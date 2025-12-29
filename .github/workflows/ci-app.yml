@@ -12,6 +12,47 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  changeset-check:
+    name: Check Changeset
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify Changeset
+        shell: bash
+        run: |
+          # Fetches the main branch to compare
+          git fetch origin main
+
+          # Lists changed files
+          CHANGED_FILES=$(git diff --name-only origin/main...HEAD)
+
+          # Checks if code was changed in apps or packages
+          HAS_CODE_CHANGES=$(echo "$CHANGED_FILES" | grep -E "^apps/|^packages/" || true)
+          
+          # Checks if there is a .md file in the .changeset folder
+          HAS_CHANGESET=$(echo "$CHANGED_FILES" | grep -E "^\.changeset/.*\.md$" || true)
+
+          echo "Status:"
+          
+          if [ -z "$HAS_CODE_CHANGES" ]; then
+            echo "✅ Only changes in infra/docs. Changeset optional."
+            exit 0
+          fi
+
+          if [ -n "$HAS_CHANGESET" ]; then
+             echo "✅ Changeset found."
+             exit 0
+          fi
+
+          echo "❌ ERROR: code changed without Changeset."
+          echo "👉 Run 'pnpm changeset' (for features) or 'pnpm changeset --empty' (for invisible adjustments)."
+          exit 1
+
   frontend-check:
     name: Build & Check - Frontend (SolidJS)
     runs-on: ubuntu-latest
