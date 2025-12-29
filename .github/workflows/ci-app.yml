@@ -6,12 +6,12 @@ on:
     paths:
       - 'apps/app/**'
       - 'packages/**'
-      - '.github/workflows/ci-client.yml'
+      - '.github/workflows/ci-app.yml'
   pull_request:
     paths:
       - 'apps/app/**'
       - 'packages/**'
-      - '.github/workflows/ci-client.yml'
+      - '.github/workflows/ci-app.yml'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

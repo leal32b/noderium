@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - 'apps/docs/**' 
-      - '.github/workflows/deploy-docs.yml'
+      - '.github/workflows/cd-docs.yml'
   workflow_dispatch:
 
 permissions:
