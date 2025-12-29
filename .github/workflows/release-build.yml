@@ -1,8 +1,10 @@
 name: Release Build & Publish
 
 on:
-  release:
-    types: [created]
+  push:
+    tags:
+      - 'noderium-app@*'
+      - 'v*'
 
 jobs:
   publish-tauri:
@@ -56,7 +58,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           projectPath: ./apps/app
-          
-          releaseId: ${{ github.event.release.id }}
           
           args: ${{ matrix.args }}
