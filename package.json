@@ -6,7 +6,8 @@
     "dev:app": "pnpm --filter noderium-app tauri dev",
     "dev:docs": "pnpm --filter noderium-docs start",
     "build": "pnpm -r build",
-    "release": "changeset tag"
+    "release": "changeset tag",
+    "ci:version": "changeset version && pnpm -r run sync-version"
   },
   "repository": {
     "type": "git",
