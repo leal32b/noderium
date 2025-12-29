@@ -2,7 +2,8 @@ name: CI - App
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
     paths:
       - 'apps/app/**'
       - 'packages/**'
