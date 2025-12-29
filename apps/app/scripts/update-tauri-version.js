@@ -1,18 +1,24 @@
-const fs = require('fs')
-const path = require('path')
+import { readFileSync, writeFileSync } from 'node:fs';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const packageJson = require('../package.json')
-const tauriConfigPath = path.join(__dirname, '../src-tauri/tauri.conf.json')
-const cargoTomlPath = path.join(__dirname, '../src-tauri/Cargo.toml')
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-const newVersion = packageJson.version
+const packageJsonPath = join(__dirname, '../package.json');
+const tauriConfigPath = join(__dirname, '../src-tauri/tauri.conf.json');
+const cargoTomlPath = join(__dirname, '../src-tauri/Cargo.toml');
 
-const tauriConfig = require(tauriConfigPath)
-tauriConfig.version = newVersion
-fs.writeFileSync(tauriConfigPath, JSON.stringify(tauriConfig, null, 2))
+const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
+const newVersion = packageJson.version;
+console.log(`🔄 Syncing version to: ${newVersion}`);
 
-let cargoToml = fs.readFileSync(cargoTomlPath, 'utf8')
-cargoToml = cargoToml.replace(/^version = ".*?"/m, `version = "${newVersion}"`)
-fs.writeFileSync(cargoTomlPath, cargoToml)
+const tauriConfig = JSON.parse(readFileSync(tauriConfigPath, 'utf-8'));
+tauriConfig.version = newVersion;
+writeFileSync(tauriConfigPath, JSON.stringify(tauriConfig, null, 2));
+console.log('✅ tauri.conf.json updated');
 
-console.log(`✅ Version synced to: ${newVersion}`)
+let cargoToml = readFileSync(cargoTomlPath, 'utf-8');
+cargoToml = cargoToml.replace(/^version = ".*?"/m, `version = "${newVersion}"`);
+writeFileSync(cargoTomlPath, cargoToml);
+console.log('✅ Cargo.toml updated');
