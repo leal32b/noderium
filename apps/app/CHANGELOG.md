@@ -1,5 +1,11 @@
 # noderium-app
 
+## 0.1.3
+
+### Patch Changes
+
+- 0d2b3d4: Add release build
+
 ## 0.1.2
 
 ### Patch Changes
