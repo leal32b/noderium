@@ -1,4 +1,4 @@
-name: Deploy Docs to Pages
+name: CD - Docs
 
 on:
   push:
@@ -19,8 +19,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
-    name: Build Docusaurus
+  docs-build:
+    name: Docs - Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -48,12 +48,12 @@ jobs:
         with:
           path: apps/docs/build
 
-  deploy:
-    name: Deploy to GitHub Pages
+  docs-deploy:
+    name: Docs - Deploy to GitHub Pages
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    needs: build
+    needs: docs-build
     runs-on: ubuntu-latest
     steps:
       - name: Deploy to GitHub Pages
