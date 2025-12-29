@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - 'apps/docs/**' 
-      - '.github/workflows/deploy-docs.yml'
+      - '.github/workflows/cd-docs.yml'
   workflow_dispatch:
 
 permissions:
@@ -20,7 +20,7 @@ concurrency:
 
 jobs:
   docs-build:
-    name: Docs - Build
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -49,7 +49,7 @@ jobs:
           path: apps/docs/build
 
   docs-deploy:
-    name: Docs - Deploy to GitHub Pages
+    name: Deploy to GitHub Pages
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

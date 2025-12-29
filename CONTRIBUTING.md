@@ -91,7 +91,7 @@ noderium/
 
 ## 🤝 Community
 
-<!-- Join the discussion on [discord](https://discord.gg/noderium) or open a (https://github.com/noderium/noderium/discussions). -->
-Open a [discussion](https://github.com/noderium/noderium/discussions).
+<!-- Join the discussion on [Discord](https://discord.gg/noderium) or open a (https://github.com/noderium/noderium/discussions). -->
+Open a [Discussion](https://github.com/noderium/noderium/discussions).
 
 **Happy Coding!**
