@@ -20,7 +20,7 @@ concurrency:
 
 jobs:
   frontend-check:
-    name: App - Build & Check - Frontend (SolidJS)
+    name: Build & Check - Frontend (SolidJS)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -46,7 +46,7 @@ jobs:
         run: pnpm --filter noderium-app build
 
   backend-check:
-    name: App - Build & Check - Backend (Rust)
+    name: Build & Check - Backend (Rust)
     runs-on: ubuntu-latest
     defaults:
       run:

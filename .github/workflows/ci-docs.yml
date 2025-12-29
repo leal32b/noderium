@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   docs-check:
-    name: Docs - Build & Check
+    name: Build & Check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
