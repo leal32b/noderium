@@ -5,7 +5,8 @@
   "scripts": {
     "dev:app": "pnpm --filter noderium-app tauri dev",
     "dev:docs": "pnpm --filter noderium-docs start",
-    "build": "pnpm -r build"
+    "build": "pnpm -r build",
+    "release": "changeset tag"
   },
   "repository": {
     "type": "git",
@@ -17,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/leal32b/noderium/issues"
   },
-  "homepage": "https://github.com/leal32b/noderium#readme"
+  "homepage": "https://github.com/leal32b/noderium#readme",
+  "devDependencies": {
+    "@changesets/cli": "^2.29.8"
+  }
 }
