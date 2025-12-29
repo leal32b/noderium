@@ -1,5 +1,11 @@
 # noderium-app
 
+## 0.1.4
+
+### Patch Changes
+
+- 9b20208: Fix release-build
+
 ## 0.1.3
 
 ### Patch Changes
