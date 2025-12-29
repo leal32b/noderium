@@ -1,0 +1,21 @@
+{
+  "name": "noderium",
+  "version": "1.0.0",
+  "description": "Local-first note-taking app with bidirectional links and graph view. Built with Vite, Tauri, Rust, SolidJS and SQLite",
+  "scripts": {
+    "dev:app": "pnpm --filter noderium-app tauri dev",
+    "dev:docs": "pnpm --filter noderium-docs start",
+    "build": "pnpm -r build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leal32b/noderium.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leal32b/noderium/issues"
+  },
+  "homepage": "https://github.com/leal32b/noderium#readme"
+}
