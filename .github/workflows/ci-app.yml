@@ -40,17 +40,17 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Type Check (TypeScript)
-        run: pnpm --filter noderium-client tsc --noEmit
+        run: pnpm --filter noderium-app tsc --noEmit
 
       - name: Build Frontend
-        run: pnpm --filter noderium-client build
+        run: pnpm --filter noderium-app build
 
   backend-check:
     name: App - Build & Check - Backend (Rust)
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./apps/client/src-tauri
+        working-directory: ./apps/app/src-tauri
 
     steps:
       - uses: actions/checkout@v4
@@ -66,7 +66,7 @@ jobs:
       - name: Rust Cache
         uses: Swatinem/rust-cache@v2
         with:
-          workspaces: apps/client/src-tauri
+          workspaces: apps/app/src-tauri
 
       - name: Check Code (Cargo Check)
         run: cargo check --verbose
