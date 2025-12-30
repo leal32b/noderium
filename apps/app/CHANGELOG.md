@@ -1,5 +1,11 @@
 # noderium-app
 
+## 0.1.5
+
+### Patch Changes
+
+- 9bd8d58: Merge relese.yml and release-build.yml into release.yml
+
 ## 0.1.4
 
 ### Patch Changes
