@@ -72,6 +72,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v3
@@ -83,6 +85,15 @@ jobs:
         with:
           node-version: 20
           cache: 'pnpm'
+
+      - name: Get Version
+        id: get_version
+        shell: bash
+        run: |
+          # Uses Node to read the JSON file securely on any OS (Win/Mac/Linux)
+          VERSION=$(node -p "require('./apps/app/package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Detected version: $VERSION"
 
       - name: Install Rust (Stable)
         uses: dtolnay/rust-toolchain@stable
@@ -104,4 +115,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           projectPath: ./apps/app
+          tagName: noderium-app@${{ steps.get_version.outputs.version }}
           args: ${{ matrix.args }}
