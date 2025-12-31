@@ -1,5 +1,4 @@
 ---
-id: handoff-template
 title: Handoff - <Feature Name>
 sidebar_label: Handoff Template
 sidebar_position: 3

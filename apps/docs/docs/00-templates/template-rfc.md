@@ -1,5 +1,4 @@
 ---
-id: rfc-template
 title: RFC - <Technical Proposal Name>
 sidebar_label: RFC Template
 sidebar_position: 2

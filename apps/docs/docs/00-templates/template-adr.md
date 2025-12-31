@@ -1,5 +1,4 @@
 ---
-id: adr-template
 title: ADR-000X - <Decision Title>
 sidebar_label: ADR Template
 sidebar_position: 4

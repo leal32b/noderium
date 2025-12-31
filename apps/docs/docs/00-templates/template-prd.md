@@ -1,5 +1,4 @@
 ---
-id: prd-template
 title: PRD - <Feature Name>
 sidebar_label: PRD Template
 sidebar_position: 1
