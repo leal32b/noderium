@@ -1,7 +1,7 @@
 ---
 title: ADR-000X - <Decision Title>
 sidebar_label: ADR Template
-sidebar_position: 4
+sidebar_position: 3
 authors: <Tech Lead>, <Staff Engineer>
 tags: [adr, architecture, accepted]
 last_updated_date: 2025-12-30

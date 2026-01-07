@@ -1,7 +1,7 @@
 ---
 title: Handoff - <Feature Name>
 sidebar_label: Handoff Template
-sidebar_position: 3
+sidebar_position: 4
 authors: <Designer Name>, <PM Name>
 tags: [handoff, ready-for-dev, design-system]
 last_updated_date: 2025-12-30

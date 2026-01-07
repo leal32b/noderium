@@ -78,21 +78,39 @@ const config: Config = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: 'My Site',
+      title: 'Noderium Docs',
       logo: {
-        alt: 'My Site Logo',
+        alt: 'Noderium Docs Logo',
         src: 'img/logo.svg',
       },
       items: [
         {
           type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
+          sidebarId: 'discoverySidebar',
           position: 'left',
-          label: 'Tutorial',
+          label: 'Discovery',
         },
-        {to: '/blog', label: 'Blog', position: 'left'},
+        // {
+        //   type: 'docSidebar',
+        //   sidebarId: 'deliverySidebar',
+        //   position: 'left',
+        //   label: 'Delivery',
+        // },
+        // {
+        //   type: 'docSidebar',
+        //   sidebarId: 'documentationSidebar',
+        //   position: 'left',
+        //   label: 'Documentation',
+        // },
+        // {
+        //   type: 'docSidebar',
+        //   sidebarId: 'metricsSidebar',
+        //   position: 'left',
+        //   label: 'Metrics',
+        // },
+        // {to: '/blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://github.com/facebook/docusaurus',
+          href: 'https://github.com/leal32b/noderium',
           label: 'GitHub',
           position: 'right',
         },
@@ -105,8 +123,8 @@ const config: Config = {
           title: 'Docs',
           items: [
             {
-              label: 'Tutorial',
-              to: '/docs/intro',
+              label: 'Discovery',
+              to: '/docs/discovery/market-research/market-research-index',
             },
           ],
         },
@@ -131,17 +149,13 @@ const config: Config = {
           title: 'More',
           items: [
             {
-              label: 'Blog',
-              to: '/blog',
-            },
-            {
               label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              href: 'https://github.com/leal32b/noderium',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} leal32b, Inc. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,
