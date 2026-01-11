@@ -10,8 +10,8 @@ last_updated_date: 2025-12-30
 import TOCInline from '@theme/TOCInline';
 import Admonition from '@theme/Admonition';
 
-<Admonition type="note" title="Status">
-  **???** ???
+<Admonition type="info" title="Status">
+  **Research Document**: This document contains strategic market research and design recommendations. Status: Active reference for product development.
 </Admonition>
 
 ## EXECUTIVE SUMMARY
@@ -32,7 +32,7 @@ Rather than compete on feature parity, **Noderium should differentiate by solvin
 
 ### 1.1 Market Leaders & Their Positioning
 
-| **Tool** | **Positioning** | **Strengths** | **Market Weakness** |
+| **Tool** | **Positioning** | **Strengths** | **Common Challenges** |
 |----------|----------------|--------------|-------------------|
 | **Obsidian** | Document-first, local-native | Customization, plugins, local storage, Markdown-friendly | Steep learning curve for casual users; requires setup discipline |
 | **Logseq** | Outliner-first, task-integrated | Block-based thinking, free/open-source, built-in tasks | Performance at scale; less polished UX; smaller ecosystem |
@@ -132,7 +132,7 @@ Rather than compete on feature parity, **Noderium should differentiate by solvin
 #### I. **Mobile Experience Lag**
 **Issue**: Serious PKM work happens on desktop; mobile is an afterthought
 
-- **Current State**: Mobile apps exist but feel tacked-on (Obsidian's mobile app is very limited; Logseq's is improving but still basic)
+- **Current State**: Mobile apps exist but some users report limitations compared to desktop experiences
 - **Pain**: Can't capture on-the-go effectively; review is hindered; no true anywhere access
 - **Market Gap**: Roam Research and Notion offer better mobile, but lack the powerful linking of specialized tools
 

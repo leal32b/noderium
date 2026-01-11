@@ -46,7 +46,7 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+            'https://github.com/leal32b/noderium/tree/main/apps/docs/',
         },
         // blog: {
         //   showReadingTime: true,
@@ -132,16 +132,12 @@ const config: Config = {
           title: 'Community',
           items: [
             {
-              label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+              label: 'GitHub Discussions',
+              href: 'https://github.com/leal32b/noderium/discussions',
             },
             {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
-            },
-            {
-              label: 'X',
-              href: 'https://x.com/docusaurus',
+              label: 'Issues',
+              href: 'https://github.com/leal32b/noderium/issues',
             },
           ],
         },
@@ -155,7 +151,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} leal32b, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Noderium Contributors. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,

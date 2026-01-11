@@ -10,8 +10,8 @@ last_updated_date: 2025-12-30
 import TOCInline from '@theme/TOCInline';
 import Admonition from '@theme/Admonition';
 
-<Admonition type="note" title="Status">
-  **???** ???
+<Admonition type="info" title="Status">
+  **Index Document**: This is the entry point for market research documentation. Use this to navigate the research package.
 </Admonition>
 
 ## WHAT'S IN HERE
@@ -333,7 +333,7 @@ A: Create a Version 2 document. Incorporate validation findings. Update competit
 7. **Tested Onboarding**: Validate < 10 minute time-to-productivity
 
 ### Avoid These Mistakes
-1. ❌ Don't compete on features (you'll lose to Obsidian/Notion)
+1. ❌ Don't compete on features (focus on differentiation, not feature parity)
 2. ❌ Don't over-customize (it causes decision paralysis)
 3. ❌ Don't skip onboarding UX (it determines retention)
 4. ❌ Don't make AI the feature (make it invisible)

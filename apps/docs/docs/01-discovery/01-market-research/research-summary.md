@@ -10,8 +10,8 @@ last_updated_date: 2025-12-30
 import TOCInline from '@theme/TOCInline';
 import Admonition from '@theme/Admonition';
 
-<Admonition type="note" title="Status">
-  **???** ???
+<Admonition type="info" title="Status">
+  **Workshop Input**: This document is designed for design workshop preparation. Contains actionable insights from market research.
 </Admonition>
 
 ## RESEARCH OVERVIEW
@@ -161,7 +161,7 @@ Current tools optimize for *their own experience*, not the *user's total workflo
 - Roam = innovative but locked-in
 - Notion = collaborative but scattered
 
-**Noderium's Opportunity**: Balance simplicity + power + collaboration + ownership
+**Noderium's Opportunity**: Balance simplicity + power + collaboration + ownership, addressing common challenges users face across the ecosystem
 
 ---
 
@@ -292,13 +292,13 @@ Current tools optimize for *their own experience*, not the *user's total workflo
 ## WHAT NOT TO BUILD (From Competitive Analysis)
 
 ### ❌ Don't Build Another Outliner
-Logseq does this better. Block-based thinking is strong but niche.
+Block-based thinking is well-served by existing tools. Focus on differentiation.
 
 ### ❌ Don't Try to Match Notion's Database Power
 Notion is better for structured data. Accept the limitation; be better at thinking.
 
 ### ❌ Don't Over-Customize
-Obsidian's 1000+ plugins are powerful but paralyze users. Lean into simplicity.
+Extensive customization options can lead to decision paralysis. Lean into simplicity and smart defaults.
 
 ### ❌ Don't Lock Data In
 Roam's proprietary format is a differentiator (moat) but feels like a prison.
