@@ -18,9 +18,12 @@
 
 We believe personal knowledge management shouldn't require choosing between **performance** and **freedom**.
 
-Currently, the market forces a compromise:
-1.  **Obsidian:** Great ecosystem, but the core is proprietary, and it relies on Electron (heavy resource usage).
-2.  **Logseq:** Open source and great block structure, but suffers from performance issues on large graphs and stability quirks.
+While the PKM space has excellent tools, some software faces common challenges:
+- **Resource-intensive architectures** that can impact system performance
+- **Performance bottlenecks** when working with large knowledge graphs
+- **Trade-offs between openness and ecosystem maturity**
+
+Noderium is our attempt to address these challenges from the ground up.
 
 ### The Noderium Mission
 Noderium is the answer for 2026. We are building a "second brain" that:
@@ -109,8 +112,8 @@ We want you up and running in under 10 minutes.
 
 ## 🤝 Community
 
-* **Questions?** Open a [Discussion](https://github.com/your-username/noderium/discussions).
-* **Bugs?** Open an [Issue](https://github.com/your-username/noderium/issues).
+* **Questions?** Open a [Discussion](https://github.com/leal32b/noderium/discussions).
+* **Bugs?** Open an [Issue](https://github.com/leal32b/noderium/issues).
 * Please read our [CONTRIBUTING.md](./CONTRIBUTING.md) before submitting your first PR!
 
 ---
