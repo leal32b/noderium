@@ -1,9 +1,10 @@
 import { onMount, onCleanup } from "solid-js";
 import { EditorView,  Decoration,  ViewPlugin,  ViewUpdate, keymap } from "@codemirror/view";
 import { EditorState, RangeSetBuilder } from "@codemirror/state";
-import { syntaxTree } from "@codemirror/language";
+import { defaultHighlightStyle, syntaxHighlighting, syntaxTree } from "@codemirror/language";
 import { markdown } from "@codemirror/lang-markdown";
 import { defaultKeymap,  history,  historyKeymap } from "@codemirror/commands";
+import { languages as codeLanguages } from "@codemirror/language-data";
 
 const MARGIN_LINES = 2;
 const FONT_BOLD = "700";
@@ -35,6 +36,106 @@ function needsRecompute(
     prev.line !== currentLine ||
     prev.from !== from ||
     prev.to !== to
+  );
+}
+
+function normalizeLanguageClass(language: string) {
+  const normalized = language.trim().toLowerCase();
+
+  if (!normalized) {
+    return "plain";
+  }
+
+  return normalized.replace(/[^a-z0-9_-]/g, "");
+}
+
+export function codeBlockDecorations() {
+  return ViewPlugin.fromClass(
+    class {
+      decorations = Decoration.none;
+
+      update(update: ViewUpdate) {
+        if (!update.docChanged && !update.viewportChanged) {
+          return;
+        }
+
+        const state = update.state;
+        const viewport = update.view.viewport;
+        const { from, to } = getVisibleRange(state, viewport);
+        const doc = state.doc;
+        const builder = new RangeSetBuilder<Decoration>();
+
+        let inFence = false;
+        let fenceMarker = "";
+        let language = "";
+        let lineNumber = 0;
+
+        for (let lineNumberIndex = 1; lineNumberIndex <= doc.lines; lineNumberIndex += 1) {
+          const line = doc.line(lineNumberIndex);
+          const match = line.text.match(/^(```|~~~)(.*)$/);
+
+          if (match) {
+            const marker = match[1];
+            const lineInView = !(line.to < from || line.from > to);
+
+            if (lineInView) {
+              builder.add(
+                line.from,
+                line.from,
+                Decoration.line({ class: "cm-md-codeblock-fence" })
+              );
+              builder.add(
+                line.from,
+                line.to,
+                Decoration.mark({ class: "cm-md-codeblock-fence-text" })
+              );
+            }
+
+            if (!inFence) {
+              inFence = true;
+              fenceMarker = marker;
+              language = match[2].trim();
+              lineNumber = 0;
+            } else if (marker === fenceMarker) {
+              inFence = false;
+              fenceMarker = "";
+              language = "";
+              lineNumber = 0;
+            }
+
+            continue;
+          }
+
+          if (!inFence) {
+            continue;
+          }
+
+          lineNumber += 1;
+
+          if (line.to < from || line.from > to) {
+            continue;
+          }
+
+          const languageClass = `cm-md-codeblock-lang-${normalizeLanguageClass(language)}`;
+          builder.add(
+            line.from,
+            line.from,
+            Decoration.line({
+              class: `cm-md-codeblock cm-md-codeblock-line ${languageClass}`,
+              attributes: {
+                "data-code-line": String(lineNumber),
+                "data-code-lang": normalizeLanguageClass(language),
+              },
+            })
+          );
+        }
+
+        this.decorations = builder.finish();
+      }
+    },
+    {
+      decorations: (v) => v.decorations,
+    }
   );
 }
 
@@ -213,12 +314,14 @@ export default function MarkdownEditor(
 
   onMount(() => {
     const state = EditorState.create({
-      doc: props.initialContent || "Welcome to Noderium",
+      doc: props.initialContent || `Welcome to Noderium`,
       extensions: [
         history(),
-        markdown(),
+        markdown({ codeLanguages }),
+        codeBlockDecorations(),
         markdownSemanticStyles(),
         hideMarkdownExceptCurrentLine(),
+        syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
         keymap.of([
           ...defaultKeymap,
           ...historyKeymap,
@@ -269,11 +372,51 @@ export default function MarkdownEditor(
           ".cm-md-emphasis": {
             fontStyle: "italic"
           },
+          ".cm-line": {
+            padding: "0",
+          },
           ".cm-md-code": {
             fontFamily: "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
             backgroundColor: "rgba(15, 23, 42, 0.06)",
             borderRadius: "0.25rem",
             padding: "0.1rem 0.2rem",
+          },
+          ".cm-md-codeblock": {
+            fontFamily: "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
+            backgroundColor: "rgba(0, 0, 0, 0.3)",
+            borderLeft: "2px solid green",
+          },
+          ".cm-md-codeblock-line": {
+            position: "relative",
+            paddingLeft: "2.5rem",
+          },
+          ".cm-md-codeblock-line::before": {
+            content: "attr(data-code-line)",
+            position: "absolute",
+            left: "0",
+            width: "2rem",
+            textAlign: "right",
+            color: "rgba(148, 163, 184, 0.9)",
+            fontVariantNumeric: "tabular-nums",
+          },
+          ".cm-md-codeblock-fence": {
+            backgroundColor: "transparent",
+            color: "inherit",
+            fontFamily: "inherit",
+          },
+          ".cm-md-codeblock-fence-text": {
+            fontFamily: "inherit",
+            color: "inherit",
+            backgroundColor: "transparent",
+          },
+          ".cm-md-codeblock-fence span": {
+            color: "inherit",
+          },
+          ".cm-md-codeblock-lang-typescript": {
+            borderLeft: "2px solid #3178c6",
+          },
+          ".cm-md-codeblock-lang-javascript": {
+            borderLeft: "2px solid #f7df1e",
           },
           ".cm-md-list-bullet-widget::before": {
             content: "'•'",
