@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "Local-first note-taking app with bidirectional links and graph view. Built with Vite, Tauri, Rust, SolidJS and SQLite",
   "scripts": {
-    "dev:app": "pnpm --filter noderium-app tauri dev",
-    "dev:docs": "pnpm --filter noderium-docs start",
+    "app:dev": "pnpm --filter noderium-app tauri dev",
+    "app:test": "pnpm --filter noderium-app test:ci",
+    "docs:dev": "pnpm --filter noderium-docs start",
     "build": "pnpm -r build",
     "release": "changeset tag",
     "ci:version": "changeset version && pnpm -r run sync-version"
