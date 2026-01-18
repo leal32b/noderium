@@ -311,6 +311,25 @@ describe("MarkdownEditor", () => {
 
       expect(onChange).toHaveBeenCalledWith("updated");
     });
+
+    it("does not emit onChange when document is unchanged", () => {
+      const onChange = vi.fn();
+      let capturedView: EditorView | null = null;
+
+      render(() => (
+        <MarkdownEditor
+          value="initial"
+          onChange={onChange}
+          onReady={(view) => { capturedView = view; }}
+        />
+      ));
+
+      capturedView!.dispatch({
+        selection: EditorSelection.single(3),
+      });
+
+      expect(onChange).not.toHaveBeenCalled();
+    });
   });
 });
 
@@ -331,6 +350,28 @@ describe("hideMarkdownExceptCurrentLine", () => {
       expect(lines).toHaveLength(2);
       expect(lines[0].querySelectorAll(".cm-hide-markdown").length).toBeGreaterThan(0);
       expect(lines[1].querySelectorAll(".cm-hide-markdown").length).toBe(0);
+
+      sut.destroy();
+    });
+
+    it("hides inline code markers outside the active line", async () => {
+      const docWithInlineCode = "Line with `code` here\nSecond line";
+      const sut = createPluginContext(
+        docWithInlineCode,
+        hideMarkdownExceptCurrentLine,
+        [markdown()]
+      );
+
+      selectLine(sut.view, 2);
+      await flushUpdates();
+
+      const hiddenSlices = collectDecorationsByClass(
+        sut.plugin,
+        sut.view.state.doc,
+        "cm-hide-markdown"
+      );
+
+      expect(hiddenSlices).toContain("`");
 
       sut.destroy();
     });
@@ -638,6 +679,36 @@ describe("codeBlockDecorations", () => {
     );
 
     expect(codeLineAttributes.some((attr) => attr.line === "1")).toBe(true);
+
+    sut.destroy();
+  });
+
+  it("processes code lines without decorations when computing state before viewport", () => {
+    const doc = [
+      "prefix",
+      "```js",
+      "code1",
+      "code2",
+      "code3",
+      "code4",
+      "code5",
+      "code6",
+      "code7",
+      "```",
+      "suffix",
+    ].join("\n");
+
+    const sut = createPluginContext(doc, codeBlockDecorations);
+    const lateViewport = getViewport(sut.view.state, 9, 11);
+
+    triggerPluginUpdate(sut.plugin, sut.view.state, lateViewport);
+
+    const { codeLineAttributes } = collectCodeLineAttributes(
+      sut.plugin,
+      sut.view.state.doc.length
+    );
+
+    expect(codeLineAttributes.some((attr) => attr.line === "6")).toBe(true);
 
     sut.destroy();
   });

@@ -18,7 +18,7 @@ export default defineConfig(async () => ({
     coverage: {
       include: ["src/**/*.{ts,tsx}"],
       exclude: [
-        "src/app.tsx",
+        "src/App.tsx",
         "src/index.tsx",
         "src/vite-env.d.ts",
         "src/**/*.test.tsx",

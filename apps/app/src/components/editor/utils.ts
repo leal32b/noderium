@@ -1,6 +1,6 @@
 import type { ViewUpdate } from "@codemirror/view";
 import type { EditorState } from "@codemirror/state";
-import type { FenceMatch, LineInfo, Viewport, ViewportState } from "./types";
+import type { FenceMatch, Viewport, ViewportState } from "./types";
 
 const VIEWPORT_MARGIN = 2;
 const LANGUAGE_SANITIZE_PATTERN = /[^a-z0-9_-]/g;
@@ -55,8 +55,4 @@ export function normalizeLanguage(language: string): string {
   return normalized
     ? normalized.replace(LANGUAGE_SANITIZE_PATTERN, "")
     : DEFAULT_LANGUAGE;
-}
-
-export function isLineInViewport(line: LineInfo, viewport: Viewport): boolean {
-  return line.to >= viewport.from && line.from <= viewport.to;
 }

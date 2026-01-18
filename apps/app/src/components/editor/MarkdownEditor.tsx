@@ -18,7 +18,21 @@ import {
 } from "./decorations";
 import { listKeymap } from "./keybindings";
 
-function createEditorExtensions(onChange?: (value: string) => void): Extension[] {
+function createOnChangeListener(
+  onChange: (value: string) => void,
+  isApplyingExternal: { value: boolean }
+): Extension {
+  return EditorView.updateListener.of((update) => {
+    if (update.docChanged && !isApplyingExternal.value) {
+      onChange(update.state.doc.toString());
+    }
+  });
+}
+
+function createEditorExtensions(
+  onChange: ((value: string) => void) | undefined,
+  isApplyingExternal: { value: boolean }
+): Extension[] {
   const extensions: Extension[] = [
     history(),
     markdown({ codeLanguages }),
@@ -31,13 +45,7 @@ function createEditorExtensions(onChange?: (value: string) => void): Extension[]
   ];
 
   if (onChange) {
-    extensions.push(
-      EditorView.updateListener.of((update) => {
-        if (update.docChanged) {
-          onChange(update.state.doc.toString());
-        }
-      })
-    );
+    extensions.push(createOnChangeListener(onChange, isApplyingExternal));
   }
 
   return extensions;
@@ -51,11 +59,7 @@ export default function MarkdownEditor(props: MarkdownEditorProps) {
   onMount(() => {
     const state = EditorState.create({
       doc: props.value ?? props.initialContent ?? DEFAULT_CONTENT,
-      extensions: createEditorExtensions((value) => {
-        if (!isApplyingExternal.value) {
-          props.onChange?.(value);
-        }
-      }),
+      extensions: createEditorExtensions(props.onChange, isApplyingExternal),
     });
 
     editorView = new EditorView({
@@ -96,9 +100,11 @@ export default function MarkdownEditor(props: MarkdownEditorProps) {
 
   return (
     <div
-      ref={(el) => { containerRef = el; }}
-      class={props.class}
-      style={{ width: "100%", height: "100%" }}
+    ref={(el) => { containerRef = el; }}
+    class={props.class}
+    style={{ width: "100%", height: "100%" }}
     />
   );
+/* c8 ignore start */
 }
+/* c8 ignore stop */

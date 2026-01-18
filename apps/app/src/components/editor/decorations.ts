@@ -6,7 +6,6 @@ import { syntaxTree } from "@codemirror/language";
 import type { LineInfo, Viewport, ViewportState } from "./types";
 import {
   computeVisibleRange,
-  isLineInViewport,
   normalizeLanguage,
   parseFenceLine,
   shouldRecompute,
@@ -106,7 +105,7 @@ export function codeBlockDecorations(): Extension {
 
         for (let lineIdx = fromLine; lineIdx <= toLine; lineIdx += 1) {
           const line = doc.line(lineIdx);
-          fenceState = this.processLine(line, fenceState, builder, visibleRange);
+          fenceState = this.processLine(line, fenceState, builder);
         }
 
         this.cache = { startLine: fromLine, state: initialState };
@@ -140,13 +139,12 @@ export function codeBlockDecorations(): Extension {
       private processLine(
         line: LineInfo,
         currentState: FenceState,
-        builder?: RangeSetBuilder<Decoration>,
-        visibleRange?: Viewport
+        builder?: RangeSetBuilder<Decoration>
       ): FenceState {
         const fence = parseFenceLine(line.text);
 
         if (fence) {
-          if (builder && visibleRange && isLineInViewport(line, visibleRange)) {
+          if (builder) {
             builder.add(line.from, line.from, DECO_FENCE_LINE);
             builder.add(line.from, line.to, DECO_FENCE_MARK);
           }
@@ -178,7 +176,7 @@ export function codeBlockDecorations(): Extension {
 
         const nextLineNumber = currentState.codeLineNumber + 1;
 
-        if (builder && visibleRange && isLineInViewport(line, visibleRange)) {
+        if (builder) {
           const normalizedLang = normalizeLanguage(currentState.currentLanguage);
           builder.add(
             line.from,
