@@ -40,7 +40,7 @@ export function shouldRecompute(
   prev: ViewportState,
   currentLineNumber: number
 ): boolean {
-  if (update.docChanged || update.viewportChanged) {
+  if (update.docChanged) {
     return true;
   }
 

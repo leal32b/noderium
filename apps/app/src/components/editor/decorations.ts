@@ -269,7 +269,8 @@ export function markdownSemanticStyles(): Extension {
         const { shouldUpdate, state: nextViewportState, viewport } = getViewportState(
           update,
           this.viewportState,
-          currentLine.number
+          currentLine.number,
+          false
         );
 
         if (!shouldUpdate) {
