@@ -1,4 +1,11 @@
 {
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "package.json": "pnpm-*.yaml",
+    "tsconfig.json": "tsconfig.node.json",
+    "vite.config.ts": "vitest.config.ts",
+    "tauri.conf.json": "Cargo.*",
+  },
   "cSpell.words": [
     "cdylib",
     "clippy",
