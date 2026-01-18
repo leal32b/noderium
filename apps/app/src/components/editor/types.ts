@@ -1,8 +1,10 @@
 import type { EditorView } from "@codemirror/view";
 
 export interface MarkdownEditorProps {
+  value?: string;
   initialContent?: string;
   class?: string;
+  onChange?: (value: string) => void;
   onReady?: (view: EditorView) => void;
 }
 

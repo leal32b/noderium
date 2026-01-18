@@ -1,6 +1,6 @@
-import { onMount, onCleanup } from "solid-js";
+import { createEffect, onMount, onCleanup } from "solid-js";
 import type { Extension } from "@codemirror/state";
-import { EditorState } from "@codemirror/state";
+import { EditorSelection, EditorState } from "@codemirror/state";
 import { EditorView, keymap } from "@codemirror/view";
 import { defaultHighlightStyle, syntaxHighlighting } from "@codemirror/language";
 import { markdown } from "@codemirror/lang-markdown";
@@ -18,8 +18,8 @@ import {
 } from "./decorations";
 import { listKeymap } from "./keybindings";
 
-function createEditorExtensions(): Extension[] {
-  return [
+function createEditorExtensions(onChange?: (value: string) => void): Extension[] {
+  const extensions: Extension[] = [
     history(),
     markdown({ codeLanguages }),
     codeBlockDecorations(),
@@ -29,16 +29,33 @@ function createEditorExtensions(): Extension[] {
     keymap.of([...listKeymap, ...defaultKeymap, ...historyKeymap]),
     editorTheme,
   ];
+
+  if (onChange) {
+    extensions.push(
+      EditorView.updateListener.of((update) => {
+        if (update.docChanged) {
+          onChange(update.state.doc.toString());
+        }
+      })
+    );
+  }
+
+  return extensions;
 }
 
 export default function MarkdownEditor(props: MarkdownEditorProps) {
   let containerRef!: HTMLDivElement;
   let editorView: EditorView | null = null;
+  const isApplyingExternal = { value: false };
 
   onMount(() => {
     const state = EditorState.create({
-      doc: props.initialContent ?? DEFAULT_CONTENT,
-      extensions: createEditorExtensions(),
+      doc: props.value ?? props.initialContent ?? DEFAULT_CONTENT,
+      extensions: createEditorExtensions((value) => {
+        if (!isApplyingExternal.value) {
+          props.onChange?.(value);
+        }
+      }),
     });
 
     editorView = new EditorView({
@@ -47,6 +64,29 @@ export default function MarkdownEditor(props: MarkdownEditorProps) {
     });
 
     props.onReady?.(editorView);
+  });
+
+  createEffect(() => {
+    if (!editorView || props.value === undefined) {
+      return;
+    }
+
+    const currentValue = editorView.state.doc.toString();
+    if (currentValue === props.value) {
+      return;
+    }
+
+    const clampedHead = Math.min(
+      editorView.state.selection.main.head,
+      props.value.length
+    );
+
+    isApplyingExternal.value = true;
+    editorView.dispatch({
+      changes: { from: 0, to: editorView.state.doc.length, insert: props.value },
+      selection: EditorSelection.single(clampedHead),
+    });
+    isApplyingExternal.value = false;
   });
 
   onCleanup(() => {

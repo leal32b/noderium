@@ -1,6 +1,7 @@
 import "@testing-library/jest-dom/vitest";
 
 import { describe, it, expect, vi, afterEach } from "vitest";
+import { createSignal } from "solid-js";
 import { render, cleanup } from "@solidjs/testing-library";
 import { type Extension, EditorSelection, EditorState } from "@codemirror/state";
 import { Decoration, EditorView, ViewPlugin } from "@codemirror/view";
@@ -256,6 +257,60 @@ describe("MarkdownEditor", () => {
       expect(capturedView).not.toBeNull();
       expect(capturedView!.state.doc.toString()).toContain("Welcome to Noderium");
     });
+
+    it("prefers value over initialContent", () => {
+      let capturedView: EditorView | null = null;
+
+      render(() => (
+        <MarkdownEditor
+          value="controlled"
+          initialContent="ignored"
+          onReady={(view) => { capturedView = view; }}
+        />
+      ));
+
+      expect(capturedView).not.toBeNull();
+      expect(capturedView!.state.doc.toString()).toBe("controlled");
+    });
+  });
+
+  describe("controlled updates", () => {
+    it("updates document when value changes", async () => {
+      const [value, setValue] = createSignal("initial");
+      let capturedView: EditorView | null = null;
+
+      render(() => (
+        <MarkdownEditor
+          value={value()}
+          onReady={(view) => { capturedView = view; }}
+        />
+      ));
+
+      expect(capturedView).not.toBeNull();
+      setValue("next");
+      await flushUpdates();
+
+      expect(capturedView!.state.doc.toString()).toBe("next");
+    });
+
+    it("emits onChange for user edits", () => {
+      const onChange = vi.fn();
+      let capturedView: EditorView | null = null;
+
+      render(() => (
+        <MarkdownEditor
+          value="initial"
+          onChange={onChange}
+          onReady={(view) => { capturedView = view; }}
+        />
+      ));
+
+      capturedView!.dispatch({
+        changes: { from: 0, to: 7, insert: "updated" },
+      });
+
+      expect(onChange).toHaveBeenCalledWith("updated");
+    });
   });
 });
 
@@ -297,6 +352,28 @@ describe("hideMarkdownExceptCurrentLine", () => {
       );
 
       expect(hiddenFences).toContain("```");
+
+      sut.destroy();
+    });
+
+    it("hides tilde fenced markers outside the active line", async () => {
+      const tildeBlock = ["~~~js", "const x = 1;", "~~~"].join("\n");
+      const sut = createPluginContext(
+        tildeBlock,
+        hideMarkdownExceptCurrentLine,
+        [markdown()]
+      );
+
+      selectLine(sut.view, 2);
+      await flushUpdates();
+
+      const hiddenFences = collectDecorationsByClass(
+        sut.plugin,
+        sut.view.state.doc,
+        "cm-hide-markdown-fence"
+      );
+
+      expect(hiddenFences).toContain("~~~");
 
       sut.destroy();
     });
@@ -497,6 +574,101 @@ describe("codeBlockDecorations", () => {
       sut.destroy();
     });
   });
+
+  it("keeps code line numbers when viewport jumps forward", () => {
+    const doc = [
+      "```js",
+      "first",
+      "second",
+      "third",
+      "```",
+      "after",
+    ].join("\n");
+
+    const sut = createPluginContext(doc, codeBlockDecorations);
+
+    const initialViewport = getViewport(sut.view.state, 2, 2);
+    triggerPluginUpdate(sut.plugin, sut.view.state, initialViewport);
+
+    const { codeLineAttributes: initialLines } = collectCodeLineAttributes(
+      sut.plugin,
+      sut.view.state.doc.length
+    );
+    expect(initialLines.some((attr) => attr.line === "1")).toBe(true);
+
+    const laterViewport = getViewport(sut.view.state, 4, 4);
+    triggerPluginUpdate(sut.plugin, sut.view.state, laterViewport, {
+      docChanged: false,
+      viewportChanged: true,
+    });
+
+    const { codeLineAttributes: laterLines } = collectCodeLineAttributes(
+      sut.plugin,
+      sut.view.state.doc.length
+    );
+    expect(laterLines.some((attr) => attr.line === "3")).toBe(true);
+
+    sut.destroy();
+  });
+
+  it("keeps code line numbers when viewport jumps backward", () => {
+    const doc = [
+      "```js",
+      "first",
+      "second",
+      "third",
+      "```",
+      "after",
+    ].join("\n");
+
+    const sut = createPluginContext(doc, codeBlockDecorations);
+
+    const laterViewport = getViewport(sut.view.state, 4, 4);
+    triggerPluginUpdate(sut.plugin, sut.view.state, laterViewport);
+
+    const earlierViewport = getViewport(sut.view.state, 2, 2);
+    triggerPluginUpdate(sut.plugin, sut.view.state, earlierViewport, {
+      docChanged: false,
+      viewportChanged: true,
+    });
+
+    const { codeLineAttributes } = collectCodeLineAttributes(
+      sut.plugin,
+      sut.view.state.doc.length
+    );
+
+    expect(codeLineAttributes.some((attr) => attr.line === "1")).toBe(true);
+
+    sut.destroy();
+  });
+
+  it("keeps fence open when marker does not match", () => {
+    const doc = [
+      "```js",
+      "first",
+      "~~~",
+      "second",
+      "```",
+    ].join("\n");
+
+    const sut = createPluginContext(doc, codeBlockDecorations);
+    const viewport = getViewport(sut.view.state, 4, 4);
+
+    triggerPluginUpdate(sut.plugin, sut.view.state, viewport);
+
+    const { codeLineAttributes } = collectCodeLineAttributes(
+      sut.plugin,
+      sut.view.state.doc.length
+    );
+
+    expect(codeLineAttributes).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ line: "2", lang: "js" }),
+      ])
+    );
+
+    sut.destroy();
+  });
 });
 
 describe("markdownSemanticStyles", () => {
@@ -572,6 +744,27 @@ describe("markdownSemanticStyles", () => {
       const prevDecorations = sut.plugin.decorations;
 
       selectPosition(sut.view, 2);
+      await flushUpdates();
+
+      expect(sut.plugin.decorations).toBe(prevDecorations);
+
+      sut.destroy();
+    });
+
+    it("skips recomputation when cursor moves to another line", async () => {
+      const sut = createPluginContext(
+        FIXTURES.headings.headingWithCode,
+        markdownSemanticStyles,
+        [markdown()]
+      );
+
+      selectPosition(sut.view, 0);
+      await flushUpdates();
+
+      const prevDecorations = sut.plugin.decorations;
+      const lineTwoPosition = sut.view.state.doc.line(2).from;
+
+      selectPosition(sut.view, lineTwoPosition);
       await flushUpdates();
 
       expect(sut.plugin.decorations).toBe(prevDecorations);

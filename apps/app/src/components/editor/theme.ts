@@ -64,14 +64,14 @@ export const editorTheme = EditorView.theme({
   },
   ".cm-md-code": {
     fontFamily: FONT_MONO,
-    backgroundColor: "rgba(15, 23, 42, 0.06)",
+    backgroundColor: "var(--editor-inline-code-bg, rgba(15, 23, 42, 0.06))",
     borderRadius: "0.25rem",
     padding: "0.1rem 0.2rem",
   },
   ".cm-md-codeblock": {
     fontFamily: FONT_MONO,
-    backgroundColor: "rgba(0, 0, 0, 0.3)",
-    borderLeft: "2px solid green",
+    backgroundColor: "var(--editor-codeblock-bg, rgba(0, 0, 0, 0.3))",
+    borderLeft: "2px solid var(--editor-codeblock-border, green)",
   },
   ".cm-md-codeblock-line": {
     position: "relative",
@@ -83,7 +83,7 @@ export const editorTheme = EditorView.theme({
     left: "0",
     width: "2rem",
     textAlign: "right",
-    color: "rgba(148, 163, 184, 0.9)",
+    color: "var(--editor-codeblock-line-number, rgba(148, 163, 184, 0.9))",
     fontVariantNumeric: "tabular-nums",
   },
   ".cm-md-codeblock-fence": {
