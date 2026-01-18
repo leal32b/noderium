@@ -16,8 +16,14 @@ export default defineConfig(async () => ({
     silent: true,
     watch: false,
     coverage: {
-      include: ["src/**/*.tsx"],
-      exclude: ["src/app.tsx", "src/index.tsx", "src/vite-env.d.ts", "src/**/*.test.tsx"],
+      include: ["src/**/*.{ts,tsx}"],
+      exclude: [
+        "src/app.tsx",
+        "src/index.tsx",
+        "src/vite-env.d.ts",
+        "src/**/*.test.tsx",
+        "src/**/types.ts"
+      ],
       provider: "v8",
       reporter: ['text', 'html', 'lcov'],
       thresholds: { 100: true }

@@ -6,17 +6,13 @@ import { type Extension, EditorSelection, EditorState } from "@codemirror/state"
 import { Decoration, EditorView, ViewPlugin } from "@codemirror/view";
 import { markdown } from "@codemirror/lang-markdown";
 
-import MarkdownEditor, {
+import MarkdownEditor from "./MarkdownEditor";
+import {
   codeBlockDecorations,
   hideMarkdownExceptCurrentLine,
   markdownSemanticStyles,
-  isEmptyListItem,
-  handleEnterInList,
-} from "./MarkdownEditor";
-
-// ============================================================================
-// Test Utilities
-// ============================================================================
+} from "./decorations";
+import { isEmptyListItem, handleEnterInList } from "./keybindings";
 
 interface DecorationPlugin {
   decorations: typeof Decoration.none;
@@ -194,10 +190,6 @@ function queryLines(host: HTMLElement): HTMLDivElement[] {
   return Array.from(host.querySelectorAll<HTMLDivElement>(".cm-line"));
 }
 
-// ============================================================================
-// Test Constants
-// ============================================================================
-
 const FIXTURES = {
   headings: {
     twoHeadings: "# First heading\n# Second heading",
@@ -229,10 +221,6 @@ const FIXTURES = {
     empty: "",
   },
 } as const;
-
-// ============================================================================
-// Component Tests
-// ============================================================================
 
 afterEach(cleanup);
 
@@ -270,10 +258,6 @@ describe("MarkdownEditor", () => {
     });
   });
 });
-
-// ============================================================================
-// Hide Markdown Plugin Tests
-// ============================================================================
 
 describe("hideMarkdownExceptCurrentLine", () => {
   describe("marker visibility", () => {
@@ -429,10 +413,6 @@ describe("hideMarkdownExceptCurrentLine", () => {
   });
 });
 
-// ============================================================================
-// Code Block Decorations Tests
-// ============================================================================
-
 describe("codeBlockDecorations", () => {
   describe("language metadata", () => {
     it("adds fence and line decorations with normalized language", () => {
@@ -519,10 +499,6 @@ describe("codeBlockDecorations", () => {
   });
 });
 
-// ============================================================================
-// Semantic Styles Tests
-// ============================================================================
-
 describe("markdownSemanticStyles", () => {
   describe("heading styles", () => {
     it("applies heading class to ATX headings", async () => {
@@ -605,10 +581,6 @@ describe("markdownSemanticStyles", () => {
   });
 });
 
-// ============================================================================
-// List Item Detection Tests
-// ============================================================================
-
 describe("isEmptyListItem", () => {
   describe("empty list markers", () => {
     it.each([
@@ -646,10 +618,6 @@ describe("isEmptyListItem", () => {
     });
   });
 });
-
-// ============================================================================
-// List Enter Handler Tests
-// ============================================================================
 
 describe("handleEnterInList", () => {
   describe("empty list item removal", () => {
