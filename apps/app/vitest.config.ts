@@ -10,7 +10,7 @@ export default defineConfig(async () => ({
   test: {
     environment: "jsdom",
     globals: true,
-    include: ['**/*.test.tsx'],
+    include: ['**/*.test.{ts,tsx}'],
     logHeapUsage: true,
     pool: 'vmThreads',
     silent: true,
@@ -21,7 +21,7 @@ export default defineConfig(async () => ({
         "src/App.tsx",
         "src/index.tsx",
         "src/vite-env.d.ts",
-        "src/**/*.test.tsx",
+        "src/**/*.test.{ts,tsx}",
         "src/**/types.ts"
       ],
       provider: "v8",
