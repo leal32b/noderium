@@ -37,8 +37,6 @@ const HEADING_CLASSES: Readonly<Record<string, string>> = {
 const INLINE_MARK_CLASSES: Readonly<Record<string, string>> = {
   StrongEmphasis: "cm-md-strong",
   Emphasis: "cm-md-emphasis",
-  InlineCode: "cm-md-code",
-  CodeText: "cm-md-code",
 };
 
 const DECO_HIDE = Decoration.mark({ class: "cm-hide-markdown" });
@@ -283,7 +281,13 @@ export function markdownSemanticStyles(): Extension {
         syntaxTree(state).iterate({
           from: visibleRange.from,
           to: visibleRange.to,
-          enter: ({ type, from, to }) => {
+          enter: (nodeRef) => {
+            const { type, from, to, node } = nodeRef;
+
+            if (type.name === "FencedCode") {
+              return false;
+            }
+
             const headingClass = HEADING_CLASSES[type.name];
             if (headingClass) {
               const lineStart = state.doc.lineAt(from).from;
@@ -294,6 +298,28 @@ export function markdownSemanticStyles(): Extension {
             const inlineClass = INLINE_MARK_CLASSES[type.name];
             if (inlineClass) {
               builder.add(from, to, Decoration.mark({ class: inlineClass }));
+              return;
+            }
+
+            if (type.name === "InlineCode") {
+              let contentFrom = from;
+              let contentTo = to;
+              const cursor = node.cursor();
+              cursor.firstChild();
+              do {
+                if (cursor.name === "CodeMark") {
+                  if (cursor.from === from) {
+                    contentFrom = cursor.to;
+                  } else {
+                    contentTo = cursor.from;
+                  }
+                }
+              } while (cursor.nextSibling());
+
+              if (contentFrom < contentTo) {
+                builder.add(contentFrom, contentTo, Decoration.mark({ class: "cm-md-code" }));
+              }
+              return false;
             }
           },
         });
