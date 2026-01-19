@@ -10,7 +10,7 @@ import { languages as codeLanguages } from "@codemirror/language-data";
 import type { MarkdownEditorProps } from "./types";
 import { editorTheme } from "./theme";
 
-const DEFAULT_CONTENT = "Welcome to Noderium";
+const DEFAULT_CONTENT = "# Welcome to Noderium";
 import {
   codeBlockDecorations,
   hideMarkdownExceptCurrentLine,

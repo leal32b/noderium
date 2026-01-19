@@ -112,4 +112,7 @@ export const editorTheme = EditorView.theme({
     opacity: "0",
     pointerEvents: "none",
   },
+  ".cm-md-marker, .cm-md-marker span": {
+    color: "var(--editor-marker-color, #94a3b8)",
+  },
 });

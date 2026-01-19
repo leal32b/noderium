@@ -41,6 +41,7 @@ const INLINE_MARK_CLASSES: Readonly<Record<string, string>> = {
 
 const DECO_HIDE = Decoration.mark({ class: "cm-hide-markdown" });
 const DECO_HIDE_FENCE = Decoration.mark({ class: "cm-hide-markdown-fence" });
+const DECO_MARKER = Decoration.mark({ class: "cm-md-marker" });
 const DECO_FENCE_LINE = Decoration.line({ class: "cm-md-codeblock-fence" });
 const DECO_FENCE_MARK = Decoration.mark({ class: "cm-md-codeblock-fence-text" });
 
@@ -226,14 +227,24 @@ export function hideMarkdownExceptCurrentLine(): Extension {
           to: visibleRange.to,
           enter: ({ type, from, to }) => {
             if (!MARKER_NODES.has(type.name)) return;
-            if (from >= currentLine.from && from < currentLine.to) return;
+
+            const isOnCurrentLine = from >= currentLine.from && from < currentLine.to;
 
             if (type.name === "CodeMark") {
               const lineText = state.doc.lineAt(from).text.trim();
               if (parseFenceLine(lineText)) {
-                builder.add(from, to, DECO_HIDE_FENCE);
+                if (isOnCurrentLine) {
+                  builder.add(from, to, DECO_MARKER);
+                } else {
+                  builder.add(from, to, DECO_HIDE_FENCE);
+                }
                 return;
               }
+            }
+
+            if (isOnCurrentLine) {
+              builder.add(from, to, DECO_MARKER);
+              return;
             }
 
             const endPos = SPACE_EXTENDED_MARKERS.has(type.name) &&

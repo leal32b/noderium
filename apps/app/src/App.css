@@ -25,12 +25,13 @@ body {
   line-height: 24px;
   font-weight: 400;
 
-  color: #0f0f0f;
-  background-color: #f6f6f6;
+  color: #211a21;
+  background-color: #cec9cc;
   --editor-inline-code-bg: rgba(15, 23, 42, 0.06);
   --editor-codeblock-bg: rgba(0, 0, 0, 0.3);
   --editor-codeblock-border: #16a34a;
   --editor-codeblock-line-number: rgba(148, 163, 184, 0.9);
+  --editor-marker-color: rgba(0, 255, 0, 1);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -115,12 +116,13 @@ button {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    color: #f6f6f6;
-    background-color: #2f2f2f;
+    color: #cec9cc;
+    background-color: #211a21;
     --editor-inline-code-bg: rgba(248, 250, 252, 0.14);
     --editor-codeblock-bg: rgba(15, 23, 42, 0.35);
-    --editor-codeblock-border: #22c55e;
+    --editor-codeblock-border: #4f43ae;
     --editor-codeblock-line-number: rgba(148, 163, 184, 0.8);
+    --editor-marker-color: #b5b6e4;
   }
 
   a:hover {
