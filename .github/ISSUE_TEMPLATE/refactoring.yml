@@ -1,0 +1,170 @@
+name: ♻️ Refactoring
+description: Propose code refactoring or technical improvements
+title: "[Refactor]: "
+labels: ["type: refactoring", "status: triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Refactoring Proposal 🔧
+        
+        Use this template to propose code refactoring, architectural improvements, or technical debt reduction.
+
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: Preflight Checklist
+      description: Please ensure you've completed all of the following.
+      options:
+        - label: I have searched the [existing issues](https://github.com/leal32b/noderium/issues) to make sure this refactoring has not been proposed yet.
+          required: true
+        - label: This is not a feature request (use the Feature Request template instead).
+          required: true
+
+  - type: textarea
+    id: current-state
+    attributes:
+      label: Current State
+      description: Describe the current state of the code/architecture that needs refactoring.
+      placeholder: |
+        Describe what currently exists and why it needs improvement...
+        Include file paths or code snippets if relevant.
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / Motivation
+      description: Why is this refactoring needed? What problems does it solve?
+      placeholder: |
+        - Technical debt reason
+        - Maintainability concerns
+        - Performance issues
+        - Code smell description
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-changes
+    attributes:
+      label: Proposed Changes
+      description: Describe the refactoring you'd like to make.
+      placeholder: |
+        A clear and concise description of the changes you want to make...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: refactor-type
+    attributes:
+      label: Refactoring Type
+      description: What type of refactoring is this?
+      multiple: true
+      options:
+        - Code Structure
+        - Architecture
+        - Design Patterns
+        - Performance Optimization
+        - Code Cleanup
+        - Dependency Update
+        - Test Improvements
+        - Type Safety
+        - Error Handling
+        - Naming/Conventions
+        - Documentation (Code)
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scope
+      description: What is the scope of this refactoring?
+      options:
+        - "Small - Single file or function"
+        - "Medium - Multiple files in same module"
+        - "Large - Multiple modules or cross-cutting"
+        - "Major - Architectural change"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: breaking-changes
+    attributes:
+      label: Breaking Changes
+      description: Will this refactoring introduce breaking changes?
+      options:
+        - "No - Purely internal changes"
+        - "Minor - Internal API changes only"
+        - "Yes - Public API changes"
+        - "Uncertain - Needs investigation"
+    validations:
+      required: true
+
+  - type: textarea
+    id: affected-areas
+    attributes:
+      label: Affected Areas
+      description: List the files, modules, or components that will be affected.
+      placeholder: |
+        - `src/module/file.ts`
+        - `apps/app/src/...`
+        - Component: XYZ
+    validations:
+      required: false
+
+  - type: textarea
+    id: benefits
+    attributes:
+      label: Expected Benefits
+      description: What benefits will this refactoring bring?
+      placeholder: |
+        - Improved maintainability
+        - Better performance
+        - Easier testing
+        - Reduced complexity
+    validations:
+      required: true
+
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks / Concerns
+      description: What are the potential risks or concerns with this refactoring?
+      placeholder: |
+        - Potential regression areas
+        - Migration concerns
+        - Time/effort considerations
+    validations:
+      required: false
+
+  - type: textarea
+    id: migration-plan
+    attributes:
+      label: Migration Plan
+      description: If applicable, describe how existing code will be migrated.
+      placeholder: Describe the migration strategy if breaking changes are involved...
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: Contribution
+      description: Would you be willing to contribute to this refactoring?
+      options:
+        - label: I would be willing to implement this refactoring.
+          required: false
+        - label: I would be willing to help review the changes.
+          required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Add any other context, code examples, or references.
+      placeholder: Any other information that might help us understand your proposal...
+    validations:
+      required: false
