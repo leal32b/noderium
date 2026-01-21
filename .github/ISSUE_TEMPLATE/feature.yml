@@ -1,0 +1,159 @@
+name: ✨ Feature
+description: Define a new feature to be implemented
+title: "[Feature]: "
+labels: ["type: feature", "status: ready"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## New Feature Specification ✨
+        
+        Use this template to define a new feature for implementation.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear and concise description of the feature.
+      placeholder: Describe what this feature does and its purpose...
+    validations:
+      required: true
+
+  - type: textarea
+    id: user-story
+    attributes:
+      label: User Story
+      description: Describe who will use this feature and why.
+      placeholder: |
+        As a [type of user],
+        I want [some goal],
+        So that [some reason].
+    validations:
+      required: true
+
+  - type: dropdown
+    id: feature-area
+    attributes:
+      label: Feature Area
+      description: Which area of Noderium does this feature relate to?
+      multiple: true
+      options:
+        - Core Application
+        - User Interface (UI)
+        - User Experience (UX)
+        - Performance
+        - Developer Experience (DX)
+        - Documentation
+        - Integrations
+        - Security
+        - Accessibility
+        - Internationalization (i18n)
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Define the criteria that must be met for this feature to be considered complete.
+      placeholder: |
+        - [ ] Criterion 1
+        - [ ] Criterion 2
+        - [ ] Criterion 3
+      value: |
+        - [ ] 
+    validations:
+      required: true
+
+  - type: textarea
+    id: technical-notes
+    attributes:
+      label: Technical Notes
+      description: Any technical considerations, constraints, or implementation details.
+      placeholder: |
+        - Architecture decisions
+        - Dependencies
+        - Performance considerations
+        - Security implications
+    validations:
+      required: false
+
+  - type: textarea
+    id: mockups
+    attributes:
+      label: Mockups / Design
+      description: If applicable, add mockups, wireframes, or design references.
+      placeholder: Drag and drop images here or paste links to design files...
+    validations:
+      required: false
+
+  - type: dropdown
+    id: complexity
+    attributes:
+      label: Complexity
+      description: Estimated complexity of this feature.
+      options:
+        - "XS - Trivial change"
+        - "S - Small, well-defined scope"
+        - "M - Medium, moderate complexity"
+        - "L - Large, significant effort"
+        - "XL - Extra large, consider breaking down"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: Implementation priority for this feature.
+      options:
+        - "P0 - Critical"
+        - "P1 - High"
+        - "P2 - Medium"
+        - "P3 - Low"
+    validations:
+      required: true
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: List any issues, features, or external dependencies that must be completed first.
+      placeholder: |
+        - #123 - Related issue
+        - Requires API v2
+    validations:
+      required: false
+
+  - type: textarea
+    id: out-of-scope
+    attributes:
+      label: Out of Scope
+      description: Explicitly define what is NOT part of this feature to prevent scope creep.
+      placeholder: |
+        - Feature X will be addressed in a separate issue
+        - Integration with Y is not included
+    validations:
+      required: false
+
+  - type: textarea
+    id: tasks
+    attributes:
+      label: Implementation Tasks
+      description: Break down the feature into smaller implementation tasks.
+      placeholder: |
+        - [ ] Task 1
+        - [ ] Task 2
+        - [ ] Task 3
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Add any other context, references, or notes about the feature.
+      placeholder: Links to documentation, related discussions, etc.
+    validations:
+      required: false
