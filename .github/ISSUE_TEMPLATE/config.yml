@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Discussions
+    url: https://github.com/leal32b/noderium/discussions
+    about: Use GitHub Discussions for questions, ideas, and general conversations.
+  - name: 📚 Documentation
+    url: https://leal32b.github.io/noderium
+    about: Check our documentation before opening an issue.
