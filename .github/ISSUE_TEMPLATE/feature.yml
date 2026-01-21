@@ -1,4 +1,4 @@
-name: 🚀 Feature
+name: ✨ Feature
 description: Define a new feature to be implemented
 title: "[Feature]: "
 labels: ["type: feature", "status: ready"]
@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        ## New Feature Specification 🚀
+        ## New Feature Specification ✨
         
         Use this template to define a new feature for implementation.
 

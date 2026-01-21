@@ -10,7 +10,8 @@
 ## Type of Change
 <!-- Mark the relevant option with an "x" (e.g., [x]) -->
 - [ ] 🐛 **Bug fix** — Non-breaking change that fixes an issue
-- [ ] ✨ **New feature** — Non-breaking change that adds functionality
+- [ ] ✨ **Feature** — Planned feature implementation
+- [ ] 💡 **Feature Request** — Community-requested feature implementation
 - [ ] 💥 **Breaking change** — Fix or feature that would cause existing functionality to change
 - [ ] ♻️ **Refactoring** — Code change that neither fixes a bug nor adds a feature
 - [ ] 📚 **Documentation** — Changes to documentation only
