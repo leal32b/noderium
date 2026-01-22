@@ -57,15 +57,15 @@ const config: Config = {
       items: [
         {
           type: 'docSidebar',
-          sidebarId: 'discoverySidebar',
-          position: 'left',
-          label: 'Discovery',
-        },
-        {
-          type: 'docSidebar',
           sidebarId: 'introductionSidebar',
           position: 'left',
           label: 'Introduction',
+        },
+        {
+          type: 'docSidebar',
+          sidebarId: 'discoverySidebar',
+          position: 'left',
+          label: 'Discovery',
         },
         {
           type: 'docSidebar',
