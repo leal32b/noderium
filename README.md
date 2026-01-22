@@ -1,7 +1,7 @@
 <div align="center">
   <h1>N O D E R I U M</h1>
   <p>
-    <strong>Local-first. Graph-powered. Blazing Fast.</strong>
+    <strong>Local-first. AI-native. Zero maintenance.</strong>
   </p>
 
   <p>
@@ -14,110 +14,156 @@
 
 ---
 
-## 🛑 Why another note-taking app?
+## Why Noderium?
 
-We believe personal knowledge management shouldn't require choosing between **performance** and **freedom**.
+**80% of PKM users abandon their tools within 6 months.** Not because of missing features—because the cognitive cost exceeds the benefit.
 
-While the PKM space has excellent tools, some software faces common challenges:
-- **Resource-intensive architectures** that can impact system performance
-- **Performance bottlenecks** when working with large knowledge graphs
-- **Trade-offs between openness and ecosystem maturity**
+Noderium resolves the three fundamental tensions that cause this abandonment:
 
-Noderium is our attempt to address these challenges from the ground up.
+| Tension | Problem | Noderium Solution |
+|---------|---------|-------------------|
+| **Capture Paradox** | Manual capture is friction, ideas get lost | Capture in <5 seconds with ubiquitous entry |
+| **Maintenance Tax** | 3-5 hours/week organizing, not thinking | Zero maintenance with AI-driven organization |
+| **Retrieval Failure** | Search has 10% accuracy, trust erodes | 95%+ success with conversational retrieval |
 
-### The Noderium Mission
-Noderium is the answer for 2026. We are building a "second brain" that:
-* 🚀 **Is Blazing Fast:** Built with **Rust** and **SolidJS**. No Virtual DOM, no bloatware.
-* 📂 **Respects your Files:** The Markdown on your disk is the *Source of Truth*. The database is just a disposable index.
-* 📱 **Is Ubiquitous:** Native Desktop and Mobile with a single codebase (Tauri v2).
-* 🔓 **Is 100% Open Source:** No "Pro" features hidden behind a proprietary core.
+### The Five Design Pillars
 
----
+1. **Minimum-Effort Capture** — From thought to saved in <5 seconds
+2. **Invisible Organization** — AI organizes; you just think
+3. **Conversational Retrieval** — Talk to your knowledge like a colleague
+4. **Ownership & Privacy** — Local-first, open formats, your control
+5. **Intentional Onboarding** — Productive in <10 minutes
 
-## ⚡ Architecture & Stack
-
-Designed for extreme performance and Developer Experience (DX).
-
-| Layer | Technology | Why? |
-| :--- | :--- | :--- |
-| **Runtime** | [Tauri v2](https://v2.tauri.app/) | Tiny binaries (~10MB), native security, Mobile & Desktop ready. |
-| **Core / Backend** | **Rust** | Zero-copy Markdown parser, async File I/O, and memory safety. |
-| **Database** | **SQLite** | Relational indexing of the knowledge graph. The DB rebuilds itself if deleted. |
-| **Frontend** | [SolidJS](https://www.solidjs.com/) | Superior performance over React. Fine-grained reactivity without VDOM overhead. |
-| **Styling** | TailwindCSS | Rapid UI iteration. |
-
-### The Data Flow (The Truth Flow)
-1.  User edits `note.md`.
-2.  **Rust (Watcher)** detects the file change.
-3.  **Rust (Parser)** extracts metadata, `[[wiki-links]]`, and #tags.
-4.  **SQLite** is updated instantly.
-5.  **SolidJS** receives an event and updates the UI (Graph/Backlinks).
+> 📖 [**Read the full Vision & Mission →**](https://leal32b.github.io/noderium/docs/introduction/vision)
 
 ---
 
-## 🗺️ Roadmap: Where are we?
+## Architecture & Stack
 
-We are on **Day 1**. Focus is currently on foundation and architecture.
+Designed for extreme performance and developer experience.
 
-- [ ] **Phase 1: The Editor (Current)**
-    - Monorepo & Tauri v2 setup.
-    - Rust-based Markdown File I/O.
-    - Basic SQLite indexing.
-- [ ] **Phase 2: The Graph**
-    - High-performance Graph visualization (Canvas/WebGL).
-    - Backlinks sidebar.
-- [ ] **Phase 3: The Experience**
-    - Full-text Search (FTS5 via SQLite).
-    - Mobile Support (Android/iOS).
+| Layer | Technology | Why |
+|-------|------------|-----|
+| **Runtime** | [Tauri v2](https://v2.tauri.app/) | Tiny binaries (~10MB), native security, mobile & desktop ready |
+| **Core** | **Rust** | Zero-copy Markdown parser, async file I/O, memory safety |
+| **Database** | **SQLite** | Relational indexing of knowledge graph. Rebuilds if deleted |
+| **Frontend** | [SolidJS](https://www.solidjs.com/) | Fine-grained reactivity without Virtual DOM |
+| **Styling** | TailwindCSS | Rapid UI iteration |
 
-> See [ROADMAP.md](./ROADMAP.md) for technical details and milestones.
+### The Truth Flow
+
+```
+User edits note.md
+       ↓
+Rust (Watcher) detects change
+       ↓
+Rust (Parser) extracts [[wiki-links]], #tags, metadata
+       ↓
+SQLite updated instantly
+       ↓
+SolidJS receives event, updates UI
+```
+
+**Key Principle**: The Markdown on your disk is the *Source of Truth*. The database is just a disposable index.
 
 ---
 
-## 🛠️ Contributing (Developer Setup)
+## Roadmap
 
-We want you up and running in under 10 minutes.
+We are on **Day 1**. Current focus: foundation and architecture.
+
+### Phase 1: The Editor (Current)
+- [x] Monorepo & Tauri v2 setup
+- [ ] Rust-based Markdown File I/O
+- [ ] Basic SQLite indexing
+- [ ] File system watcher
+
+### Phase 2: The Graph
+- [ ] High-performance graph visualization (Canvas/WebGL)
+- [ ] Backlinks sidebar
+
+### Phase 3: The Experience
+- [ ] Full-text Search (FTS5 via SQLite)
+- [ ] Mobile support (Android/iOS)
+- [ ] Conversational retrieval
+
+> 📖 [**See full Roadmap →**](https://leal32b.github.io/noderium/docs/introduction/roadmap)
+
+---
+
+## Getting Started
 
 ### Prerequisites
-* **Rust** (Stable)
-* **Node.js** (v20+)
-* **pnpm** (Required for monorepo management)
-* Build dependencies for your OS (see Tauri guides).
 
-### Running the Project
+- **Rust** (Stable) — [rustup.rs](https://rustup.rs/)
+- **Node.js** (v20+) — [nodejs.org](https://nodejs.org/)
+- **pnpm** — Required for monorepo management
+- Build dependencies for your OS — [Tauri prerequisites](https://v2.tauri.app/start/prerequisites/)
 
-1.  **Clone the repository:**
-    ```bash
-    git clone [https://github.com/leal32b/noderium.git](https://github.com/leal32b/noderium.git)
-    cd noderium
-    ```
+### Quick Start
 
-2.  **Install dependencies:**
-    ```bash
-    pnpm install
-    ```
+```bash
+# Clone the repository
+git clone https://github.com/leal32b/noderium.git
+cd noderium
 
-3.  **Run the App (Desktop):**
-    ```bash
-    pnpm dev:app
-    ```
-    *This starts Vite and the Rust compiler simultaneously.*
+# Install dependencies
+pnpm install
+
+# Run the app (starts Vite + Rust compiler)
+pnpm dev:app
+```
 
 ### Monorepo Structure
-* `apps/app`: The main application (Tauri + SolidJS).
-* `apps/docs`: Documentation (Docusaurus).
-* `packages/`: Shared libraries (Future expansion).
+
+```
+noderium/
+├── apps/
+│   ├── app/          # Main application (Tauri + SolidJS)
+│   └── docs/         # Documentation (Docusaurus)
+├── packages/         # Shared libraries (future)
+└── pnpm-workspace.yaml
+```
+
+> 📖 [**Full installation guide →**](https://leal32b.github.io/noderium/docs/getting-started/installation)
 
 ---
 
-## 🤝 Community
+## Documentation
 
-* **Questions?** Open a [Discussion](https://github.com/leal32b/noderium/discussions).
-* **Bugs?** Open an [Issue](https://github.com/leal32b/noderium/issues).
-* Please read our [CONTRIBUTING.md](./CONTRIBUTING.md) before submitting your first PR!
+| Document | Description |
+|----------|-------------|
+| [Vision & Mission](https://leal32b.github.io/noderium/docs/introduction/vision) | Why Noderium exists, core beliefs, product vision |
+| [The Five Pillars](https://leal32b.github.io/noderium/docs/introduction/pillars) | Architecture principles that resolve the tensions |
+| [Roadmap](https://leal32b.github.io/noderium/docs/introduction/roadmap) | Development phases and success metrics |
+| [Getting Started](https://leal32b.github.io/noderium/docs/getting-started/installation) | Installation and quick start guide |
+| [Market Research](https://leal32b.github.io/noderium/docs/discovery/market-research/market-research-index) | Competitive landscape and positioning |
+
+---
+
+## Community
+
+- **Questions?** Open a [Discussion](https://github.com/leal32b/noderium/discussions)
+- **Bugs?** Open an [Issue](https://github.com/leal32b/noderium/issues)
+- **Contributing?** Read [CONTRIBUTING.md](./CONTRIBUTING.md) first
+
+---
+
+## Core Beliefs
+
+1. **Your knowledge is an extension of your identity** — It deserves respect, privacy, and control
+2. **Cognitive load is real and finite** — Every organization decision steals from thinking
+3. **Trust is the foundation** — Transparency, local control, and results build trust
+4. **AI changes the game** — But only if it's local-first, yours, and transparent
+5. **Simplicity in complexity is luxury** — Focused constraints liberate more than infinite options
 
 ---
 
 <p align="center">
-  Made with ❤️ and 🦀 (Rust) by the Noderium community.
+  Made with 🦀 and ❤️ by the Noderium community.
+</p>
+<p align="center">
+  <a href="https://leal32b.github.io/noderium/">Documentation</a> •
+  <a href="https://github.com/leal32b/noderium/discussions">Discussions</a> •
+  <a href="https://github.com/leal32b/noderium/issues">Issues</a>
 </p>
