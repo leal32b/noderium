@@ -115,7 +115,7 @@ This comprehensive market research package consists of four interconnected docum
 1. Build prototype based on design direction
 2. Test with personas from [Research Summary for Design Workshops](./research-summary.md)
 3. Specifically test: Onboarding flow, conversational search, capture experience
-4. Validate core assumptions: < 10 min onboarding? Conversation interface natural?
+4. Validate core assumptions: &lt;10 min onboarding? Conversation interface natural?
 5. Iterate based on feedback
 6. Update PRD with findings
 
@@ -131,7 +131,7 @@ This comprehensive market research package consists of four interconnected docum
 **Gap**: No tool solves unified capture + automatic organization + intelligent retrieval + collaboration + privacy  
 
 ### Noderium's Differentiation (Five Pillars)
-1. **Effortless Capture**: Information from anywhere in < 5 seconds
+1. **Effortless Capture**: Information from anywhere in &lt;5 seconds
 2. **Conversational Access**: Talk to your knowledge, not search
 3. **Intelligent Collaboration**: Shared spaces without shared burden
 4. **Ownership & Privacy**: Local-first, your data, your control
@@ -153,7 +153,7 @@ This comprehensive market research package consists of four interconnected docum
 
 ### Success Metrics (Research-Backed)
 - **90-day retention**: 70% (vs. 20% industry average)
-- **Time to first value**: < 10 minutes
+- **Time to first value**: &lt;10 minutes
 - **Search success rate**: > 80% first attempt
 - **NPS**: 50+ (strong promoters)
 - **Maintenance effort**: Invisible (system handles it)
@@ -275,7 +275,7 @@ Data is yours. Privacy is default. Escape is always available.
 **Goal**: Validate design direction with prototypes
 
 **Prototype Tests**:
-1. **Onboarding**: Can users get productive in < 10 minutes?
+1. **Onboarding**: Can users get productive in &lt;10 minutes?
 2. **Capture**: Is unified capture intuitive?
 3. **Conversation**: Does conversational interface feel natural?
 4. **Organization**: Do automatic suggestions seem helpful?
@@ -329,8 +329,8 @@ A: Create a Version 2 document. Incorporate validation findings. Update competit
 3. **Local-First Default**: Data lives on user device first; sync is optional
 4. **Progressive Disclosure**: Show advanced features only when needed
 5. **Transparent AI**: Every AI suggestion shows its reasoning
-6. **Frictionless Capture**: < 5 seconds from discovery to saved
-7. **Tested Onboarding**: Validate < 10 minute time-to-productivity
+6. **Frictionless Capture**: &lt;5 seconds from discovery to saved
+7. **Tested Onboarding**: Validate &lt;10 minute time-to-productivity
 
 ### Avoid These Mistakes
 1. ❌ Don't compete on features (focus on differentiation, not feature parity)

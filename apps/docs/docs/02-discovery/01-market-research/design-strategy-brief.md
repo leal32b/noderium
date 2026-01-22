@@ -39,7 +39,7 @@ Knowledge workers waste **8.2 hours/week** searching for, recreating, and duplic
 
 ### Noderium's Answer
 A unified, intelligent knowledge system that:
-- **Captures** information from anywhere in < 5 seconds
+- **Captures** information from anywhere in &lt;5 seconds
 - **Organizes** automatically (AI does the work, not you)
 - **Surfaces** exactly what you need via conversation (not search)
 - **Respects** your data (local-first, your ownership)
@@ -90,7 +90,7 @@ A unified, intelligent knowledge system that:
 - One entry point from any app (keyboard shortcut, Slack command, email forward, browser clip)
 - Intent recognition: "This is a research insight" vs. "This is an action"
 - Automatic enrichment: Tags, related notes, context
-- Result: <  5 seconds from discovery to captured
+- Result: &lt;5 seconds from discovery to captured
 
 **Design Principle**: Capture should interrupt work less than typing the URL
 
@@ -102,7 +102,7 @@ A unified, intelligent knowledge system that:
 - Ask: "How did I approach X before?" → System synthesizes answer
 - Ask: "What am I missing about Y?" → System suggests connections
 - Transparent sourcing: Shows which notes informed each answer
-- Result: <  3 seconds to find information; serendipitous discovery
+- Result: &lt;3 seconds to find information; serendipitous discovery
 
 **Design Principle**: Talking to your knowledge should feel natural, not technical
 
@@ -136,7 +136,7 @@ A unified, intelligent knowledge system that:
 **Noderium Solution**:
 - Opinionated defaults: Works beautifully for 90% of users as-is
 - Progressive disclosure: Advanced features don't clutter the interface
-- Guided onboarding: <  10 minutes to productivity
+- Guided onboarding: &lt;10 minutes to productivity
 - Beautiful design: Using it feels like thinking, not working
 - Result: Sustainable adoption; long-term retention; joy in usage
 
@@ -154,7 +154,7 @@ A unified, intelligent knowledge system that:
 | **Conversational Access** | ❌ | ❌ | ❌ | 🟡 | ✅ (primary) |
 | **Unified Capture** | 🟡 (extensions) | 🟡 | 🟡 | ✅ | ✅ (native) |
 | **Mobile Experience** | 🟡 (limited) | 🟡 | ✅ | ✅ | ✅ (native) |
-| **Onboarding Speed** | ❌ (steep) | 🟡 | 🟡 | 🟡 | ✅ (< 10 min) |
+| **Onboarding Speed** | ❌ (steep) | 🟡 | 🟡 | 🟡 | ✅ (&lt;10 min) |
 | **Data Portability** | ✅ | ✅ | ❌ | ❌ | ✅ (obvious) |
 
 **Noderium's Unique Position**: The only tool that balances simplicity + power + collaboration + privacy
@@ -286,9 +286,9 @@ Data is yours. Privacy is default. Escape is always available.
 - **Suggestion adoption rate**: 40%+ (users acting on AI)
 
 ### Adoption Velocity
-- **Time to first value**: <  10 minutes
+- **Time to first value**: &lt;10 minutes
 - **NPS score**: 50+ (strong promoters)
-- **Uninstall reason analysis**: < 10% cite "too complex"
+- **Uninstall reason analysis**: &lt;10% cite "too complex"
 
 ---
 

@@ -172,8 +172,8 @@ Rather than compete on feature parity, **Noderium should differentiate by solvin
 - ✅ Sync when needed (not required)
 
 **Experience Expectations:**
-- ✅ Capture in < 5 seconds (from any app, any device)
-- ✅ Find information in < 3 seconds (smart, contextual search)
+- ✅ Capture in &lt;5 seconds (from any app, any device)
+- ✅ Find information in &lt;3 seconds (smart, contextual search)
 - ✅ Automatic organization (tags, connections, relationships inferred, not manual)
 - ✅ Conversational interface (ask questions, don't construct queries)
 - ✅ Proactive insights (system suggests connections I missed)
@@ -265,7 +265,7 @@ Rather than compete on feature parity, **Noderium should differentiate by solvin
 **Opportunity**: Gradual complexity (start simple → enable advanced use as confidence grows)
 
 **Noderium Differentiator**:
-- Onboarding < 10 minutes to productivity
+- Onboarding &lt;10 minutes to productivity
 - Smart defaults (opinionated structure that works for most)
 - Progressive disclosure (advanced features appear when needed)
 
@@ -300,7 +300,7 @@ Rather than compete on feature parity, **Noderium should differentiate by solvin
 | **Conversational Access** | ❌ | ❌ | ❌ | 🟡 | **✅ (primary)** |
 | **Capture Integration** | 🟡 (extensions) | 🟡 (limited) | 🟡 (limited) | ✅ | **✅ (native)** |
 | **Mobile Experience** | 🟡 | 🟡 | ✅ | ✅ | **✅ (native)** |
-| **Onboarding Time** | ❌ (steep) | 🟡 | 🟡 | 🟡 | **✅ (< 10 min)** |
+| **Onboarding Time** | ❌ (steep) | 🟡 | 🟡 | 🟡 | **✅ (&lt;10 min)** |
 | **Ownership & Privacy** | ✅ | ✅ | ❌ | ❌ | **✅ (choice-based)** |
 
 ---
@@ -479,13 +479,13 @@ Rather than compete on feature parity, **Noderium should differentiate by solvin
 - **Single, contextual entry point** from any app (keyboard shortcut, Slack, email, clip)
 - **Intent recognition** (automatically routes to task/note/archive)
 - **Automatic enrichment** (related notes, tags, context)
-- **Result**: Information captured in < 5 seconds, organized automatically
+- **Result**: Information captured in &lt;5 seconds, organized automatically
 
 #### **2. Conversational Access**
 - **Primary interface is dialogue**, not navigation
 - **Understands your knowledge**: "Show me how I approached X before"
 - **Transparent sourcing**: Answers cite which notes informed them
-- **Result**: Find what you need in < 3 seconds; serendipitous discovery of connected ideas
+- **Result**: Find what you need in &lt;3 seconds; serendipitous discovery of connected ideas
 
 #### **3. Intelligent Collaboration**
 - **Shared knowledge without shared everything**: Invite teammates to see how you think
@@ -503,7 +503,7 @@ Rather than compete on feature parity, **Noderium should differentiate by solvin
 - **Opinionated defaults**: Works great out-of-the-box for 90% of use cases
 - **Progressive disclosure**: Advanced features don't clutter the interface
 - **Beautiful design**: Using it should feel like thinking, not working
-- **Result**: < 10 minute onboarding; sustainable long-term use
+- **Result**: &lt;10 minute onboarding; sustainable long-term use
 
 ### 8.2 Target Market Positioning
 
@@ -532,7 +532,7 @@ Rather than compete on feature parity, **Noderium should differentiate by solvin
 - Time to find information (should decrease as system learns)
 
 **Adoption Velocity**:
-- Time to first value (< 10 minutes)
+- Time to first value (&lt;10 minutes)
 - % users completing 5-note setup
 - NPS (target: 50+)
 

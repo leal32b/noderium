@@ -1,0 +1,167 @@
+# Installation
+
+> Get Noderium running on your machine in under 10 minutes.
+
+---
+
+## Prerequisites
+
+Before you begin, make sure you have the following installed:
+
+| Requirement | Version | Notes |
+|-------------|---------|-------|
+| **Rust** | Stable | [Install via rustup](https://rustup.rs/) |
+| **Node.js** | v20+ | [Download here](https://nodejs.org/) |
+| **pnpm** | Latest | Required for monorepo management |
+| **Build Dependencies** | - | See [Tauri prerequisites](https://v2.tauri.app/start/prerequisites/) for your OS |
+
+### Quick Check
+
+```bash
+# Verify installations
+rustc --version
+node --version
+pnpm --version
+```
+
+---
+
+## Installation Steps
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/leal32b/noderium.git
+cd noderium
+```
+
+### 2. Install Dependencies
+
+```bash
+pnpm install
+```
+
+This will install all dependencies for the monorepo, including:
+- Frontend dependencies (SolidJS, TailwindCSS)
+- Documentation site dependencies (Docusaurus)
+- Shared package dependencies
+
+### 3. Run the Application
+
+```bash
+pnpm dev:app
+```
+
+This starts both:
+- **Vite** development server for the frontend
+- **Rust** compiler in watch mode for the Tauri backend
+
+The application will open automatically once compiled.
+
+---
+
+## Monorepo Structure
+
+```
+noderium/
+├── apps/
+│   ├── app/          # Main application (Tauri + SolidJS)
+│   └── docs/         # Documentation (Docusaurus)
+├── packages/         # Shared libraries (future expansion)
+├── pnpm-workspace.yaml
+└── package.json
+```
+
+---
+
+## Platform-Specific Notes
+
+### macOS
+
+Install Xcode Command Line Tools:
+
+```bash
+xcode-select --install
+```
+
+### Linux (Debian/Ubuntu)
+
+```bash
+sudo apt update
+sudo apt install libwebkit2gtk-4.1-dev \
+  build-essential \
+  curl \
+  wget \
+  file \
+  libxdo-dev \
+  libssl-dev \
+  libayatana-appindicator3-dev \
+  librsvg2-dev
+```
+
+### Windows
+
+1. Install [Microsoft Visual Studio C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/)
+2. Install [WebView2](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
+
+---
+
+## Troubleshooting
+
+### Rust compilation errors
+
+Make sure you have the latest stable Rust:
+
+```bash
+rustup update stable
+```
+
+### Node.js version mismatch
+
+We recommend using a Node.js version manager like [fnm](https://github.com/Schniz/fnm) or [nvm](https://github.com/nvm-sh/nvm):
+
+```bash
+# Using fnm
+fnm use 20
+
+# Using nvm
+nvm use 20
+```
+
+### pnpm not found
+
+Install pnpm globally:
+
+```bash
+npm install -g pnpm
+```
+
+Or use corepack (recommended for Node.js 16.10+):
+
+```bash
+corepack enable
+corepack prepare pnpm@latest --activate
+```
+
+---
+
+## Next Steps
+
+Once installed, you're ready to:
+
+1. **Explore the app**: Create your first note and see the graph in action
+2. **Read the architecture**: Understand [the 5 pillars](/docs/introduction/pillars) that guide Noderium
+3. **Contribute**: Check out our [Contributing Guide](https://github.com/leal32b/noderium/blob/main/CONTRIBUTING.md)
+
+---
+
+## Development Commands
+
+| Command | Description |
+|---------|-------------|
+| `pnpm dev:app` | Start the desktop app in development mode |
+| `pnpm dev:docs` | Start the documentation site locally |
+| `pnpm build:app` | Build the desktop app for production |
+| `pnpm build:docs` | Build the documentation site |
+| `pnpm test` | Run tests across all packages |
+| `pnpm lint` | Run linters across all packages |

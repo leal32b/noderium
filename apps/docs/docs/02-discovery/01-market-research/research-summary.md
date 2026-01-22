@@ -123,7 +123,7 @@ Current tools optimize for *their own experience*, not the *user's total workflo
 **Current State**: Most tools require 30+ minutes of decisions before first note
 **User Pain**: Decision fatigue on day 1 → abandonment
 **What Exists**: Notion templates (help a bit); most tools: trial and error
-**The Gap**: No tool designed for "productive in < 10 minutes"
+**The Gap**: No tool designed for "productive in &lt;10 minutes"
 
 **Opportunity**: Smart defaults + progressive disclosure of advanced features
 
@@ -267,7 +267,7 @@ Current tools optimize for *their own experience*, not the *user's total workflo
 
 ## CRITICAL SUCCESS FACTORS (From Research)
 
-### 1. Onboarding Must Be < 10 Minutes
+### 1. Onboarding Must Be &lt;10 Minutes
 **Why**: First 30 minutes determine retention probability
 **How**: Smart defaults + walkthrough showing real value fast
 

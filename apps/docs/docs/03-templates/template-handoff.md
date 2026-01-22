@@ -29,7 +29,7 @@ import Admonition from '@theme/Admonition';
 * **Loading:** Use `SkeletonLoader` component (not spinner) for initial load.
 
 **Responsive Breakpoints**
-* **Mobile (< 768px):** Stack columns, hide "Export" button behind menu.
+* **Mobile (&lt;768px):** Stack columns, hide "Export" button behind menu.
 * **Desktop (> 1024px):** 12-col grid, max-width 1200px.
 
 ## 3. Analytics Instrumentation (Dev Requirements)
