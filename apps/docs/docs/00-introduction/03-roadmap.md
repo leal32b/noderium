@@ -43,14 +43,14 @@ Polish and essential features.
 
 ---
 
-## Vision Timeline
+## Vision Phases
 
-| Year | Milestone | Key Features |
-|------|-----------|--------------|
-| **2026** | MVP Launch | Core capture & organization, local conversational retrieval, basic collaboration, mobile MVP |
-| **2027** | Rich Integration | Multi-modal content (articles, videos, audio), native integrations (Slack, Email, etc.), team applications |
-| **2028** | Intelligence | Advanced reasoning, AI proactivity (suggestions before you ask), team knowledge graphs |
-| **2029-2030** | Ubiquity | Workflow integration, semi-autonomous agency, emergent thinking patterns discovery |
+| Phase | Milestone | Key Features |
+|-------|-----------|--------------|
+| **Phase 1** | Foundation | Core capture & organization, local conversational retrieval, basic collaboration, mobile MVP |
+| **Phase 2** | Integration | Multi-modal content (articles, videos, audio), native integrations (Slack, Email, etc.), team applications |
+| **Phase 3** | Intelligence | Advanced reasoning, AI proactivity (suggestions before you ask), team knowledge graphs |
+| **Phase 4** | Ubiquity | Workflow integration, semi-autonomous agency, emergent thinking patterns discovery |
 
 ---
 

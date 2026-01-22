@@ -103,11 +103,11 @@ This isn't a question of features. It's a question of **moral architecture**.
 
 ## Why Now?
 
-Three convergences create a window of opportunity in 2026:
+Three convergences create a unique window of opportunity:
 
 ### 1. The Era of Conversational AI Has Arrived
 
-Before: AI was a gimmick. Now: 54% of professionals use LLMs routinely. Expectations have changed. But no PKM tool has *rethought UX* assuming AI as an architectural primitive.
+Before: AI was a gimmick. Now: professionals use LLMs routinely. Expectations have changed. But no PKM tool has *rethought UX* assuming AI as an architectural primitive.
 
 ### 2. The Local-First Movement is Mainstream
 
@@ -119,14 +119,14 @@ Obsidian and Logseq are growing faster than Notion. Privacy concerns aren't frin
 
 ---
 
-## Product Vision: The 5-Year Horizon
+## Product Vision
 
-| Year | Focus |
-|------|-------|
-| **2026** | Core capture & organization, local conversational retrieval, basic collaboration, mobile MVP |
-| **2027** | Rich content selections (articles, videos, audio), multi-modal synthesis, native integrations (Slack, Email) |
-| **2028** | Advanced reasoning, AI proactivity, team knowledge graphs |
-| **2029-2030** | Workflow integration, semi-autonomous agency, emergent thinking patterns |
+| Phase | Focus |
+|-------|-------|
+| **Phase 1: Foundation** | Core capture & organization, local conversational retrieval, basic collaboration, mobile MVP |
+| **Phase 2: Integration** | Rich content (articles, videos, audio), multi-modal synthesis, native integrations (Slack, Email) |
+| **Phase 3: Intelligence** | Advanced reasoning, AI proactivity, team knowledge graphs |
+| **Phase 4: Ubiquity** | Workflow integration, semi-autonomous agency, emergent thinking patterns |
 
 ---
 

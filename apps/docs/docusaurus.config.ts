@@ -57,6 +57,12 @@ const config: Config = {
       items: [
         {
           type: 'docSidebar',
+          sidebarId: 'discoverySidebar',
+          position: 'left',
+          label: 'Discovery',
+        },
+        {
+          type: 'docSidebar',
           sidebarId: 'introductionSidebar',
           position: 'left',
           label: 'Introduction',
@@ -66,18 +72,6 @@ const config: Config = {
           sidebarId: 'gettingStartedSidebar',
           position: 'left',
           label: 'Getting Started',
-        },
-        {
-          type: 'docSidebar',
-          sidebarId: 'discoverySidebar',
-          position: 'left',
-          label: 'Discovery',
-        },
-        {
-          type: 'docSidebar',
-          sidebarId: 'templatesSidebar',
-          position: 'left',
-          label: 'Templates',
         },
         {
           href: 'https://github.com/leal32b/noderium',

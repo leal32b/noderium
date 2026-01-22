@@ -34,7 +34,7 @@ Press `Cmd+K` (or `Ctrl+K`) to open the quick capture.
 Type something simple:
 
 ```
-AI will fundamentally change how we manage personal knowledge in 2026
+AI will fundamentally change how we manage personal knowledge
 ```
 
 Hit `Enter`.
@@ -76,7 +76,7 @@ What have I learned about AI?
 ```
 
 **The response:**
-> Based on your notes, you've captured that "AI will fundamentally change how we manage personal knowledge in 2026." This suggests you're interested in the intersection of AI and PKM tools.
+> Based on your notes, you've captured that "AI will fundamentally change how we manage personal knowledge." This suggests you're interested in the intersection of AI and PKM tools.
 >
 > *Source: [Your first note]*
 
