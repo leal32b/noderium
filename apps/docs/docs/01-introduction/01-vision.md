@@ -1,14 +1,5 @@
 # Vision & Mission
 
-```mermaid
-graph LR
-    A[User Lands] --> B{Auth?}
-    B -- Yes --> C[Dashboard]
-    B -- No --> D[Login Page]
-    D --> E[SSO Provider]
-    E --> C
-```
-
 > **Noderium exists to resolve the fundamental tensions in personal knowledge management—not through more features, but through a radical reimagination of architecture.**
 
 ---
