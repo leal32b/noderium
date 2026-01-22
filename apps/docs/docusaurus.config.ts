@@ -114,19 +114,11 @@ const config: Config = {
           ],
         },
         {
-          title: 'Resources',
+          title: 'More',
           items: [
             {
-              label: 'ADR Template',
-              to: '/docs/templates/template-adr',
-            },
-            {
-              label: 'RFC Template',
-              to: '/docs/templates/template-rfc',
-            },
-            {
-              label: 'PRD Template',
-              to: '/docs/templates/template-prd',
+              label: 'Roadmap',
+              to: '/docs/introduction/roadmap',
             },
           ],
         },
