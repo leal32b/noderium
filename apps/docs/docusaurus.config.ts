@@ -79,6 +79,12 @@ const config: Config = {
           label: 'Getting Started',
         },
         {
+          type: 'docSidebar',
+          sidebarId: 'contributingSidebar',
+          position: 'left',
+          label: 'Contributing',
+        },
+        {
           href: 'https://github.com/leal32b/noderium',
           label: 'GitHub',
           position: 'right',
@@ -111,6 +117,23 @@ const config: Config = {
             {
               label: 'Roadmap',
               to: '/docs/introduction/roadmap',
+            },
+          ],
+        },
+        {
+          title: 'Contributing',
+          items: [
+            {
+              label: 'Contribution Guide',
+              to: '/docs/contributing/overview',
+            },
+            {
+              label: 'Issue Templates',
+              to: '/docs/contributing/issue-templates',
+            },
+            {
+              label: 'Pull Requests',
+              to: '/docs/contributing/pull-requests',
             },
           ],
         },

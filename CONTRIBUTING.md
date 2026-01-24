@@ -1,7 +1,10 @@
 # Contributing to Noderium
 
-First off, thank you for considering contributing to Noderium. We are building the highest-performance local-first note-taking app in existence, and we can't do it without you.
+First off, thank you for considering contributing to Noderium! We are building the highest-performance local-first note-taking app in existence, and we can't do it without you.
+
 Noderium is not just another Electron wrapper. We are building a **Tauri v2 + Rust + SolidJS** application that respects the user's RAM and treats Markdown files as the holy source of truth.
+
+> 📚 **Full Documentation**: For comprehensive contribution guidelines, including issue templates, PR workflows, and labels, visit our [Contributing Guide](https://leal32b.github.io/noderium/docs/contributing/overview).
 
 ## ⚡ The Philosophy
 
@@ -76,18 +79,34 @@ noderium/
   ```
 - Queries: We use sqlx. Queries are checked at compile-time. You must have a valid .env pointing to a DB to compile.
 
+## 📝 Opening Issues
+
+We use structured issue templates to ensure consistency. When [creating a new issue](https://github.com/leal32b/noderium/issues/new/choose), choose the appropriate template:
+
+| Template | When to Use |
+|----------|-------------|
+| 🐛 **Bug Report** | Something isn't working as expected |
+| ✨ **Feature Request** | Suggest new features or enhancements |
+| ♻️ **Refactoring** | Propose code improvements |
+| 🔬 **Spike / Research** | Request technical investigation |
+| 📚 **Documentation** | Report or improve documentation |
+| 🔧 **Chore** | Maintenance and housekeeping tasks |
+
+For questions and discussions, use [GitHub Discussions](https://github.com/leal32b/noderium/discussions).
+
 ## 📮 Pull Request Process
 
 1. **Fork & Branch:** Create a branch for your feature (`feat/graph-view`) or bugfix (`fix/parser-crash`).
 2. **Conventional Commits:** We enforce Conventional Commits.
-   - feat: add bi-directional linking
-   - fix(core): resolve markdown parsing error
-   - perf: optimize graph traversal query
+   - `feat:` add bi-directional linking
+   - `fix(core):` resolve markdown parsing error
+   - `perf:` optimize graph traversal query
 3. **Check:** Run the full suite before pushing.
     ```bash
     pnpm turbo run test lint
     ```
-4. **Open PR:** Link the issue you are solving.
+4. **Open PR:** Use the PR template and link the issue you are solving.
+5. **Review:** Address feedback and wait for approval.
 
 ## 🤝 Community
 
