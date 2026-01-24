@@ -13,7 +13,7 @@ body:
   - type: checkboxes
     id: preflight
     attributes:
-      label: Preflight Checklist
+      label: 📋 Preflight Checklist
       description: Please ensure you've completed all of the following.
       options:
         - label: I have searched the [existing issues](https://github.com/leal32b/noderium/issues) to make sure this documentation issue has not been reported yet.
@@ -22,7 +22,7 @@ body:
   - type: dropdown
     id: doc-type
     attributes:
-      label: Documentation Type
+      label: 🏷️ Documentation Type
       description: What type of documentation does this relate to?
       options:
         - "README"
@@ -40,7 +40,7 @@ body:
   - type: dropdown
     id: issue-type
     attributes:
-      label: Issue Type
+      label: 🏷️ Issue Type
       description: What kind of documentation issue is this?
       options:
         - "Missing - Documentation doesn't exist"
@@ -55,7 +55,7 @@ body:
   - type: input
     id: location
     attributes:
-      label: Documentation Location
+      label: 📍 Documentation Location
       description: Where is the documentation located? (URL, file path, or section name)
       placeholder: e.g., https://docs.example.com/getting-started or apps/docs/docs/...
     validations:
@@ -64,7 +64,7 @@ body:
   - type: textarea
     id: current-content
     attributes:
-      label: Current Content
+      label: 📖 Current Content
       description: If applicable, quote the current documentation content.
       placeholder: |
         > Current documentation says...
@@ -74,7 +74,7 @@ body:
   - type: textarea
     id: problem
     attributes:
-      label: Problem Description
+      label: ❓ Problem Description
       description: Describe the issue with the current documentation.
       placeholder: |
         - What is missing, incorrect, or unclear?
@@ -85,7 +85,7 @@ body:
   - type: textarea
     id: suggested-content
     attributes:
-      label: Suggested Content / Changes
+      label: 💡 Suggested Content / Changes
       description: Provide your suggested documentation content or changes.
       placeholder: |
         I suggest changing it to...
@@ -98,7 +98,7 @@ body:
   - type: dropdown
     id: audience
     attributes:
-      label: Target Audience
+      label: 👥 Target Audience
       description: Who is the primary audience for this documentation?
       multiple: true
       options:
@@ -114,7 +114,7 @@ body:
   - type: checkboxes
     id: contribution
     attributes:
-      label: Contribution
+      label: 🤝 Contribution
       description: Would you be willing to contribute to this documentation?
       options:
         - label: I would be willing to write/update this documentation.
@@ -125,7 +125,7 @@ body:
   - type: textarea
     id: additional
     attributes:
-      label: Additional Context
+      label: ℹ️ Additional Context
       description: Add any other context, screenshots, or references.
       placeholder: Any other information that might help...
     validations:

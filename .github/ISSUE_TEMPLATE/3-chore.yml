@@ -13,7 +13,7 @@ body:
   - type: checkboxes
     id: preflight
     attributes:
-      label: Preflight Checklist
+      label: 📋 Preflight Checklist
       description: Please ensure you've completed all of the following.
       options:
         - label: I have searched the [existing issues](https://github.com/leal32b/noderium/issues) to make sure this task has not been proposed yet.
@@ -22,7 +22,7 @@ body:
   - type: dropdown
     id: chore-type
     attributes:
-      label: Chore Type
+      label: 🏷️ Chore Type
       description: What type of maintenance task is this?
       options:
         - "Dependency Update"
@@ -40,7 +40,7 @@ body:
   - type: textarea
     id: description
     attributes:
-      label: Task Description
+      label: 📝 Task Description
       description: Describe the maintenance task that needs to be done.
       placeholder: |
         A clear description of what needs to be done...
@@ -50,7 +50,7 @@ body:
   - type: textarea
     id: motivation
     attributes:
-      label: Motivation
+      label: ❓ Motivation
       description: Why is this maintenance task needed?
       placeholder: |
         - Security vulnerability fix
@@ -63,7 +63,7 @@ body:
   - type: dropdown
     id: priority
     attributes:
-      label: Priority
+      label: 🔺 Priority
       description: How urgent is this maintenance task?
       options:
         - "Low - Can be done when convenient"
@@ -76,7 +76,7 @@ body:
   - type: textarea
     id: affected-areas
     attributes:
-      label: Affected Areas
+      label: 📍 Affected Areas
       description: What parts of the project will be affected?
       placeholder: |
         - CI/CD pipelines
@@ -89,7 +89,7 @@ body:
   - type: textarea
     id: implementation
     attributes:
-      label: Implementation Details
+      label: 🛠️ Implementation Details
       description: If known, describe how this task should be implemented.
       placeholder: |
         Steps or approach for completing this task...
@@ -99,7 +99,7 @@ body:
   - type: checkboxes
     id: contribution
     attributes:
-      label: Contribution
+      label: 🤝 Contribution
       description: Would you be willing to contribute to this task?
       options:
         - label: I would be willing to implement this task.
@@ -108,7 +108,7 @@ body:
   - type: textarea
     id: additional
     attributes:
-      label: Additional Context
+      label: ℹ️ Additional Context
       description: Add any other context about this task.
       placeholder: Any other information...
     validations:

@@ -1,37 +1,38 @@
-## Description
+## 📝 Description
 <!-- Provide a clear and concise description of what this PR does -->
 
 
-## Related Issues
+
+## 🔗 Related Issues
 <!-- Link related issues using keywords: closes, fixes, resolves, relates to -->
 <!-- Example: Closes #123, Relates to #456 -->
 
 
-## Type of Change
+## ❓ Type of Change
 <!-- Mark the relevant option with an "x" (e.g., [x]) -->
-- [ ] 🐛 **Bug fix** — Non-breaking change that fixes an issue
-- [ ] ✨ **Feature** — Planned feature implementation
-- [ ] 💡 **Feature Request** — Community-requested feature implementation
-- [ ] 💥 **Breaking change** — Fix or feature that would cause existing functionality to change
+- [ ] 🐞 **Bug fix** — Non-breaking change that fixes an issue
+- [ ] 💡 **Feature Request** — Community-suggested feature implementation
+- [ ] 🔧 **Chore** — Maintenance tasks, dependency updates, CI/CD, etc.
+- [ ] ✨ **Feature** — Approved/planned feature implementation
 - [ ] ♻️ **Refactoring** — Code change that neither fixes a bug nor adds a feature
 - [ ] 📚 **Documentation** — Changes to documentation only
-- [ ] 🔧 **Chore** — Maintenance tasks, dependency updates, CI/CD, etc.
+- [ ] 💥 **Breaking change** — Fix or feature that would cause existing functionality to change
 - [ ] 🧪 **Test** — Adding or updating tests
 
-## Changes Made
+## 📋 Changes Made
 <!-- Provide a bullet-point list of the changes made -->
 - 
 
-## Screenshots / Recordings
+## 📎 Screenshots / Recordings
 <!-- If applicable, add screenshots or recordings to demonstrate the changes -->
 <!-- Delete this section if not applicable -->
 
 
-## How to Test
+## 🧪 How to Test
 <!-- Provide steps for reviewers to test your changes -->
 1. 
 
-## Checklist
+## ✅ Checklist
 ### General
 - [ ] My code follows the project's coding standards and style guidelines
 - [ ] I have performed a self-review of my own code
@@ -55,6 +56,5 @@
 
 **Breaking changes description:** 
 
-## Additional Notes
+## 🗒️ Additional Notes
 <!-- Add any additional context, notes for reviewers, or anything else -->
-

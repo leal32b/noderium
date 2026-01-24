@@ -25,7 +25,7 @@ import Admonition from '@theme/Admonition';
 **Success Metrics (KPIs)**
 | Metric Type | Metric Name | Current Baseline | Target (Success) | Guardrail Metric (What can't break?) |
 |-------------|-------------|------------------|------------------|--------------------------------------|
-| North Star  | Conversion Rate | 2.5% | 5.0% | Page Load Time (< 1.5s) |
+| North Star  | Conversion Rate | 2.5% | 5.0% | Page Load Time (&lt;1.5s) |
 | Secondary   | Daily Active Users| 10k | 12k | CS Ticket Volume |
 
 ## 2. Problem Definition & Insights
