@@ -13,7 +13,7 @@ body:
   - type: checkboxes
     id: preflight
     attributes:
-      label: Preflight Checklist
+      label: 📋 Preflight Checklist
       description: Please ensure you've completed all of the following.
       options:
         - label: I have searched the [existing issues](https://github.com/leal32b/noderium/issues) to make sure this spike has not been proposed yet.
@@ -24,7 +24,7 @@ body:
   - type: textarea
     id: objective
     attributes:
-      label: Spike Objective
+      label: 🎯 Spike Objective
       description: What is the main question or uncertainty you want to resolve?
       placeholder: |
         The primary question we need to answer is...
@@ -34,7 +34,7 @@ body:
   - type: textarea
     id: background
     attributes:
-      label: Background / Context
+      label: 📖 Background / Context
       description: Provide context on why this investigation is needed.
       placeholder: |
         - What triggered the need for this spike?
@@ -46,7 +46,7 @@ body:
   - type: textarea
     id: questions
     attributes:
-      label: Key Questions to Answer
+      label: ❓ Key Questions to Answer
       description: List the specific questions this spike should answer.
       placeholder: |
         1. Is it technically feasible to...?
@@ -58,7 +58,7 @@ body:
   - type: dropdown
     id: spike-type
     attributes:
-      label: Spike Type
+      label: 🏷️ Spike Type
       description: What type of spike is this?
       options:
         - "Technical Feasibility - Can we do this?"
@@ -75,7 +75,7 @@ body:
   - type: dropdown
     id: timebox
     attributes:
-      label: Suggested Time-box
+      label: ⏱️ Suggested Time-box
       description: How much time should be allocated to this spike?
       options:
         - "1-2 hours"
@@ -90,7 +90,7 @@ body:
   - type: textarea
     id: approach
     attributes:
-      label: Proposed Approach
+      label: 🔢 Proposed Approach
       description: How do you suggest approaching this investigation?
       placeholder: |
         - Research phase: ...
@@ -102,7 +102,7 @@ body:
   - type: textarea
     id: success-criteria
     attributes:
-      label: Success Criteria
+      label: ✅ Success Criteria
       description: What outcomes would make this spike successful?
       placeholder: |
         This spike will be successful if we:
@@ -115,7 +115,7 @@ body:
   - type: textarea
     id: deliverables
     attributes:
-      label: Expected Deliverables
+      label: 📦 Expected Deliverables
       description: What should be produced as a result of this spike?
       placeholder: |
         - [ ] Technical document / ADR
@@ -129,7 +129,7 @@ body:
   - type: textarea
     id: related-work
     attributes:
-      label: Related Issues / PRs
+      label: 🔗 Related Issues / PRs
       description: Link any related issues or pull requests.
       placeholder: |
         - #123 - Related feature request
@@ -140,7 +140,7 @@ body:
   - type: textarea
     id: resources
     attributes:
-      label: Resources / References
+      label: 📚 Resources / References
       description: List any resources, documentation, or references that might be helpful.
       placeholder: |
         - [Link to documentation]
@@ -152,7 +152,7 @@ body:
   - type: checkboxes
     id: contribution
     attributes:
-      label: Contribution
+      label: 🤝 Contribution
       description: Would you be willing to contribute to this spike?
       options:
         - label: I would be willing to conduct this spike.
@@ -163,7 +163,7 @@ body:
   - type: textarea
     id: additional
     attributes:
-      label: Additional Context
+      label: ℹ️ Additional Context
       description: Add any other context about this spike.
       placeholder: Any other information that might help...
     validations:

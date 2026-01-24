@@ -8,16 +8,17 @@ When you [create a new issue](https://github.com/leal32b/noderium/issues/new/cho
 
 | Template | Purpose | Labels |
 |----------|---------|--------|
-| 🐛 Bug Report | Report bugs or unexpected behavior | `type: bug`, `status: triage` |
-| ✨ Feature Request | Suggest new features or enhancements | `type: feature`, `status: triage` |
-| ♻️ Refactoring | Propose code improvements | `type: refactoring`, `status: triage` |
-| 🔬 Spike / Research | Request technical investigation | `type: spike`, `status: triage` |
-| 📚 Documentation | Report or improve documentation | `type: documentation`, `status: triage` |
+| 🐞 Bug Report | Report bugs or unexpected behavior | `type: bug`, `status: triage` |
+| 💡 Feature Request | Suggest new features or enhancements | `type: feature`, `status: triage` |
 | 🔧 Chore | Maintenance and housekeeping tasks | `type: chore`, `status: triage` |
+| 🔬 Spike / Research | Request technical investigation | `type: spike`, `status: triage` |
+| ✨ Feature | Define a new feature for implementation | `type: feature`, `status: ready` |
+| ♻️ Refactoring | Propose code improvements | `type: refactoring`, `status: triage` |
+| 📚 Documentation | Report or improve documentation | `type: documentation`, `status: triage` |
 
 ---
 
-## 🐛 Bug Report
+## 🐞 Bug Report
 
 Use this template when something isn't working as expected.
 
@@ -91,34 +92,27 @@ So that I can maintain my flow without reaching for the mouse.
 
 ---
 
-## ♻️ Refactoring
+## 🔧 Chore / Maintenance
 
-Use this template to propose code improvements that don't change functionality.
+Use this template for routine maintenance tasks.
 
 ### When to Use
 
-- Code cleanup and simplification
-- Architecture improvements
-- Design pattern implementations
-- Technical debt reduction
-- Performance optimizations (internal)
-- Type safety improvements
+- Dependency updates
+- CI/CD improvements
+- Build configuration changes
+- Development tooling updates
+- Repository maintenance
+- Security patches
 
-### Important Considerations
+### Priority Levels
 
-| Aspect | Question to Answer |
-|--------|-------------------|
-| **Scope** | How many files/modules are affected? |
-| **Breaking Changes** | Will this affect public APIs? |
-| **Benefits** | What improvements will this bring? |
-| **Risks** | What could go wrong? |
-
-### Scope Levels
-
-- **Small**: Single file or function
-- **Medium**: Multiple files in same module
-- **Large**: Multiple modules or cross-cutting
-- **Major**: Architectural change
+| Priority | When to Use |
+|----------|-------------|
+| **Low** | Can be done when convenient |
+| **Medium** | Should be done in near future |
+| **High** | Should be prioritized |
+| **Critical** | Security or blocking issue |
 
 ---
 
@@ -168,6 +162,70 @@ Spikes are time-limited to prevent scope creep:
 
 ---
 
+## ✨ Feature
+
+Use this template to define a new feature for implementation. This is typically used by maintainers after a feature request has been accepted and refined.
+
+### When to Use
+
+- Implementing an accepted feature request
+- Breaking down large features into smaller issues
+- Defining planned roadmap features
+- Creating implementation specifications
+
+### Key Sections
+
+| Section | Purpose |
+|---------|---------|
+| **Description** | Clear explanation of what the feature does |
+| **User Story** | Who benefits and how |
+| **Acceptance Criteria** | What defines "done"? |
+| **Technical Notes** | Implementation considerations |
+| **Complexity** | Estimated effort |
+| **Priority** | Implementation priority |
+
+### Difference from Feature Request
+
+| Feature Request | Feature |
+|-----------------|---------|
+| Suggested by community | Defined by maintainers |
+| Status: triage | Status: ready |
+| May or may not be implemented | Approved for implementation |
+| Problem-focused | Solution-focused |
+
+---
+
+## ♻️ Refactoring
+
+Use this template to propose code improvements that don't change functionality.
+
+### When to Use
+
+- Code cleanup and simplification
+- Architecture improvements
+- Design pattern implementations
+- Technical debt reduction
+- Performance optimizations (internal)
+- Type safety improvements
+
+### Important Considerations
+
+| Aspect | Question to Answer |
+|--------|-------------------|
+| **Scope** | How many files/modules are affected? |
+| **Breaking Changes** | Will this affect public APIs? |
+| **Benefits** | What improvements will this bring? |
+| **Risks** | What could go wrong? |
+
+### Scope Levels
+
+- **Small**: Single file or function
+- **Medium**: Multiple files in same module
+- **Large**: Multiple modules or cross-cutting
+- **Major**: Architectural change
+
+---
+
 ## 📚 Documentation
 
 Use this template for documentation improvements.
@@ -200,30 +258,6 @@ Use this template for documentation improvements.
 | **Outdated** | Documentation needs updating |
 | **Unclear** | Documentation is confusing |
 | **Incomplete** | Documentation needs more detail |
-
----
-
-## 🔧 Chore / Maintenance
-
-Use this template for routine maintenance tasks.
-
-### When to Use
-
-- Dependency updates
-- CI/CD improvements
-- Build configuration changes
-- Development tooling updates
-- Repository maintenance
-- Security patches
-
-### Priority Levels
-
-| Priority | When to Use |
-|----------|-------------|
-| **Low** | Can be done when convenient |
-| **Medium** | Should be done in near future |
-| **High** | Should be prioritized |
-| **Critical** | Security or blocking issue |
 
 ---
 
@@ -275,9 +309,10 @@ Use this template for routine maintenance tasks.
 If you're unsure which template to use:
 
 1. **Bug or not working** → Bug Report
-2. **New capability** → Feature Request
-3. **Code quality** → Refactoring
+2. **New capability idea** → Feature Request
+3. **Maintenance** → Chore
 4. **Need to research** → Spike
-5. **Docs problem** → Documentation
-6. **Maintenance** → Chore
-7. **Question** → [GitHub Discussions](https://github.com/leal32b/noderium/discussions)
+5. **Planned feature** → Feature
+6. **Code quality** → Refactoring
+7. **Docs problem** → Documentation
+8. **Question** → [GitHub Discussions](https://github.com/leal32b/noderium/discussions)

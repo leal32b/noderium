@@ -13,7 +13,7 @@ body:
   - type: checkboxes
     id: preflight
     attributes:
-      label: Preflight Checklist
+      label: 📋 Preflight Checklist
       description: Please ensure you've completed all of the following.
       options:
         - label: I have searched the [existing issues](https://github.com/leal32b/noderium/issues) to make sure this feature has not been requested yet.
@@ -24,7 +24,7 @@ body:
   - type: textarea
     id: problem
     attributes:
-      label: Problem Statement
+      label: ❓ Problem Statement
       description: Is your feature request related to a problem? Please describe.
       placeholder: A clear and concise description of what the problem is. Ex. I'm always frustrated when...
     validations:
@@ -33,7 +33,7 @@ body:
   - type: textarea
     id: solution
     attributes:
-      label: Proposed Solution
+      label: 💡 Proposed Solution
       description: Describe the solution you'd like.
       placeholder: A clear and concise description of what you want to happen...
     validations:
@@ -42,7 +42,7 @@ body:
   - type: textarea
     id: alternatives
     attributes:
-      label: Alternatives Considered
+      label: 🔀 Alternatives Considered
       description: Describe any alternative solutions or features you've considered.
       placeholder: A clear and concise description of any alternative solutions or features you've considered...
     validations:
@@ -51,7 +51,7 @@ body:
   - type: dropdown
     id: feature-area
     attributes:
-      label: Feature Area
+      label: 🏷️ Feature Area
       description: Which area of Noderium does this feature relate to?
       multiple: true
       options:
@@ -72,7 +72,7 @@ body:
   - type: dropdown
     id: priority
     attributes:
-      label: Priority
+      label: 🔺 Priority
       description: How important is this feature to you?
       options:
         - "Nice to have - Would be a good addition"
@@ -84,7 +84,7 @@ body:
   - type: textarea
     id: user-story
     attributes:
-      label: User Story
+      label: 👤 User Story
       description: Describe who would benefit from this feature and how.
       placeholder: |
         As a [type of user],
@@ -96,7 +96,7 @@ body:
   - type: textarea
     id: acceptance-criteria
     attributes:
-      label: Acceptance Criteria
+      label: ✅ Acceptance Criteria
       description: What would need to be true for this feature to be considered complete?
       placeholder: |
         - [ ] Criterion 1
@@ -108,7 +108,7 @@ body:
   - type: textarea
     id: mockups
     attributes:
-      label: Mockups / Examples
+      label: 🎨 Mockups / Examples
       description: If applicable, add mockups, wireframes, or examples from other applications.
       placeholder: Drag and drop images here or paste links to examples...
     validations:
@@ -117,7 +117,7 @@ body:
   - type: checkboxes
     id: contribution
     attributes:
-      label: Contribution
+      label: 🤝 Contribution
       description: Would you be willing to contribute to this feature?
       options:
         - label: I would be willing to help implement this feature.
@@ -130,7 +130,7 @@ body:
   - type: textarea
     id: additional
     attributes:
-      label: Additional Context
+      label: ℹ️ Additional Context
       description: Add any other context, references, or screenshots about the feature request.
       placeholder: Any other information that might help us understand your request...
     validations:

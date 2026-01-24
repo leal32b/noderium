@@ -13,7 +13,7 @@ body:
   - type: checkboxes
     id: preflight
     attributes:
-      label: Preflight Checklist
+      label: 📋 Preflight Checklist
       description: Please ensure you've completed all of the following.
       options:
         - label: I have searched the [existing issues](https://github.com/leal32b/noderium/issues) to make sure this refactoring has not been proposed yet.
@@ -24,7 +24,7 @@ body:
   - type: textarea
     id: current-state
     attributes:
-      label: Current State
+      label: 📖 Current State
       description: Describe the current state of the code/architecture that needs refactoring.
       placeholder: |
         Describe what currently exists and why it needs improvement...
@@ -35,7 +35,7 @@ body:
   - type: textarea
     id: problem
     attributes:
-      label: Problem / Motivation
+      label: ❓ Problem / Motivation
       description: Why is this refactoring needed? What problems does it solve?
       placeholder: |
         - Technical debt reason
@@ -48,7 +48,7 @@ body:
   - type: textarea
     id: proposed-changes
     attributes:
-      label: Proposed Changes
+      label: 💡 Proposed Changes
       description: Describe the refactoring you'd like to make.
       placeholder: |
         A clear and concise description of the changes you want to make...
@@ -58,7 +58,7 @@ body:
   - type: dropdown
     id: refactor-type
     attributes:
-      label: Refactoring Type
+      label: 🏷️ Refactoring Type
       description: What type of refactoring is this?
       multiple: true
       options:
@@ -80,7 +80,7 @@ body:
   - type: dropdown
     id: scope
     attributes:
-      label: Scope
+      label: 📐 Scope
       description: What is the scope of this refactoring?
       options:
         - "Small - Single file or function"
@@ -93,7 +93,7 @@ body:
   - type: dropdown
     id: breaking-changes
     attributes:
-      label: Breaking Changes
+      label: 💥 Breaking Changes
       description: Will this refactoring introduce breaking changes?
       options:
         - "No - Purely internal changes"
@@ -106,7 +106,7 @@ body:
   - type: textarea
     id: affected-areas
     attributes:
-      label: Affected Areas
+      label: 📍 Affected Areas
       description: List the files, modules, or components that will be affected.
       placeholder: |
         - `src/module/file.ts`
@@ -118,7 +118,7 @@ body:
   - type: textarea
     id: benefits
     attributes:
-      label: Expected Benefits
+      label: ✨ Expected Benefits
       description: What benefits will this refactoring bring?
       placeholder: |
         - Improved maintainability
@@ -131,7 +131,7 @@ body:
   - type: textarea
     id: risks
     attributes:
-      label: Risks / Concerns
+      label: ⚠️ Risks / Concerns
       description: What are the potential risks or concerns with this refactoring?
       placeholder: |
         - Potential regression areas
@@ -143,7 +143,7 @@ body:
   - type: textarea
     id: migration-plan
     attributes:
-      label: Migration Plan
+      label: 🗺️ Migration Plan
       description: If applicable, describe how existing code will be migrated.
       placeholder: Describe the migration strategy if breaking changes are involved...
     validations:
@@ -152,7 +152,7 @@ body:
   - type: checkboxes
     id: contribution
     attributes:
-      label: Contribution
+      label: 🤝 Contribution
       description: Would you be willing to contribute to this refactoring?
       options:
         - label: I would be willing to implement this refactoring.
@@ -163,7 +163,7 @@ body:
   - type: textarea
     id: additional
     attributes:
-      label: Additional Context
+      label: ℹ️ Additional Context
       description: Add any other context, code examples, or references.
       placeholder: Any other information that might help us understand your proposal...
     validations:

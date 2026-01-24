@@ -85,12 +85,13 @@ We use structured issue templates to ensure consistency. When [creating a new is
 
 | Template | When to Use |
 |----------|-------------|
-| 🐛 **Bug Report** | Something isn't working as expected |
-| ✨ **Feature Request** | Suggest new features or enhancements |
-| ♻️ **Refactoring** | Propose code improvements |
-| 🔬 **Spike / Research** | Request technical investigation |
-| 📚 **Documentation** | Report or improve documentation |
+| 🐞 **Bug Report** | Something isn't working as expected |
+| 💡 **Feature Request** | Suggest new features or enhancements |
 | 🔧 **Chore** | Maintenance and housekeeping tasks |
+| 🔬 **Spike / Research** | Request technical investigation |
+| ✨ **Feature** | Define a new feature for implementation |
+| ♻️ **Refactoring** | Propose code improvements |
+| 📚 **Documentation** | Report or improve documentation |
 
 For questions and discussions, use [GitHub Discussions](https://github.com/leal32b/noderium/discussions).
 

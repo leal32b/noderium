@@ -13,7 +13,7 @@ body:
   - type: textarea
     id: description
     attributes:
-      label: Description
+      label: 📝 Description
       description: A clear and concise description of the feature.
       placeholder: Describe what this feature does and its purpose...
     validations:
@@ -22,7 +22,7 @@ body:
   - type: textarea
     id: user-story
     attributes:
-      label: User Story
+      label: 👤 User Story
       description: Describe who will use this feature and why.
       placeholder: |
         As a [type of user],
@@ -34,7 +34,7 @@ body:
   - type: dropdown
     id: feature-area
     attributes:
-      label: Feature Area
+      label: 🏷️ Feature Area
       description: Which area of Noderium does this feature relate to?
       multiple: true
       options:
@@ -55,7 +55,7 @@ body:
   - type: textarea
     id: acceptance-criteria
     attributes:
-      label: Acceptance Criteria
+      label: ✅ Acceptance Criteria
       description: Define the criteria that must be met for this feature to be considered complete.
       placeholder: |
         - [ ] Criterion 1
@@ -69,7 +69,7 @@ body:
   - type: textarea
     id: technical-notes
     attributes:
-      label: Technical Notes
+      label: 🛠️ Technical Notes
       description: Any technical considerations, constraints, or implementation details.
       placeholder: |
         - Architecture decisions
@@ -82,7 +82,7 @@ body:
   - type: textarea
     id: mockups
     attributes:
-      label: Mockups / Design
+      label: 🎨 Mockups / Design
       description: If applicable, add mockups, wireframes, or design references.
       placeholder: Drag and drop images here or paste links to design files...
     validations:
@@ -91,7 +91,7 @@ body:
   - type: dropdown
     id: complexity
     attributes:
-      label: Complexity
+      label: 🧠 Complexity
       description: Estimated complexity of this feature.
       options:
         - "XS - Trivial change"
@@ -105,7 +105,7 @@ body:
   - type: dropdown
     id: priority
     attributes:
-      label: Priority
+      label: 🔺 Priority
       description: Implementation priority for this feature.
       options:
         - "P0 - Critical"
@@ -118,7 +118,7 @@ body:
   - type: textarea
     id: dependencies
     attributes:
-      label: Dependencies
+      label: 🔗 Dependencies
       description: List any issues, features, or external dependencies that must be completed first.
       placeholder: |
         - #123 - Related issue
@@ -129,7 +129,7 @@ body:
   - type: textarea
     id: out-of-scope
     attributes:
-      label: Out of Scope
+      label: 🚫 Out of Scope
       description: Explicitly define what is NOT part of this feature to prevent scope creep.
       placeholder: |
         - Feature X will be addressed in a separate issue
@@ -140,7 +140,7 @@ body:
   - type: textarea
     id: tasks
     attributes:
-      label: Implementation Tasks
+      label: 📋 Implementation Tasks
       description: Break down the feature into smaller implementation tasks.
       placeholder: |
         - [ ] Task 1
@@ -152,7 +152,7 @@ body:
   - type: textarea
     id: additional
     attributes:
-      label: Additional Context
+      label: ℹ️ Additional Context
       description: Add any other context, references, or notes about the feature.
       placeholder: Links to documentation, related discussions, etc.
     validations:

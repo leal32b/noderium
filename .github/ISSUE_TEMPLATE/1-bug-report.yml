@@ -1,4 +1,4 @@
-name: 🐛 Bug Report
+name: 🐞 Bug Report
 description: Report a bug or unexpected behavior
 title: "[Bug]: "
 labels: ["type: bug", "status: triage"]
@@ -13,7 +13,7 @@ body:
   - type: checkboxes
     id: preflight
     attributes:
-      label: Preflight Checklist
+      label: 📋 Preflight Checklist
       description: Please ensure you've completed all of the following.
       options:
         - label: I have searched the [existing issues](https://github.com/leal32b/noderium/issues) to make sure this bug has not been reported yet.
@@ -26,7 +26,7 @@ body:
   - type: textarea
     id: description
     attributes:
-      label: Bug Description
+      label: 📝 Bug Description
       description: A clear and concise description of what the bug is.
       placeholder: Describe the bug...
     validations:
@@ -35,7 +35,7 @@ body:
   - type: textarea
     id: expected
     attributes:
-      label: Expected Behavior
+      label: ✅ Expected Behavior
       description: What did you expect to happen?
       placeholder: I expected...
     validations:
@@ -44,7 +44,7 @@ body:
   - type: textarea
     id: actual
     attributes:
-      label: Actual Behavior
+      label: ❌ Actual Behavior
       description: What actually happened?
       placeholder: Instead, what happened was...
     validations:
@@ -53,7 +53,7 @@ body:
   - type: textarea
     id: reproduction
     attributes:
-      label: Steps to Reproduce
+      label: 🔢 Steps to Reproduce
       description: Provide detailed steps to reproduce the bug.
       placeholder: |
         1. Go to '...'
@@ -66,7 +66,7 @@ body:
   - type: textarea
     id: screenshots
     attributes:
-      label: Screenshots / Recordings
+      label: 📸 Screenshots / Recordings
       description: If applicable, add screenshots or screen recordings to help explain your problem.
       placeholder: Drag and drop images/videos here or paste links...
     validations:
@@ -75,7 +75,7 @@ body:
   - type: dropdown
     id: severity
     attributes:
-      label: Severity
+      label: 🔺 Severity
       description: How severe is this bug?
       options:
         - "Critical - Application crash or data loss"
@@ -88,7 +88,7 @@ body:
   - type: input
     id: version
     attributes:
-      label: Noderium Version
+      label: 🏷️ Noderium Version
       description: What version of Noderium are you running?
       placeholder: e.g., 1.0.0
     validations:
@@ -97,7 +97,7 @@ body:
   - type: dropdown
     id: os
     attributes:
-      label: Operating System
+      label: 💻 Operating System
       description: What operating system are you using?
       multiple: true
       options:
@@ -118,7 +118,7 @@ body:
   - type: textarea
     id: environment
     attributes:
-      label: Environment Details
+      label: 🌐 Environment Details
       description: Any additional environment information that might be relevant.
       placeholder: |
         - Browser (if applicable): 
@@ -131,7 +131,7 @@ body:
   - type: textarea
     id: logs
     attributes:
-      label: Relevant Logs / Error Messages
+      label: 🧾 Relevant Logs / Error Messages
       description: Please copy and paste any relevant log output or error messages.
       render: shell
     validations:
@@ -140,7 +140,7 @@ body:
   - type: textarea
     id: additional
     attributes:
-      label: Additional Context
+      label: ℹ️ Additional Context
       description: Add any other context about the problem here.
       placeholder: Any other information that might help us understand and fix the issue...
     validations:

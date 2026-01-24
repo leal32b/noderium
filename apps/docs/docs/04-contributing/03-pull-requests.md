@@ -101,13 +101,13 @@ Relates to #789
 
 Select the appropriate type(s):
 
-- 🐛 **Bug fix** — Non-breaking change that fixes an issue
-- ✨ **Feature** — Planned feature implementation
+- 🐞 **Bug fix** — Non-breaking change that fixes an issue
 - 💡 **Feature Request** — Community-requested feature implementation
-- 💥 **Breaking change** — Fix or feature that would cause existing functionality to change
+- 🔧 **Chore** — Maintenance tasks, dependency updates, CI/CD, etc.
+- ✨ **Feature** — Planned feature implementation
 - ♻️ **Refactoring** — Code change that neither fixes a bug nor adds a feature
 - 📚 **Documentation** — Changes to documentation only
-- 🔧 **Chore** — Maintenance tasks, dependency updates, CI/CD, etc.
+- 💥 **Breaking change** — Fix or feature that would cause existing functionality to change
 - 🧪 **Test** — Adding or updating tests
 
 ### Changes Made

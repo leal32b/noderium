@@ -24,20 +24,20 @@ These indicate the nature of the issue or PR.
 |-------|-------|-------------|
 | `type: bug` | 🔴 `#d73a4a` | Something isn't working |
 | `type: feature` | 🔵 `#a2eeef` | New feature or enhancement |
-| `type: refactoring` | 🟣 `#7057ff` | Code improvement without changing behavior |
-| `type: spike` | 🟡 `#fbca04` | Research or investigation task |
-| `type: documentation` | 🔵 `#0075ca` | Documentation improvements |
 | `type: chore` | ⚫ `#666666` | Maintenance and housekeeping |
+| `type: spike` | 🟡 `#fbca04` | Research or investigation task |
+| `type: refactoring` | 🟣 `#7057ff` | Code improvement without changing behavior |
+| `type: documentation` | 🔵 `#0075ca` | Documentation improvements |
 
 ### When to Use
 
 ```
 Bug found           → type: bug
 New capability      → type: feature
-Code cleanup        → type: refactoring
-Need to research    → type: spike
-Docs update         → type: documentation
 Dependency update   → type: chore
+Need to research    → type: spike
+Code cleanup        → type: refactoring
+Docs update         → type: documentation
 ```
 
 ---
@@ -253,10 +253,10 @@ For maintainers creating or updating labels:
 # Type labels
 type: bug:           "#d73a4a"
 type: feature:       "#a2eeef"
-type: refactoring:   "#7057ff"
-type: spike:         "#fbca04"
-type: documentation: "#0075ca"
 type: chore:         "#666666"
+type: spike:         "#fbca04"
+type: refactoring:   "#7057ff"
+type: documentation: "#0075ca"
 
 # Status labels
 status: triage:      "#e99695"
