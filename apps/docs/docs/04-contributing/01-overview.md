@@ -48,19 +48,19 @@ Noderium is an open-source project that values:
 
 | I want to... | Go to... |
 |--------------|----------|
-| Report a bug | [Bug Report Template](https://github.com/leal32b/noderium/issues/new?template=bug_report.yml) |
-| Request a feature | [Feature Request Template](https://github.com/leal32b/noderium/issues/new?template=feature_request.yml) |
-| Propose refactoring | [Refactoring Template](https://github.com/leal32b/noderium/issues/new?template=refactoring.yml) |
-| Start a research spike | [Spike Template](https://github.com/leal32b/noderium/issues/new?template=spike.yml) |
-| Improve documentation | [Documentation Template](https://github.com/leal32b/noderium/issues/new?template=documentation.yml) |
-| Propose maintenance | [Chore Template](https://github.com/leal32b/noderium/issues/new?template=chore.yml) |
+| Report a bug | [Bug Report Template](https://github.com/leal32b/noderium/issues/new?template=1-bug-report.yml) |
+| Request a feature | [Feature Request Template](https://github.com/leal32b/noderium/issues/new?template=2-feature-request.yml) |
+| Propose maintenance | [Chore Template](https://github.com/leal32b/noderium/issues/new?template=3-chore.yml) |
+| Start a research spike | [Spike Template](https://github.com/leal32b/noderium/issues/new?template=4-spike.yml) |
+| Propose refactoring | [Refactoring Template](https://github.com/leal32b/noderium/issues/new?template=6-refactoring.yml) |
+| Improve documentation | [Documentation Template](https://github.com/leal32b/noderium/issues/new?template=7-documentation.yml) |
 | Ask a question | [GitHub Discussions](https://github.com/leal32b/noderium/discussions) |
 
 ## Before You Start
 
 1. **Search existing issues** — Your idea might already be tracked
 2. **Read the documentation** — Familiarize yourself with the project
-3. **Check the roadmap** — See what's planned in [our roadmap](/docs/introduction/roadmap)
+3. **Check the roadmap** — See what's planned in our [Roadmap](/docs/introduction/roadmap)
 4. **Join the discussion** — Complex features benefit from early feedback
 
 ## Getting Help

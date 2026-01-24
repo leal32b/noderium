@@ -102,9 +102,9 @@ Relates to #789
 Select the appropriate type(s):
 
 - 🐞 **Bug fix** — Non-breaking change that fixes an issue
-- 💡 **Feature Request** — Community-requested feature implementation
+- 💡 **Feature Request** — Community-suggested feature implementation
 - 🔧 **Chore** — Maintenance tasks, dependency updates, CI/CD, etc.
-- ✨ **Feature** — Planned feature implementation
+- ✨ **Feature** — Approved/planned feature implementation
 - ♻️ **Refactoring** — Code change that neither fixes a bug nor adds a feature
 - 📚 **Documentation** — Changes to documentation only
 - 💥 **Breaking change** — Fix or feature that would cause existing functionality to change

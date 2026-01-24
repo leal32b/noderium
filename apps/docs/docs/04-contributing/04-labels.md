@@ -23,7 +23,8 @@ These indicate the nature of the issue or PR.
 | Label | Color | Description |
 |-------|-------|-------------|
 | `type: bug` | 🔴 `#d73a4a` | Something isn't working |
-| `type: feature` | 🔵 `#a2eeef` | New feature or enhancement |
+| `type: feature-request` | 🔵 `#1d76db` | Community-suggested feature or enhancement |
+| `type: feature` | 🔵 `#a2eeef` | Approved feature for implementation |
 | `type: chore` | ⚫ `#666666` | Maintenance and housekeeping |
 | `type: spike` | 🟡 `#fbca04` | Research or investigation task |
 | `type: refactoring` | 🟣 `#7057ff` | Code improvement without changing behavior |
@@ -32,12 +33,13 @@ These indicate the nature of the issue or PR.
 ### When to Use
 
 ```
-Bug found           → type: bug
-New capability      → type: feature
-Dependency update   → type: chore
-Need to research    → type: spike
-Code cleanup        → type: refactoring
-Docs update         → type: documentation
+Bug found              → type: bug
+New capability idea    → type: feature-request (community)
+Approved feature       → type: feature (maintainers)
+Dependency update      → type: chore
+Need to research       → type: spike
+Code cleanup           → type: refactoring
+Docs update            → type: documentation
 ```
 
 ---
@@ -251,12 +253,13 @@ For maintainers creating or updating labels:
 
 ```yaml
 # Type labels
-type: bug:           "#d73a4a"
-type: feature:       "#a2eeef"
-type: chore:         "#666666"
-type: spike:         "#fbca04"
-type: refactoring:   "#7057ff"
-type: documentation: "#0075ca"
+type: bug:             "#d73a4a"
+type: feature-request: "#1d76db"
+type: feature:         "#a2eeef"
+type: chore:           "#666666"
+type: spike:           "#fbca04"
+type: refactoring:     "#7057ff"
+type: documentation:   "#0075ca"
 
 # Status labels
 status: triage:      "#e99695"

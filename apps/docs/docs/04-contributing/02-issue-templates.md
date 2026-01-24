@@ -9,7 +9,7 @@ When you [create a new issue](https://github.com/leal32b/noderium/issues/new/cho
 | Template | Purpose | Labels |
 |----------|---------|--------|
 | 🐞 Bug Report | Report bugs or unexpected behavior | `type: bug`, `status: triage` |
-| 💡 Feature Request | Suggest new features or enhancements | `type: feature`, `status: triage` |
+| 💡 Feature Request | Suggest new features or enhancements | `type: feature-request`, `status: triage` |
 | 🔧 Chore | Maintenance and housekeeping tasks | `type: chore`, `status: triage` |
 | 🔬 Spike / Research | Request technical investigation | `type: spike`, `status: triage` |
 | ✨ Feature | Define a new feature for implementation | `type: feature`, `status: ready` |
@@ -54,7 +54,7 @@ Use this template when something isn't working as expected.
 
 ---
 
-## ✨ Feature Request
+## 💡 Feature Request
 
 Use this template to suggest new functionality or improvements.
 
@@ -189,6 +189,7 @@ Use this template to define a new feature for implementation. This is typically 
 | Feature Request | Feature |
 |-----------------|---------|
 | Suggested by community | Defined by maintainers |
+| Label: `type: feature-request` | Label: `type: feature` |
 | Status: triage | Status: ready |
 | May or may not be implemented | Approved for implementation |
 | Problem-focused | Solution-focused |
@@ -309,10 +310,10 @@ Use this template for documentation improvements.
 If you're unsure which template to use:
 
 1. **Bug or not working** → Bug Report
-2. **New capability idea** → Feature Request
+2. **New capability idea** → Feature Request (community suggestion)
 3. **Maintenance** → Chore
 4. **Need to research** → Spike
-5. **Planned feature** → Feature
+5. **Planned/approved feature** → Feature (maintainers only)
 6. **Code quality** → Refactoring
 7. **Docs problem** → Documentation
 8. **Question** → [GitHub Discussions](https://github.com/leal32b/noderium/discussions)

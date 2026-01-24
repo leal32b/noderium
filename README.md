@@ -96,7 +96,7 @@ We are on **Day 1**. Current focus: foundation and architecture.
 ### Prerequisites
 
 - **Rust** (Stable) — [rustup.rs](https://rustup.rs/)
-- **Node.js** (v20+) — [nodejs.org](https://nodejs.org/)
+- **Node.js** (v20+ LTS) — [nodejs.org](https://nodejs.org/)
 - **pnpm** — Required for monorepo management
 - Build dependencies for your OS — [Tauri prerequisites](https://v2.tauri.app/start/prerequisites/)
 
@@ -120,8 +120,9 @@ pnpm dev:app
 noderium/
 ├── apps/
 │   ├── app/          # Main application (Tauri + SolidJS)
+│   │   ├── src/      # SolidJS Frontend (UI)
+│   │   └── src-tauri/ # Rust Backend (Core Logic)
 │   └── docs/         # Documentation (Docusaurus)
-├── packages/         # Shared libraries (future)
 └── pnpm-workspace.yaml
 ```
 

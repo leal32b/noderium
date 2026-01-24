@@ -2,6 +2,10 @@
 
 > Your first 10 minutes with Noderium—from zero to productive.
 
+:::caution Work in Progress
+Noderium is currently in **Phase 1** of development. The features described below represent our **product vision** and are being actively developed. Some functionality (such as AI-powered auto-organization and conversational retrieval) is not yet available. Check our [Roadmap](/docs/introduction/roadmap) for the current status.
+:::
+
 ---
 
 ## The Aha Moment
@@ -146,7 +150,7 @@ Now that you've experienced the basics:
 1. **Keep capturing** for a week—let your knowledge base grow
 2. **Explore connections** in the graph view
 3. **Ask deeper questions** as you accumulate more notes
-4. **Read the Vision** to understand the philosophy behind Noderium
+4. **Read the [Vision](/docs/introduction/vision)** to understand the philosophy behind Noderium
 
 ---
 
@@ -182,4 +186,4 @@ Your job is to **think and create**. Noderium's job is everything else.
 
 ---
 
-*Ready to go deeper? Read about [The Five Design Pillars](/docs/introduction/pillars) that make this possible.*
+*Ready to go deeper? Read about [The Five Pillars](/docs/introduction/pillars) that make this possible.*

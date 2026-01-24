@@ -11,7 +11,7 @@ Before you begin, make sure you have the following installed:
 | Requirement | Version | Notes |
 |-------------|---------|-------|
 | **Rust** | Stable | [Install via rustup](https://rustup.rs/) |
-| **Node.js** | v20+ | [Download here](https://nodejs.org/) |
+| **Node.js** | v20+ LTS | [Download here](https://nodejs.org/) |
 | **pnpm** | Latest | Required for monorepo management |
 | **Build Dependencies** | - | See [Tauri prerequisites](https://v2.tauri.app/start/prerequisites/) for your OS |
 
@@ -66,8 +66,9 @@ The application will open automatically once compiled.
 noderium/
 ├── apps/
 │   ├── app/          # Main application (Tauri + SolidJS)
+│   │   ├── src/      # SolidJS Frontend (UI)
+│   │   └── src-tauri/ # Rust Backend (Core Logic)
 │   └── docs/         # Documentation (Docusaurus)
-├── packages/         # Shared libraries (future expansion)
 ├── pnpm-workspace.yaml
 └── package.json
 ```
@@ -150,8 +151,8 @@ corepack prepare pnpm@latest --activate
 Once installed, you're ready to:
 
 1. **Explore the app**: Create your first note and see the graph in action
-2. **Read the architecture**: Understand [the 5 pillars](/docs/introduction/pillars) that guide Noderium
-3. **Contribute**: Check out our [Contributing Guide](https://github.com/leal32b/noderium/blob/main/CONTRIBUTING.md)
+2. **Read the architecture**: Understand [The Five Pillars](/docs/introduction/pillars) that guide Noderium
+3. **Contribute**: Check out our [Contributing Guide](/docs/contributing/overview)
 
 ---
 
@@ -161,7 +162,4 @@ Once installed, you're ready to:
 |---------|-------------|
 | `pnpm dev:app` | Start the desktop app in development mode |
 | `pnpm dev:docs` | Start the documentation site locally |
-| `pnpm build:app` | Build the desktop app for production |
-| `pnpm build:docs` | Build the documentation site |
-| `pnpm test` | Run tests across all packages |
-| `pnpm lint` | Run linters across all packages |
+| `pnpm build` | Build all packages for production |
