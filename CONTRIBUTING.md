@@ -1,7 +1,10 @@
 # Contributing to Noderium
 
-First off, thank you for considering contributing to Noderium. We are building the highest-performance local-first note-taking app in existence, and we can't do it without you.
+First off, thank you for considering contributing to Noderium! We are building the highest-performance local-first note-taking app in existence, and we can't do it without you.
+
 Noderium is not just another Electron wrapper. We are building a **Tauri v2 + Rust + SolidJS** application that respects the user's RAM and treats Markdown files as the holy source of truth.
+
+> 📚 **Full Documentation**: For comprehensive contribution guidelines, including issue templates, PR workflows, and labels, visit our [Contributing Guide](https://leal32b.github.io/noderium/docs/contributing/overview).
 
 ## ⚡ The Philosophy
 
@@ -14,18 +17,11 @@ Before writing code, please understand our core tenets:
 ## 🛠 Prerequisites
 
 You will need the following tools installed:
-- **Node.js (LTS)** & **pnpm** (We use pnpm workspaces).
+- **Node.js (v20+ LTS)** & **pnpm** (We use pnpm workspaces).
 - **Rust (Stable)** & **Cargo**.
 - **System Dependencies:**
-  - _Linux:_ `libwebkit2gtk-4.0-dev`, `build-essential`, `curl`, `wget`, `libssl-dev`, `libgtk-3-dev`,
-`libayatana-appindicator3-dev`, `librsvg2-dev`.
-  - _Windows/macOS:_ Standard build tools (VS C++ Build Tools / Xcode Command Line
-Tools).
-- **SQLx CLI:** Required for database migrations.
-
-```bash
-cargo install sqlx-cli
-```
+  - _Linux:_ `libwebkit2gtk-4.1-dev`, `build-essential`, `curl`, `wget`, `file`, `libxdo-dev`, `libssl-dev`, `libgtk-3-dev`, `libayatana-appindicator3-dev`, `librsvg2-dev`.
+  - _Windows/macOS:_ Standard build tools (VS C++ Build Tools / Xcode Command Line Tools).
 
 ## 🏗 Monorepo Structure
 
@@ -44,54 +40,58 @@ noderium/
 
 1. **Clone the repository:**
     ```bash
-    git clone https://github.com/noderium/noderium.git
+    git clone https://github.com/leal32b/noderium.git
     cd noderium
     ```
 2. **Install dependencies:**
     ```bash
     pnpm install
-    pnpm dev:app
-    ````
-3. **Setup the Database (Dev)**: This runs the migrations in crates/noderium_db to create your local dev.db.
-    ```bash
-    pnpm db:setup
     ```
-4. **Run the App**: This command starts the Rust backend and the SolidJS frontend with Hot Module Replacement (HMR).
+3. **Run the App:** This command starts the Rust backend and the SolidJS frontend with Hot Module Replacement (HMR).
     ```bash
-    pnpm tauri dev
+    pnpm dev:app
     ```
 
 ## 💻 Development Workflow
 
 ### Working on the Frontend (SolidJS)
-- Located in apps/desktop/src.
+- Located in `apps/app/src`.
 - We use Tailwind CSS for styling.
 - State Management: We use Solid signals/stores. Avoid React-style patterns; embrace fine-grained reactivity.
 
 ### Working on the Core (Rust)
-- Database: If you change the database schema, you must create a migration:
-  ```bash
-  cd crates/noderium_db
-  sqlx migrate add <descriptive_name>
-  ```
-- Queries: We use sqlx. Queries are checked at compile-time. You must have a valid .env pointing to a DB to compile.
+- Located in `apps/app/src-tauri`.
+- The Rust backend handles file I/O, Markdown parsing, and SQLite indexing.
+- Follow Rust best practices and avoid `unwrap()` in production code.
+
+## 📝 Opening Issues
+
+We use structured issue templates to ensure consistency. When [creating a new issue](https://github.com/leal32b/noderium/issues/new/choose), choose the appropriate template:
+
+| Template | When to Use |
+|----------|-------------|
+| 🐞 **Bug Report** | Something isn't working as expected |
+| 💡 **Feature Request** | Suggest new features or enhancements (community) |
+| 🔧 **Chore** | Maintenance and housekeeping tasks |
+| 🔬 **Spike / Research** | Request technical investigation |
+| ✨ **Feature** | Define a feature for implementation (maintainers) |
+| ♻️ **Refactoring** | Propose code improvements |
+| 📚 **Documentation** | Report or improve documentation |
+
+For questions and discussions, use [GitHub Discussions](https://github.com/leal32b/noderium/discussions).
 
 ## 📮 Pull Request Process
 
 1. **Fork & Branch:** Create a branch for your feature (`feat/graph-view`) or bugfix (`fix/parser-crash`).
 2. **Conventional Commits:** We enforce Conventional Commits.
-   - feat: add bi-directional linking
-   - fix(core): resolve markdown parsing error
-   - perf: optimize graph traversal query
-3. **Check:** Run the full suite before pushing.
-    ```bash
-    pnpm turbo run test lint
-    ```
-4. **Open PR:** Link the issue you are solving.
+   - `feat:` add bi-directional linking
+   - `fix(core):` resolve markdown parsing error
+   - `perf:` optimize graph traversal query
+3. **Open PR:** Use the PR template and link the issue you are solving.
+4. **Review:** Address feedback and wait for approval.
 
 ## 🤝 Community
 
-<!-- Join the discussion on [Discord](https://discord.gg/noderium) or open a (https://github.com/noderium/noderium/discussions). -->
-Open a [Discussion](https://github.com/noderium/noderium/discussions).
+Open a [Discussion](https://github.com/leal32b/noderium/discussions).
 
 **Happy Coding!**

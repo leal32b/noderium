@@ -1,0 +1,7 @@
+{
+  "label": "Templates",
+  "link": {
+    "type": "generated-index",
+    "description": "Ready-to-use templates for product development: ADRs, RFCs, PRDs, and handoffs."
+  }
+}

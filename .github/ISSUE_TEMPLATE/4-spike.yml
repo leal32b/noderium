@@ -1,0 +1,170 @@
+name: 🔬 Spike / Research
+description: Propose a technical investigation or research task
+title: "[Spike]: "
+labels: ["type: spike", "status: triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Technical Spike / Research 🔍
+        
+        Use this template to propose a time-boxed investigation to reduce uncertainty or explore technical possibilities.
+
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: 📋 Preflight Checklist
+      description: Please ensure you've completed all of the following.
+      options:
+        - label: I have searched the [existing issues](https://github.com/leal32b/noderium/issues) to make sure this spike has not been proposed yet.
+          required: true
+        - label: I have checked the [documentation](https://leal32b.github.io/noderium) to see if this is already documented.
+          required: true
+
+  - type: textarea
+    id: objective
+    attributes:
+      label: 🎯 Spike Objective
+      description: What is the main question or uncertainty you want to resolve?
+      placeholder: |
+        The primary question we need to answer is...
+    validations:
+      required: true
+
+  - type: textarea
+    id: background
+    attributes:
+      label: 📖 Background / Context
+      description: Provide context on why this investigation is needed.
+      placeholder: |
+        - What triggered the need for this spike?
+        - What do we currently know?
+        - What are the unknowns?
+    validations:
+      required: true
+
+  - type: textarea
+    id: questions
+    attributes:
+      label: ❓ Key Questions to Answer
+      description: List the specific questions this spike should answer.
+      placeholder: |
+        1. Is it technically feasible to...?
+        2. What are the trade-offs between...?
+        3. How does X compare to Y in terms of...?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: spike-type
+    attributes:
+      label: 🏷️ Spike Type
+      description: What type of spike is this?
+      options:
+        - "Technical Feasibility - Can we do this?"
+        - "Architecture - How should we structure this?"
+        - "Technology Evaluation - Which tool/library should we use?"
+        - "Performance - What are the performance characteristics?"
+        - "Security - What are the security implications?"
+        - "Integration - How do we integrate with X?"
+        - "Proof of Concept - Build a working prototype"
+        - "Other"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: timebox
+    attributes:
+      label: ⏱️ Suggested Time-box
+      description: How much time should be allocated to this spike?
+      options:
+        - "1-2 hours"
+        - "Half day (4 hours)"
+        - "1 day"
+        - "2-3 days"
+        - "1 week"
+        - "To be determined"
+    validations:
+      required: true
+
+  - type: textarea
+    id: approach
+    attributes:
+      label: 🔢 Proposed Approach
+      description: How do you suggest approaching this investigation?
+      placeholder: |
+        - Research phase: ...
+        - Experimentation: ...
+        - Prototyping: ...
+    validations:
+      required: false
+
+  - type: textarea
+    id: success-criteria
+    attributes:
+      label: ✅ Success Criteria
+      description: What outcomes would make this spike successful?
+      placeholder: |
+        This spike will be successful if we:
+        - [ ] Answer question 1
+        - [ ] Have a recommendation for...
+        - [ ] Document our findings in...
+    validations:
+      required: true
+
+  - type: textarea
+    id: deliverables
+    attributes:
+      label: 📦 Expected Deliverables
+      description: What should be produced as a result of this spike?
+      placeholder: |
+        - [ ] Technical document / ADR
+        - [ ] Proof of concept code
+        - [ ] Comparison matrix
+        - [ ] Recommendation document
+        - [ ] Demo / presentation
+    validations:
+      required: true
+
+  - type: textarea
+    id: related-work
+    attributes:
+      label: 🔗 Related Issues / PRs
+      description: Link any related issues or pull requests.
+      placeholder: |
+        - #123 - Related feature request
+        - #456 - Depends on this spike
+    validations:
+      required: false
+
+  - type: textarea
+    id: resources
+    attributes:
+      label: 📚 Resources / References
+      description: List any resources, documentation, or references that might be helpful.
+      placeholder: |
+        - [Link to documentation]
+        - [Link to similar implementation]
+        - [Relevant article/blog post]
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: 🤝 Contribution
+      description: Would you be willing to contribute to this spike?
+      options:
+        - label: I would be willing to conduct this spike.
+          required: false
+        - label: I would be willing to help review the findings.
+          required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: ℹ️ Additional Context
+      description: Add any other context about this spike.
+      placeholder: Any other information that might help...
+    validations:
+      required: false

@@ -1,0 +1,115 @@
+name: 🔧 Chore / Maintenance
+description: Propose maintenance tasks, dependency updates, or housekeeping
+title: "[Chore]: "
+labels: ["type: chore", "status: triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Maintenance Task 🔧
+        
+        Use this template for routine maintenance, dependency updates, CI/CD improvements, and other housekeeping tasks.
+
+  - type: checkboxes
+    id: preflight
+    attributes:
+      label: 📋 Preflight Checklist
+      description: Please ensure you've completed all of the following.
+      options:
+        - label: I have searched the [existing issues](https://github.com/leal32b/noderium/issues) to make sure this task has not been proposed yet.
+          required: true
+
+  - type: dropdown
+    id: chore-type
+    attributes:
+      label: 🏷️ Chore Type
+      description: What type of maintenance task is this?
+      options:
+        - "Dependency Update"
+        - "CI/CD Improvement"
+        - "Build Configuration"
+        - "Development Tooling"
+        - "Code Cleanup"
+        - "Security Patch"
+        - "Repository Maintenance"
+        - "Release Management"
+        - "Other"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: 📝 Task Description
+      description: Describe the maintenance task that needs to be done.
+      placeholder: |
+        A clear description of what needs to be done...
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: ❓ Motivation
+      description: Why is this maintenance task needed?
+      placeholder: |
+        - Security vulnerability fix
+        - Keep dependencies up to date
+        - Improve CI/CD pipeline efficiency
+        - etc.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: 🔺 Priority
+      description: How urgent is this maintenance task?
+      options:
+        - "Low - Can be done when convenient"
+        - "Medium - Should be done in the near future"
+        - "High - Should be prioritized"
+        - "Critical - Security or blocking issue"
+    validations:
+      required: true
+
+  - type: textarea
+    id: affected-areas
+    attributes:
+      label: 📍 Affected Areas
+      description: What parts of the project will be affected?
+      placeholder: |
+        - CI/CD pipelines
+        - Package dependencies
+        - Build configuration
+        - etc.
+    validations:
+      required: false
+
+  - type: textarea
+    id: implementation
+    attributes:
+      label: 🛠️ Implementation Details
+      description: If known, describe how this task should be implemented.
+      placeholder: |
+        Steps or approach for completing this task...
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: 🤝 Contribution
+      description: Would you be willing to contribute to this task?
+      options:
+        - label: I would be willing to implement this task.
+          required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: ℹ️ Additional Context
+      description: Add any other context about this task.
+      placeholder: Any other information...
+    validations:
+      required: false
