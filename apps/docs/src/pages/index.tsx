@@ -315,11 +315,11 @@ export default function Home(): ReactNode {
                 }
               />
               <CardLink
-                title="Market Research"
-                to="/docs/discovery/market-research/market-research-index"
+                title="The Five Pillars"
+                to="/docs/introduction/pillars"
                 description={
                   <>
-                    Competitive landscape, user research, and strategic positioning.
+                    Architecture principles that make Noderium different. Design philosophy in detail.
                   </>
                 }
               />

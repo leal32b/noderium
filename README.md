@@ -137,7 +137,6 @@ noderium/
 | [The Five Pillars](https://leal32b.github.io/noderium/docs/introduction/pillars) | Architecture principles that resolve the tensions |
 | [Roadmap](https://leal32b.github.io/noderium/docs/introduction/roadmap) | Development phases and success metrics |
 | [Getting Started](https://leal32b.github.io/noderium/docs/getting-started/installation) | Installation and quick start guide |
-| [Market Research](https://leal32b.github.io/noderium/docs/discovery/market-research/market-research-index) | Competitive landscape and positioning |
 
 ---
 
