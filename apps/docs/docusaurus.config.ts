@@ -66,12 +66,12 @@ const config: Config = {
           position: 'left',
           label: 'Introduction',
         },
-        {
-          type: 'docSidebar',
-          sidebarId: 'discoverySidebar',
-          position: 'left',
-          label: 'Discovery',
-        },
+        // {
+        //   type: 'docSidebar',
+        //   sidebarId: 'discoverySidebar',
+        //   position: 'left',
+        //   label: 'Discovery',
+        // },
         {
           type: 'docSidebar',
           sidebarId: 'gettingStartedSidebar',
