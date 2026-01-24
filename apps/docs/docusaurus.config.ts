@@ -106,19 +106,6 @@ const config: Config = {
           ],
         },
         {
-          title: 'Strategy',
-          items: [
-            {
-              label: 'Market Research',
-              to: '/docs/discovery/market-research/market-research-index',
-            },
-            {
-              label: 'Design Strategy',
-              to: '/docs/discovery/market-research/design-strategy-brief',
-            },
-          ],
-        },
-        {
           title: 'More',
           items: [
             {
