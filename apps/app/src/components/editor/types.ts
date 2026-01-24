@@ -15,9 +15,9 @@ export interface LineInfo {
 }
 
 export interface ViewportState {
-  line: number;
-  from: number;
-  to: number;
+  readonly line: number;
+  readonly from: number;
+  readonly to: number;
 }
 
 export interface Viewport {
@@ -26,6 +26,6 @@ export interface Viewport {
 }
 
 export interface FenceMatch {
-  marker: string;
-  language: string;
+  readonly marker: string;
+  readonly language: string;
 }

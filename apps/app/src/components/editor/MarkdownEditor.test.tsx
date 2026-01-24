@@ -1,6 +1,5 @@
 import "@testing-library/jest-dom/vitest";
 
-import { describe, it, expect, vi, afterEach } from "vitest";
 import { createSignal } from "solid-js";
 import { render, cleanup } from "@solidjs/testing-library";
 import { EditorSelection } from "@codemirror/state";

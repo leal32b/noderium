@@ -1,4 +1,3 @@
-import { describe, it, expect } from "vitest";
 import { EditorState, EditorSelection } from "@codemirror/state";
 import { EditorView } from "@codemirror/view";
 import { markdown } from "@codemirror/lang-markdown";

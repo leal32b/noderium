@@ -1,8 +1,8 @@
 import { EditorView } from "@codemirror/view";
 
 const FONT_WEIGHT_BOLD = "700" as const;
-const FONT_SANS = "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif";
-const FONT_MONO = "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
+const FONT_SANS = "ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" as const;
+const FONT_MONO = "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" as const;
 
 export const editorTheme = EditorView.theme({
   "&": {
@@ -114,5 +114,25 @@ export const editorTheme = EditorView.theme({
   },
   ".cm-md-marker, .cm-md-marker span": {
     color: "var(--editor-marker-color, #94a3b8)",
+  },
+  ".cm-hide-link-syntax": {
+    position: "absolute",
+    width: "0",
+    height: "0",
+    opacity: "0",
+    pointerEvents: "none",
+  },
+  ".cm-md-link-active, .cm-md-link-active span": {
+    color: "var(--editor-link-active-color, #4f43ae) !important",
+  },
+  ".cm-link-widget": {
+    color: "var(--editor-link-color, #3b82f6)",
+    textDecoration: "underline",
+    cursor: "pointer",
+    borderRadius: "0.125rem",
+  },
+  ".cm-link-widget:hover": {
+    color: "var(--editor-link-hover-color, #2563eb)",
+    backgroundColor: "var(--editor-link-hover-bg, rgba(59, 130, 246, 0.1))",
   },
 });

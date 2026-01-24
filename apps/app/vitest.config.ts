@@ -22,7 +22,7 @@ export default defineConfig(async () => ({
         "src/index.tsx",
         "src/vite-env.d.ts",
         "src/**/*.test.{ts,tsx}",
-        "src/**/{index,types}.ts"
+        "src/**/{index,theme,types}.ts"
       ],
       provider: "v8",
       reporter: ['text', 'html', 'lcov'],

@@ -1,5 +1,7 @@
-import { createEffect, onMount, onCleanup } from "solid-js";
 import type { Extension } from "@codemirror/state";
+import type { MarkdownEditorProps } from "./types";
+
+import { createEffect, onCleanup, onMount } from "solid-js";
 import { EditorSelection, EditorState } from "@codemirror/state";
 import { EditorView, keymap } from "@codemirror/view";
 import { defaultHighlightStyle, syntaxHighlighting } from "@codemirror/language";
@@ -7,16 +9,18 @@ import { markdown } from "@codemirror/lang-markdown";
 import { defaultKeymap, history, historyKeymap } from "@codemirror/commands";
 import { languages as codeLanguages } from "@codemirror/language-data";
 
-import type { MarkdownEditorProps } from "./types";
-import { editorTheme } from "./theme";
-
-const DEFAULT_CONTENT = "# Welcome to Noderium";
 import {
   codeBlockDecorations,
   hideMarkdownExceptCurrentLine,
+  linkDecorations,
   markdownSemanticStyles,
 } from "./decorations";
 import { listKeymap } from "./keybindings";
+import { editorTheme } from "./theme";
+
+const DEFAULT_CONTENT = `# Welcome to Noderium
+[google](https://www.google.com)
+` as const;
 
 function createOnChangeListener(
   onChange: (value: string) => void,
@@ -39,6 +43,7 @@ function createEditorExtensions(
     codeBlockDecorations(),
     markdownSemanticStyles(),
     hideMarkdownExceptCurrentLine(),
+    linkDecorations(),
     syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
     keymap.of([...listKeymap, ...defaultKeymap, ...historyKeymap]),
     editorTheme,
