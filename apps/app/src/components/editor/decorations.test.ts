@@ -10,6 +10,7 @@ vi.mock("@tauri-apps/plugin-opener", () => ({
 }));
 
 import {
+  backlinkDecorations,
   codeBlockDecorations,
   computeInlineCodeRange,
   hideMarkdownExceptCurrentLine,
@@ -421,19 +422,6 @@ describe("markdownSemanticStyles", () => {
       view.destroy();
     });
 
-    it("applies heading class to setext headings", async () => {
-      const doc = "Setext Heading\n----";
-      const extension = markdownSemanticStyles();
-      const view = createEditorView(doc, [extension, markdown()]);
-
-      view.dispatch({ selection: EditorSelection.single(0) });
-      await tick();
-
-      const lines = queryLines(view);
-      expect(lines[0].classList.contains("cm-md-heading-2")).toBe(true);
-
-      view.destroy();
-    });
   });
 
   describe("inline formatting styles", () => {
@@ -508,7 +496,7 @@ describe("markdownSemanticStyles", () => {
       view.destroy();
     });
 
-    it("skips recomputation when cursor moves to another line", async () => {
+    it("recomputes when cursor moves to another line", async () => {
       const doc = "## Heading\nLine with `code`";
       const extension = markdownSemanticStyles();
       const view = createEditorView(doc, [extension, markdown()]);
@@ -522,7 +510,7 @@ describe("markdownSemanticStyles", () => {
       view.dispatch({ selection: EditorSelection.single(view.state.doc.line(2).from) });
       await tick();
 
-      expect(plugin.decorations).toBe(prevDecorations);
+      expect(plugin.decorations).not.toBe(prevDecorations);
 
       view.destroy();
     });
@@ -987,5 +975,214 @@ describe("isLinkWidgetClick", () => {
     const element = document.createElement("span");
 
     expect(isLinkWidgetClick(element)).toBe(false);
+  });
+});
+
+describe("backlinkDecorations", () => {
+  describe("backlink display when cursor is on backlink line", () => {
+    it("shows [[ and ]] markers with marker style when cursor is on line", async () => {
+      const doc = "First line\n[[my note]]\nThird line";
+      const extension = backlinkDecorations();
+      const view = createEditorView(doc, [extension, markdown()]);
+
+      // Move cursor to the backlink line
+      view.dispatch({ selection: EditorSelection.single(view.state.doc.line(2).from) });
+      await tick();
+
+      const plugin = getPlugin(view, extension);
+      const markers = collectDecorationsByClass(plugin, view.state.doc, "cm-md-backlink-marker");
+
+      expect(markers).toContain("[[");
+      expect(markers).toContain("]]");
+
+      view.destroy();
+    });
+
+    it("applies active text style to backlink content when cursor is on line", async () => {
+      const doc = "First line\n[[my note]]\nThird line";
+      const extension = backlinkDecorations();
+      const view = createEditorView(doc, [extension, markdown()]);
+
+      // Move cursor to the backlink line
+      view.dispatch({ selection: EditorSelection.single(view.state.doc.line(2).from) });
+      await tick();
+
+      const plugin = getPlugin(view, extension);
+      const activeText = collectDecorationsByClass(
+        plugin,
+        view.state.doc,
+        "cm-md-backlink-text-active"
+      );
+
+      expect(activeText).toContain("my note");
+
+      view.destroy();
+    });
+  });
+
+  describe("backlink display when cursor is outside backlink line", () => {
+    it("hides [[ and ]] markers when cursor is on different line", async () => {
+      const doc = "First line\n[[my note]]\nThird line";
+      const extension = backlinkDecorations();
+      const view = createEditorView(doc, [extension, markdown()]);
+
+      // Move cursor to first line
+      view.dispatch({ selection: EditorSelection.single(0) });
+      await tick();
+
+      const plugin = getPlugin(view, extension);
+      const hidden = collectDecorationsByClass(plugin, view.state.doc, "cm-hide-backlink-syntax");
+
+      expect(hidden).toContain("[[");
+      expect(hidden).toContain("]]");
+
+      view.destroy();
+    });
+
+    it("displays backlink content as widget when cursor is outside", async () => {
+      const doc = "First line\n[[my note]]\nThird line";
+      const extension = backlinkDecorations();
+      const view = createEditorView(doc, [extension, markdown()]);
+
+      // Move cursor to first line
+      view.dispatch({ selection: EditorSelection.single(0) });
+      await tick();
+
+      const lines = queryLines(view);
+      const backlinkLine = lines[1];
+      const widget = backlinkLine.querySelector(".cm-backlink-widget");
+
+      expect(widget).not.toBeNull();
+      expect(widget?.textContent).toBe("my note");
+
+      view.destroy();
+    });
+
+    it("sets data-backlink attribute on widget", async () => {
+      const doc = "First line\n[[my note]]\nThird line";
+      const extension = backlinkDecorations();
+      const view = createEditorView(doc, [extension, markdown()]);
+
+      // Move cursor to first line
+      view.dispatch({ selection: EditorSelection.single(0) });
+      await tick();
+
+      const lines = queryLines(view);
+      const backlinkLine = lines[1];
+      const widget = backlinkLine.querySelector(".cm-backlink-widget");
+
+      expect(widget?.getAttribute("data-backlink")).toBe("my note");
+
+      view.destroy();
+    });
+  });
+
+  describe("multiple backlinks", () => {
+    it("handles multiple backlinks on different lines", async () => {
+      const doc = "[[first note]]\nSome text\n[[second note]]";
+      const extension = backlinkDecorations();
+      const view = createEditorView(doc, [extension, markdown()]);
+
+      // Move cursor to the middle line
+      view.dispatch({ selection: EditorSelection.single(view.state.doc.line(2).from) });
+      await tick();
+
+      const lines = queryLines(view);
+
+      const firstWidget = lines[0].querySelector(".cm-backlink-widget");
+      const secondWidget = lines[2].querySelector(".cm-backlink-widget");
+
+      expect(firstWidget?.textContent).toBe("first note");
+      expect(secondWidget?.textContent).toBe("second note");
+
+      view.destroy();
+    });
+
+    it("handles multiple backlinks on same line when cursor is outside", async () => {
+      const doc = "First line\n[[note1]] and [[note2]]\nThird line";
+      const extension = backlinkDecorations();
+      const view = createEditorView(doc, [extension, markdown()]);
+
+      // Move cursor to first line
+      view.dispatch({ selection: EditorSelection.single(0) });
+      await tick();
+
+      const lines = queryLines(view);
+      const backlinkLine = lines[1];
+      const widgets = backlinkLine.querySelectorAll(".cm-backlink-widget");
+
+      expect(widgets).toHaveLength(2);
+      expect(widgets[0].textContent).toBe("note1");
+      expect(widgets[1].textContent).toBe("note2");
+
+      view.destroy();
+    });
+  });
+
+  describe("recomputation optimization", () => {
+    it("recomputes when cursor moves to different line", async () => {
+      const doc = "First line\n[[my note]]\nThird line";
+      const extension = backlinkDecorations();
+      const view = createEditorView(doc, [extension, markdown()]);
+      const plugin = getPlugin(view, extension);
+
+      view.dispatch({ selection: EditorSelection.single(0) });
+      await tick();
+
+      const prevDecorations = plugin.decorations;
+
+      view.dispatch({ selection: EditorSelection.single(view.state.doc.line(2).from) });
+      await tick();
+
+      expect(plugin.decorations).not.toBe(prevDecorations);
+
+      view.destroy();
+    });
+
+    it("skips recomputation when cursor stays on same line", async () => {
+      const doc = "First line\n[[my note]]\nThird line";
+      const extension = backlinkDecorations();
+      const view = createEditorView(doc, [extension, markdown()]);
+      const plugin = getPlugin(view, extension);
+
+      view.dispatch({ selection: EditorSelection.single(0) });
+      await tick();
+
+      const prevDecorations = plugin.decorations;
+
+      view.dispatch({ selection: EditorSelection.single(5) });
+      await tick();
+
+      expect(plugin.decorations).toBe(prevDecorations);
+
+      view.destroy();
+    });
+  });
+
+  describe("widget equality", () => {
+    it("reuses widget when backlink content is unchanged", async () => {
+      const doc = "First line\n[[my note]]\nThird line";
+      const extension = backlinkDecorations();
+      const view = createEditorView(doc, [extension, markdown()]);
+
+      view.dispatch({ selection: EditorSelection.single(0) });
+      await tick();
+
+      const lines = queryLines(view);
+      const widget1 = lines[1].querySelector(".cm-backlink-widget");
+
+      view.dispatch({ selection: EditorSelection.single(view.state.doc.line(3).from) });
+      await tick();
+
+      view.dispatch({ selection: EditorSelection.single(0) });
+      await tick();
+
+      const lines2 = queryLines(view);
+      const widget2 = lines2[1].querySelector(".cm-backlink-widget");
+
+      expect(widget1?.textContent).toBe(widget2?.textContent);
+
+      view.destroy();
+    });
   });
 });

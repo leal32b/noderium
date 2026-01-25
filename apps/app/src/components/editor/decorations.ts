@@ -40,8 +40,6 @@ const HEADING_CLASSES: Readonly<Record<string, string>> = {
   ATXHeading4: "cm-md-heading-4",
   ATXHeading5: "cm-md-heading-5",
   ATXHeading6: "cm-md-heading-6",
-  SetextHeading1: "cm-md-heading-1",
-  SetextHeading2: "cm-md-heading-2",
 };
 
 const INLINE_MARK_CLASSES: Readonly<Record<string, string>> = {
@@ -97,14 +95,11 @@ interface FenceState {
 function getViewportState(
   update: ViewUpdate,
   prevState: ViewportState,
-  currentLineNumber: number,
-  trackLine = true
+  currentLineNumber: number
 ): { shouldUpdate: boolean; state: ViewportState; viewport: Viewport } {
   const { viewport } = update.view;
 
-  const effectiveLine = trackLine ? currentLineNumber : prevState.line;
-
-  if (!shouldRecompute(update, prevState, effectiveLine)) {
+  if (!shouldRecompute(update, prevState, currentLineNumber)) {
     return { shouldUpdate: false, state: prevState, viewport };
   }
 
@@ -112,7 +107,7 @@ function getViewportState(
     shouldUpdate: true,
     viewport,
     state: {
-      line: trackLine ? currentLineNumber : prevState.line,
+      line: currentLineNumber,
       from: viewport.from,
       to: viewport.to,
     },
@@ -318,8 +313,7 @@ export function markdownSemanticStyles(): Extension {
         const { shouldUpdate, state: nextViewportState, viewport } = getViewportState(
           update,
           this.viewportState,
-          currentLine.number,
-          false
+          currentLine.number
         );
 
         if (!shouldUpdate) {
@@ -408,6 +402,8 @@ class LinkWidget extends WidgetType {
 
 const DECO_HIDE_LINK = Decoration.mark({ class: "cm-hide-link-syntax" });
 const DECO_LINK_ACTIVE = Decoration.mark({ class: "cm-md-link-active" });
+const DECO_BACKLINK_MARKER = Decoration.mark({ class: "cm-md-backlink-marker" });
+const DECO_HIDE_BACKLINK = Decoration.mark({ class: "cm-hide-backlink-syntax" });
 
 interface LinkInfo {
   from: number;
@@ -541,5 +537,147 @@ export function linkDecorations(): Extension {
         mousedown: (event) => isLinkWidgetClick(event.target as HTMLElement),
       },
     }
+  );
+}
+
+class BacklinkWidget extends WidgetType {
+  constructor(private readonly text: string) {
+    super();
+  }
+
+  toDOM(): HTMLElement {
+    const span = document.createElement("span");
+    span.className = "cm-backlink-widget";
+    span.textContent = this.text;
+    span.setAttribute("data-backlink", this.text);
+    return span;
+  }
+
+  eq(other: BacklinkWidget): boolean {
+    return this.text === other.text;
+  }
+}
+
+const BACKLINK_PATTERN = /\[\[([^\]]+)\]\]/g;
+
+interface BacklinkInfo {
+  from: number;
+  to: number;
+  textFrom: number;
+  textTo: number;
+  text: string;
+}
+
+function findBacklinks(text: string, lineFrom: number): BacklinkInfo[] {
+  const backlinks: BacklinkInfo[] = [];
+  let match: RegExpExecArray | null;
+
+  BACKLINK_PATTERN.lastIndex = 0;
+  while ((match = BACKLINK_PATTERN.exec(text)) !== null) {
+    const from = lineFrom + match.index;
+    const to = from + match[0].length;
+    const textFrom = from + 2; // skip [[
+    const textTo = to - 2; // skip ]]
+
+    backlinks.push({
+      from,
+      to,
+      textFrom,
+      textTo,
+      text: match[1],
+    });
+  }
+
+  return backlinks;
+}
+
+export function backlinkDecorations(): Extension {
+  return ViewPlugin.fromClass(
+    class BacklinkDecorationsPlugin {
+      decorations = Decoration.none;
+      viewportState: ViewportState = { line: -1, from: 0, to: 0 };
+
+      update(update: ViewUpdate): void {
+        const { state } = update;
+        const cursorPos = state.selection.main.head;
+        const currentLine = state.doc.lineAt(cursorPos);
+        const { shouldUpdate, state: nextViewportState, viewport } = getViewportState(
+          update,
+          this.viewportState,
+          currentLine.number
+        );
+
+        if (!shouldUpdate) {
+          return;
+        }
+
+        this.viewportState = nextViewportState;
+
+        const visibleRange = computeVisibleRange(state, viewport);
+        const { doc } = state;
+        const fromLine = doc.lineAt(visibleRange.from).number;
+        const toLine = doc.lineAt(visibleRange.to).number;
+        const decorations: { from: number; to: number; deco: Decoration }[] = [];
+
+        for (let lineIdx = fromLine; lineIdx <= toLine; lineIdx += 1) {
+          const line = doc.line(lineIdx);
+          const backlinks = findBacklinks(line.text, line.from);
+          const isOnCurrentLine = lineIdx === currentLine.number;
+
+          for (const backlink of backlinks) {
+            if (isOnCurrentLine) {
+              // On current line: show [[ and ]] with marker style
+              decorations.push({
+                from: backlink.from,
+                to: backlink.from + 2,
+                deco: DECO_BACKLINK_MARKER,
+              });
+              decorations.push({
+                from: backlink.to - 2,
+                to: backlink.to,
+                deco: DECO_BACKLINK_MARKER,
+              });
+              // Style the content
+              decorations.push({
+                from: backlink.textFrom,
+                to: backlink.textTo,
+                deco: Decoration.mark({ class: "cm-md-backlink-text-active" }),
+              });
+            } else {
+              // Off current line: hide [[ and ]] and show widget with hover effect
+              decorations.push({
+                from: backlink.from,
+                to: backlink.from + 2,
+                deco: DECO_HIDE_BACKLINK,
+              });
+              decorations.push({
+                from: backlink.to - 2,
+                to: backlink.to,
+                deco: DECO_HIDE_BACKLINK,
+              });
+              decorations.push({
+                from: backlink.textFrom,
+                to: backlink.textTo,
+                deco: Decoration.replace({
+                  widget: new BacklinkWidget(backlink.text),
+                }),
+              });
+            }
+          }
+        }
+
+        /* c8 ignore start -- secondary sort by end position for overlapping starts */
+        decorations.sort((a, b) => a.from - b.from || a.to - b.to);
+        /* c8 ignore stop */
+
+        const builder = new RangeSetBuilder<Decoration>();
+        for (const { from, to, deco } of decorations) {
+          builder.add(from, to, deco);
+        }
+
+        this.decorations = builder.finish();
+      }
+    },
+    { decorations: (plugin) => plugin.decorations }
   );
 }

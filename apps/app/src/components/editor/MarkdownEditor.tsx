@@ -9,7 +9,11 @@ import { markdown } from "@codemirror/lang-markdown";
 import { defaultKeymap, history, historyKeymap } from "@codemirror/commands";
 import { languages as codeLanguages } from "@codemirror/language-data";
 
+// Disable setext headings to avoid flickering when typing dashes/equals at line start
+const noSetextHeadings = { remove: ["SetextHeading"] as const };
+
 import {
+  backlinkDecorations,
   codeBlockDecorations,
   hideMarkdownExceptCurrentLine,
   linkDecorations,
@@ -20,6 +24,7 @@ import { editorTheme } from "./theme";
 
 const DEFAULT_CONTENT = `# Welcome to Noderium
 [google](https://www.google.com)
+Aqui um [[backlink]]
 ` as const;
 
 function createOnChangeListener(
@@ -39,11 +44,12 @@ function createEditorExtensions(
 ): Extension[] {
   const extensions: Extension[] = [
     history(),
-    markdown({ codeLanguages }),
+    markdown({ codeLanguages, extensions: [noSetextHeadings] }),
     codeBlockDecorations(),
     markdownSemanticStyles(),
     hideMarkdownExceptCurrentLine(),
     linkDecorations(),
+    backlinkDecorations(),
     syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
     keymap.of([...listKeymap, ...defaultKeymap, ...historyKeymap]),
     editorTheme,

@@ -132,6 +132,30 @@ export const editorTheme = EditorView.theme({
     borderRadius: "0.125rem",
   },
   ".cm-link-widget:hover": {
-    color: "var(--esnes_body_light)"
+    color: "var(--snes_body_light)",
+  },
+  ".cm-md-backlink-marker, .cm-md-backlink-marker span": {
+    color: "var(--editor-marker-color)",
+  },
+  ".cm-md-backlink-text-active": {
+    color: "var(--snes_accent_lavender)",
+  },
+  ".cm-hide-backlink-syntax": {
+    position: "absolute",
+    width: "0",
+    height: "0",
+    opacity: "0",
+    pointerEvents: "none",
+  },
+  ".cm-backlink-widget": {
+    color: "var(--sfc_blue_x)",
+    cursor: "pointer",
+    borderRadius: "0.125rem",
+    padding: "0.1rem 0rem",
+    transition: "background-color 0.15s ease, color 0.15s ease",
+  },
+  ".cm-backlink-widget:hover": {
+    backgroundColor: "var(--sfc_blue_x)",
+    color: "var(--snes_body_light)",
   },
 });
