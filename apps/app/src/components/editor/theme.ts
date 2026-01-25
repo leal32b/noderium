@@ -15,7 +15,7 @@ export const editorTheme = EditorView.theme({
   ".cm-content": {
     minHeight: "100%",
     padding: "1rem",
-    caretColor: "currentColor",
+    caretColor: "var(--snes_body_light)",
   },
   ".cm-editor": {
     height: "100%",
@@ -64,13 +64,13 @@ export const editorTheme = EditorView.theme({
   },
   ".cm-md-code": {
     fontFamily: FONT_MONO,
-    backgroundColor: "var(--editor-inline-code-bg, rgba(15, 23, 42, 0.06))",
+    backgroundColor: "var(--editor-inline-code-bg)",
     borderRadius: "0.25rem",
     padding: "0.1rem 0.2rem",
   },
   ".cm-md-codeblock": {
     fontFamily: FONT_MONO,
-    backgroundColor: "var(--editor-codeblock-bg, rgba(0, 0, 0, 0.3))",
+    backgroundColor: "var(--editor-codeblock-bg)",
     borderLeft: "2px solid var(--editor-codeblock-border, green)",
   },
   ".cm-md-codeblock-line": {
@@ -83,7 +83,7 @@ export const editorTheme = EditorView.theme({
     left: "0",
     width: "2rem",
     textAlign: "right",
-    color: "var(--editor-codeblock-line-number, rgba(148, 163, 184, 0.9))",
+    color: "var(--editor-codeblock-line-number)",
     fontVariantNumeric: "tabular-nums",
   },
   ".cm-md-codeblock-fence": {
@@ -113,7 +113,7 @@ export const editorTheme = EditorView.theme({
     pointerEvents: "none",
   },
   ".cm-md-marker, .cm-md-marker span": {
-    color: "var(--editor-marker-color, #94a3b8)",
+    color: "var(--editor-marker-color)",
   },
   ".cm-hide-link-syntax": {
     position: "absolute",
@@ -123,16 +123,15 @@ export const editorTheme = EditorView.theme({
     pointerEvents: "none",
   },
   ".cm-md-link-active, .cm-md-link-active span": {
-    color: "var(--editor-link-active-color, #4f43ae) !important",
+    color: "var(--snes_accent_lavender) !important",
   },
   ".cm-link-widget": {
-    color: "var(--editor-link-color, #3b82f6)",
+    color: "var(--sfc_blue_x)",
     textDecoration: "underline",
     cursor: "pointer",
     borderRadius: "0.125rem",
   },
   ".cm-link-widget:hover": {
-    color: "var(--editor-link-hover-color, #2563eb)",
-    backgroundColor: "var(--editor-link-hover-bg, rgba(59, 130, 246, 0.1))",
+    color: "var(--esnes_body_light)"
   },
 });
