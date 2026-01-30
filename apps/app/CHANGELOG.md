@@ -1,5 +1,11 @@
 # noderium-app
 
+## 0.2.0
+
+### Minor Changes
+
+- 14bceb3: Add Markdown editor
+
 ## 0.1.6
 
 ### Patch Changes
