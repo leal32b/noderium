@@ -8,19 +8,36 @@
     "dev": "vite",
     "build": "vite build",
     "serve": "vite preview",
+    "test": "vitest",
+    "test:verbose": "npm test -- --silent=false",
+    "test:watch": "npm run test:verbose -- --watch",
+    "test:ci": "npm test -- --coverage",
     "tauri": "tauri",
-    "sync-version": "node scripts/update-tauri-version.js && git add src-tauri/tauri.conf.json src-tauri/Cargo.toml"
+    "sync-version": "node scripts/update-tauri-version.js && git add src-tauri/tauri.conf.json src-tauri/Cargo.toml",
+    "bench:hide": "node scripts/bench-markdown-hide.js"
   },
   "license": "MIT",
   "dependencies": {
-    "solid-js": "^1.9.3",
-    "@tauri-apps/api": "^2",
-    "@tauri-apps/plugin-opener": "^2"
+    "@codemirror/commands": "^6.10.1",
+    "@codemirror/lang-markdown": "^6.5.0",
+    "@codemirror/language": "^6.12.1",
+    "@codemirror/language-data": "^6.5.2",
+    "@codemirror/state": "^6.5.4",
+    "@codemirror/view": "^6.39.12",
+    "@lezer/markdown": "^1.6.3",
+    "@tauri-apps/api": "^2.9.1",
+    "@tauri-apps/plugin-opener": "^2.5.3",
+    "solid-js": "^1.9.11"
   },
   "devDependencies": {
-    "typescript": "~5.6.2",
-    "vite": "^6.0.3",
-    "vite-plugin-solid": "^2.11.0",
-    "@tauri-apps/cli": "^2"
+    "@solidjs/testing-library": "^0.8.10",
+    "@tauri-apps/cli": "^2.9.6",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@vitest/coverage-v8": "^4.0.18",
+    "jsdom": "^27.4.0",
+    "typescript": "~5.9.3",
+    "vite": "^7.3.1",
+    "vite-plugin-solid": "^2.11.10",
+    "vitest": "^4.0.18"
   }
 }

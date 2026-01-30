@@ -1,0 +1,292 @@
+You are an expert in TDD, DDD, TypeScript, Vitest, Tauri v2, Rust, SolidJS, CodeMirror 6,
+TailwindCSS, SQLite, ESLint, pnpm monorepos and extreme organization/performance.
+
+================================================================================
+PROJECT CONTEXT (Noderium)
+================================================================================
+Personal Knowledge Management app: a "thinking partner" for knowledge workers.
+
+The Three Fundamental Tensions (why 80% abandon PKM tools):
+1. Capture Paradox: manual capture is friction, ideas get lost (8.2h/week wasted).
+2. Maintenance Tax: 3-5h/week organizing, not thinking (cognitive fatigue).
+3. Retrieval Failure: search has 10% accuracy, trust erodes (abandonment).
+
+Core Beliefs (non-negotiable):
+1. Your knowledge is an extension of your identity.
+2. Cognitive load is real and finite (every org decision steals from thinking).
+3. Trust is the foundation (transparency, local control, results).
+4. AI changes the game (but only if local-first, yours, and transparent).
+5. Simplicity in complexity is luxury (focused constraints liberate).
+
+The Five Design Pillars (never compromise):
+1. Minimum-Effort Capture - thought to saved in <5 seconds
+2. Invisible Organization - AI-driven, zero user maintenance
+3. Conversational Retrieval - dialogue-first, 95%+ success rate
+4. Ownership & Privacy - local-first, open formats, user control
+5. Intentional Onboarding - productive in <10 minutes
+
+Core Architecture Principle:
+  Markdown files on disk = Source of Truth
+  SQLite = disposable index (can be rebuilt from files)
+  AI = invisible assistant, not a visible feature
+
+Local-first by default. Cloud is optional and transparent.
+UX goal: feels like thinking, not working. Avoid feature bloat.
+
+================================================================================
+MONOREPO STRUCTURE (pnpm workspaces)
+================================================================================
+noderium/
+  apps/
+    app/           # Main Tauri application
+      src/         # SolidJS frontend (UI layer)
+      src-tauri/   # Rust backend (core logic)
+    docs/          # Docusaurus documentation
+  .changeset/      # Changesets for versioning
+
+Commands:
+  pnpm install     # Install all workspace dependencies
+  pnpm dev:app     # Run desktop app (Vite + Tauri)
+  pnpm dev:docs    # Run documentation site
+  pnpm test        # Run tests across workspaces
+
+================================================================================
+GLOBAL PRINCIPLES
+================================================================================
+- Prefer smallest, fastest, simplest solution that meets the goal.
+- Optimize for startup time (<1s), interaction latency (<100ms), memory, battery.
+- Avoid unnecessary dependencies, re-renders, and IO.
+- Keep architecture clean, modular, and discoverable.
+- Use ASCII in edits unless file already uses Unicode.
+
+================================================================================
+DDD VOCABULARY (use consistently)
+================================================================================
+Domain terms from product docs:
+- capture: act of saving a thought/note (<5s)
+- vault: user's local knowledge repository (folder of markdown files)
+- knowledge graph: relationships between notes (links, tags, semantic)
+- conversation: dialogue with AI about your knowledge
+- intent: what the user wants to accomplish (detected automatically)
+- retrieval: finding information via conversation or search
+- sync: optional cloud synchronization (user-controlled)
+
+Bounded contexts:
+- Capture Domain: quick entry, auto-enrichment, intent recognition
+- Organization Domain: AI-driven taxonomy, knowledge graph
+- Retrieval Domain: conversational interface, search, synthesis
+- Vault Domain: file I/O, watcher, markdown parsing
+- Sync Domain: optional cloud, conflict resolution
+
+================================================================================
+TDD / VITEST
+================================================================================
+- Always write/adjust tests first or alongside behavior changes.
+- Favor deterministic tests; avoid timers, random, and IO when possible.
+- Test public behavior, not internal implementation details.
+- Keep tests fast; mock filesystem/network; prefer in-memory SQLite.
+- Use descriptive test names: "<behavior> when <condition>".
+- Keep coverage always at 100%.
+- Use c8 ignore comments sparingly (only for truly untestable code like DOM).
+
+Test file naming: <module>.test.ts or <module>.test.tsx
+Test structure: describe blocks for grouping, it blocks for cases.
+
+Common test patterns in this codebase:
+- Helper functions: createEditorView(), getPlugin(), tick()
+- Mock external dependencies: vi.mock("@tauri-apps/plugin-opener")
+- Async tests: await tick() for microtask flushing
+- Cleanup: always call view.destroy() after EditorView tests
+
+File structure per feature (co-located):
+  module.ts           # Implementation
+  module.test.ts      # Tests
+  types.ts            # Interfaces and types (no tests needed)
+  utils.ts            # Shared utilities
+  utils.test.ts       # Utility tests
+  index.ts            # Public exports (no tests needed)
+
+================================================================================
+TYPESCRIPT / SOLIDJS
+================================================================================
+- Prefer strict typing, narrow types, and explicit return types for public APIs.
+- Favor functional composition; keep components small and single-purpose.
+- Minimize reactive dependencies and expensive computations.
+- Use memoization where it removes recomputation without adding complexity.
+- Prefer createEffect for side effects, createMemo for derived state.
+- Avoid React patterns; embrace SolidJS fine-grained reactivity.
+
+Type imports: use `import type { X }` for type-only imports.
+Props: define with interface, e.g., `interface MyComponentProps { ... }`.
+
+================================================================================
+CODEMIRROR 6
+================================================================================
+CodeMirror 6 is used for the Markdown editor. Key patterns:
+
+ViewPlugin pattern:
+- Use ViewPlugin.fromClass for stateful decorations.
+- Track viewport state to avoid unnecessary recomputation.
+- Use RangeSetBuilder for efficient decoration building.
+- Sort decorations by position before building.
+
+Decoration types:
+- Decoration.mark: inline styling (e.g., bold, code)
+- Decoration.line: line-level styling (e.g., headings, code blocks)
+- Decoration.widget: replace content with custom DOM
+- Decoration.replace: hide/replace text ranges
+
+Performance:
+- Only process visible viewport (use computeVisibleRange).
+- Cache state between updates; invalidate on docChanged.
+- Use shouldRecompute guards to skip unnecessary work.
+- Avoid syntaxTree traversal on every keystroke.
+
+Widget best practices:
+- Extend WidgetType; implement toDOM() and eq().
+- Use event delegation; attach listeners in toDOM().
+- Return false from eq() only when content differs.
+
+================================================================================
+TAILWINDCSS / UI
+================================================================================
+- Keep class lists readable and consistent; avoid excessive variants.
+- Prefer design tokens/utilities already in the project.
+- UI should be minimal, calm, and fast.
+- Follow the principle: "Beauty over features" - every pixel has purpose.
+- Dark mode ready; use CSS custom properties for theming.
+
+================================================================================
+TAURI V2 / RUST
+================================================================================
+Tauri v2 specific:
+- Use plugin system (@tauri-apps/plugin-*) for OS features.
+- Define capabilities in src-tauri/capabilities/ for security.
+- Prefer async commands; use tauri::async_runtime.
+
+Rust commands:
+- Keep commands small, focused, and async where appropriate.
+- Prefer zero-copy where feasible; avoid large payloads over IPC.
+- Validate inputs at the boundary; return structured errors with thiserror.
+- Never use unwrap() in production code; use Result and proper error handling.
+
+IPC best practices:
+- Serialize only necessary data.
+- Use events for push notifications from Rust to frontend.
+- Batch related operations to reduce IPC overhead.
+
+Dynamic import pattern for Tauri plugins (with fallback):
+  async function openExternalUrl(url: string): Promise<void> {
+    try {
+      const { openUrl } = await import("@tauri-apps/plugin-opener");
+      await openUrl(url);
+    } catch {
+      window.open(url, "_blank", "noopener,noreferrer");
+    }
+  }
+
+================================================================================
+SQLITE / LOCAL-FIRST STORAGE
+================================================================================
+Key principle: SQLite is a cache/index, not the source of truth.
+Markdown files are the source of truth; DB can be rebuilt from them.
+
+- Prefer efficient schema design; indexes for hot paths.
+- Use transactions for multi-step writes.
+- Avoid N+1 queries; batch and prepare statements.
+- Keep migrations simple and reversible.
+- Use FTS5 for full-text search when implemented.
+
+================================================================================
+PERFORMANCE EXPECTATIONS
+================================================================================
+Concrete targets (from product pillars):
+- Capture: <5 seconds from thought to saved
+- Retrieval: <3 seconds to find via conversation
+- Startup: <1 second to interactive
+- UI response: <100ms for user actions
+
+Guidelines:
+- Prioritize responsive UI; avoid blocking the main thread.
+- Lazy load only when needed; do not introduce heavyweight bundles.
+- Defer non-critical work; measure before optimizing.
+- Use Web Workers for heavy computation if needed.
+
+================================================================================
+CONVENTIONAL COMMITS
+================================================================================
+Format: <type>(<scope>): <description>
+
+Types:
+  feat     - New feature
+  fix      - Bug fix
+  perf     - Performance improvement
+  refactor - Code change without behavior change
+  docs     - Documentation only
+  test     - Adding/updating tests
+  chore    - Maintenance (deps, CI, build)
+  style    - Code style (formatting)
+  ci       - CI/CD changes
+  build    - Build system changes
+
+Scopes (Noderium-specific):
+  core     - Rust backend
+  ui       - SolidJS frontend
+  editor   - Markdown editor (CodeMirror)
+  graph    - Knowledge graph visualization
+  search   - Search functionality
+  db       - SQLite/database layer
+  parser   - Markdown parser
+  api      - Tauri commands
+  docs     - Documentation
+  deps     - Dependencies
+
+Examples:
+  feat(editor): add bidirectional link support
+  fix(parser): resolve heading crash on empty content
+  perf(db): optimize knowledge graph query
+  refactor(ui): extract capture dialog component
+
+Branch naming:
+  feat/<description>      e.g., feat/graph-view
+  fix/<description>       e.g., fix/parser-crash
+  refactor/<description>  e.g., refactor/api-layer
+  docs/<description>      e.g., docs/contributing-guide
+  chore/<description>     e.g., chore/update-deps
+
+================================================================================
+CHANGESETS (versioning)
+================================================================================
+Use changesets for version management:
+  pnpm changeset        # Create a new changeset
+  pnpm changeset version # Bump versions based on changesets
+
+Changeset types: major | minor | patch
+Write user-facing descriptions in changesets.
+
+================================================================================
+DOCUMENTATION TEMPLATES (in apps/docs/docs/00-templates/)
+================================================================================
+Use these templates for technical documents:
+- template-prd.md:     Product Requirements Document (features, user stories)
+- template-rfc.md:     Request for Comments (technical proposals, architecture)
+- template-adr.md:     Architecture Decision Record (decisions, trade-offs)
+- template-handoff.md: Engineering handoff (ready for dev)
+
+Issue types (use appropriate template):
+- Bug Report: something isn't working as expected
+- Feature Request: community-suggested feature
+- Feature: approved feature for implementation
+- Chore: maintenance and housekeeping
+- Spike: time-boxed technical investigation
+- Refactoring: code improvement without behavior change
+- Documentation: documentation improvements
+
+================================================================================
+WHEN UNCERTAIN
+================================================================================
+- Choose the most lightweight approach.
+- Document assumptions briefly in code comments if needed.
+- Refer to the Five Pillars when making architectural decisions.
+- Ask: "Does this reduce cognitive load for the user?"
+- Remember: users abandon because systems cost more than they're worth.

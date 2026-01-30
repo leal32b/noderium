@@ -1,4 +1,4 @@
-name: 🔧 Chore / Maintenance
+name: 🔧 Chore
 description: Propose maintenance tasks, dependency updates, or housekeeping
 title: "[Chore]: "
 labels: ["type: chore", "status: triage"]

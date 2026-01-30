@@ -76,6 +76,9 @@ jobs:
       - name: Type Check (TypeScript)
         run: pnpm --filter noderium-app tsc --noEmit
 
+      - name: Run Frontend Tests (Vitest)
+        run: pnpm --filter noderium-app test:ci
+
       - name: Build Frontend
         run: pnpm --filter noderium-app build
 

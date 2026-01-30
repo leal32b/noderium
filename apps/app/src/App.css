@@ -5,14 +5,47 @@
 .logo.solid:hover {
   filter: drop-shadow(0 0 2em #2f5d90);
 }
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+}
+
 :root {
+  /* --- Cores do Console SNES (Americano) --- */
+  --snes_body_light: #b0b1b5;   /* Cinza claro do corpo principal */
+  --snes_body_dark: #818389;    /* Cinza escuro da base e detalhes */
+  --snes_accent_purple: #51308d; /* Roxo escuro dos botões Power/Reset */
+  --snes_accent_lavender: #a0a0d1; /* Lilás claro dos botões X e Y */
+  /* --- Cores dos Botões SFC (Super Famicom / Europeu) --- */
+  --sfc_red_a: #d82828;    /* Botão A (Vermelho) */
+  --sfc_yellow_b: #f0b000; /* Botão B (Amarelo) */
+  --sfc_blue_x: #0060b0;   /* Botão X (Azul) */
+  --sfc_green_y: #008840;  /* Botão Y (Verde) */
+  /* --- Detalhes Adicionais --- */
+  --snes_dpad: #212121;    /* Preto levemente fosco do D-Pad */
+  --snes_text: #4a4a4a;    /* Cor do texto do logo */
+  
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 24px;
   font-weight: 400;
 
-  color: #0f0f0f;
-  background-color: #f6f6f6;
+  color: #211a21;
+  background-color: #cec9cc;
+  --editor-inline-code-bg: rgba(15, 23, 42, 0.06);
+  --editor-codeblock-bg: rgba(0, 0, 0, 0.3);
+  --editor-codeblock-border: #16a34a;
+  --editor-codeblock-line-number: rgba(148, 163, 184, 0.9);
+  --editor-marker-color: rgba(0, 255, 0, 1);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -97,8 +130,13 @@ button {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    color: #f6f6f6;
-    background-color: #2f2f2f;
+    color: var(--snes_body_light);
+    background-color: var(--snes_dpad);
+    --editor-inline-code-bg: var(--snes_text);
+    --editor-codeblock-bg: var(--snes_text);
+    --editor-codeblock-border: var(--snes_accent_purple);
+    --editor-codeblock-line-number: var(--snes_dpad);
+    --editor-marker-color: var(--snes_accent_lavender);
   }
 
   a:hover {
