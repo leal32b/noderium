@@ -1,7 +1,7 @@
 import { ViewUpdate } from "@codemirror/view";
 
-import { hideMarkers } from "../../../../src/components/editor/decorators/hideMarkers";
-import { createEditorView } from '../__helpers__/editorHelpers'
+import { hideMarkers } from "../../../src/components/editor/hideMarkers";
+import { createEditorView } from './__helpers__/editorHelpers'
 import { collectReplacedRangesForLine, getPlugin } from './__helpers__/decoratorsHelper'
 
 

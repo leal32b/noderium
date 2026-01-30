@@ -4,7 +4,7 @@ import { indentWithTab, history, historyKeymap } from "@codemirror/commands";
 import { markdown } from "@codemirror/lang-markdown";
 import { Strikethrough, TaskList } from "@lezer/markdown";
 import { onMount } from "solid-js";
-import { hideMarkers } from './decorators/hideMarkers'
+import { hideMarkers } from './hideMarkers'
 import { shortcuts } from './shortcuts'
 
 const DEFAULT_CONTENT = `
