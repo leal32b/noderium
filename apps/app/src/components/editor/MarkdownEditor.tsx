@@ -1,10 +1,11 @@
 import { EditorState } from "@codemirror/state";
 import { EditorView, keymap } from "@codemirror/view";
-import { indentWithTab } from "@codemirror/commands";
+import { indentWithTab, history, historyKeymap } from "@codemirror/commands";
 import { markdown } from "@codemirror/lang-markdown";
 import { Strikethrough, TaskList } from "@lezer/markdown";
 import { onMount } from "solid-js";
 import { hideMarkers } from './decorators/hideMarkers'
+import { shortcuts } from './shortcuts'
 
 const DEFAULT_CONTENT = `
 # Welcome to Noderium
@@ -33,8 +34,10 @@ const MarkdownEditor = () => {
     const state = EditorState.create({
       doc: DEFAULT_CONTENT,
       extensions: [
-        keymap.of([indentWithTab]),
+        history(),
+        keymap.of([...historyKeymap, indentWithTab]),
         markdown({ extensions: [Strikethrough, TaskList] }),
+        shortcuts,
         hideMarkers
       ]
     })
