@@ -2,12 +2,11 @@ import { RangeSetBuilder } from "@codemirror/state";
 import { syntaxTree } from "@codemirror/language";
 import { Decoration, EditorView, ViewPlugin, type DecorationSet, type ViewUpdate } from "@codemirror/view";
 
-/**
- * ViewPlugin that hides markdown syntax markers (e.g. `#`, `*`, `[[...]]`) everywhere
- * except on the line containing the cursor. Uses viewport + syntax tree for performance.
- */
+type SimpleRange = {
+  from: number;
+  to: number;
+}
 
-/** Map of syntax mark node types to trailing spaces to include in the hide range (0 or 1). */
 const NODE_TYPES = new Map<string, number>([
   ["HeaderMark", 1],
   ["EmphasisMark", 0],
@@ -22,16 +21,6 @@ const NODE_TYPES = new Map<string, number>([
 
 const BACKLINK_PATTERN = /\[\[([^\]]+)\]\]/g;
 
-/** Half-open document range [from, to). */
-interface SimpleRange {
-  from: number;
-  to: number;
-}
-
-/**
- * Merges overlapping or adjacent ranges into a sorted, non-overlapping list.
- * Required because RangeSetBuilder does not accept overlapping ranges.
- */
 const mergeRanges = (ranges: SimpleRange[]): SimpleRange[] => {
   if (ranges.length === 0) return [];
 
@@ -81,6 +70,7 @@ const hideMarkers = ViewPlugin.fromClass(
       const backlinkRanges: SimpleRange[] = [];
 
       const docString = state.doc.sliceString(from, to);
+
       BACKLINK_PATTERN.lastIndex = 0;
       let m: RegExpExecArray | null;
 
@@ -98,8 +88,7 @@ const hideMarkers = ViewPlugin.fromClass(
 
       backlinkRanges.sort((a, b) => a.from - b.from);
 
-      // Single index over sorted backlinkRanges for O(1) amortized overlap checks.
-      let blIndex = 0; 
+      let backlinkIndex = 0; 
 
       syntaxTree(state).iterate({
         from,
@@ -107,17 +96,17 @@ const hideMarkers = ViewPlugin.fromClass(
         enter: (node) => {
           const typeName = node.type.name;
           const spaces = NODE_TYPES.get(typeName);
+          
           if (spaces === undefined) return;
 
           if (node.from >= cursorStart && node.to <= cursorEnd) return;
 
-          while (blIndex < backlinkRanges.length && backlinkRanges[blIndex].to <= node.from) {
-            blIndex++;
+          while (backlinkIndex < backlinkRanges.length && backlinkRanges[backlinkIndex].to <= node.from) {
+            backlinkIndex++;
           }
 
-          const currentBl = backlinkRanges[blIndex];
-          const isOverlappingBacklink =
-            currentBl && node.from >= currentBl.from && node.to <= currentBl.to;
+          const currentBacklink = backlinkRanges[backlinkIndex];
+          const isOverlappingBacklink = currentBacklink && node.from >= currentBacklink.from && node.to <= currentBacklink.to;
 
           if ((typeName === "LinkMark" || typeName === "URL") && isOverlappingBacklink) {
             return;

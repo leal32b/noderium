@@ -1,10 +1,10 @@
 import "./App.css";
-import { MarkdownEditor2 } from "./components/editor2/MarkdownEditor2";
+import { MarkdownEditor } from "./components/editor/MarkdownEditor";
 
 function App() {
   return (
     <main style={{ height: "100vh", width: "100vw", margin: 0, padding: 0 }}>
-      <MarkdownEditor2 />
+      <MarkdownEditor />
     </main>
   );
 }

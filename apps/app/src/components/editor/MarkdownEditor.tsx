@@ -1,121 +1,57 @@
-import type { Extension } from "@codemirror/state";
-import type { MarkdownEditorProps } from "./types";
-
-import { createEffect, onCleanup, onMount } from "solid-js";
-import { EditorSelection, EditorState } from "@codemirror/state";
+import { EditorState } from "@codemirror/state";
 import { EditorView, keymap } from "@codemirror/view";
-import { defaultHighlightStyle, syntaxHighlighting } from "@codemirror/language";
+import { indentWithTab } from "@codemirror/commands";
 import { markdown } from "@codemirror/lang-markdown";
-import { defaultKeymap, history, historyKeymap } from "@codemirror/commands";
-import { languages as codeLanguages } from "@codemirror/language-data";
+import { Strikethrough, TaskList } from "@lezer/markdown";
+import { onMount } from "solid-js";
+import { hideMarkers } from './decorators/hideMarkers'
 
-// Disable setext headings to avoid flickering when typing dashes/equals at line start
-const noSetextHeadings = { remove: ["SetextHeading"] as const };
+const DEFAULT_CONTENT = `
+# Welcome to Noderium
+*EmphasisMark*
+**EmphasisMark**
+_EmphasisMark_
+__EmphasisMark__
+~~StrikethroughMark~~
+[LinkMark](https://www.google.com)
+- ListMark
+* ListMark
++ ListMark
+- [ ] TaskMarker
+> QuoteMark
+\`inline code\`
+\`\`\`bash
+  npm i
+\`\`\`
+[[Wikilink]]
+`;
 
-import {
-  backlinkDecorations,
-  codeBlockDecorations,
-  hideMarkdownExceptCurrentLine,
-  linkDecorations,
-  markdownSemanticStyles,
-} from "./decorations";
-import { listKeymap } from "./keybindings";
-import { editorTheme } from "./theme";
-
-const DEFAULT_CONTENT = `# Welcome to Noderium
-[google](https://www.google.com)
-Aqui um [[backlink]]
-` as const;
-
-function createOnChangeListener(
-  onChange: (value: string) => void,
-  isApplyingExternal: { value: boolean }
-): Extension {
-  return EditorView.updateListener.of((update) => {
-    if (update.docChanged && !isApplyingExternal.value) {
-      onChange(update.state.doc.toString());
-    }
-  });
-}
-
-function createEditorExtensions(
-  onChange: ((value: string) => void) | undefined,
-  isApplyingExternal: { value: boolean }
-): Extension[] {
-  const extensions: Extension[] = [
-    history(),
-    markdown({ codeLanguages, extensions: [noSetextHeadings] }),
-    codeBlockDecorations(),
-    markdownSemanticStyles(),
-    hideMarkdownExceptCurrentLine(),
-    linkDecorations(),
-    backlinkDecorations(),
-    syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
-    keymap.of([...listKeymap, ...defaultKeymap, ...historyKeymap]),
-    editorTheme,
-  ];
-
-  if (onChange) {
-    extensions.push(createOnChangeListener(onChange, isApplyingExternal));
-  }
-
-  return extensions;
-}
-
-export default function MarkdownEditor(props: MarkdownEditorProps) {
+const MarkdownEditor = () => {
   let containerRef!: HTMLDivElement;
-  let editorView: EditorView | null = null;
-  const isApplyingExternal = { value: false };
 
   onMount(() => {
     const state = EditorState.create({
-      doc: props.value ?? props.initialContent ?? DEFAULT_CONTENT,
-      extensions: createEditorExtensions(props.onChange, isApplyingExternal),
-    });
+      doc: DEFAULT_CONTENT,
+      extensions: [
+        keymap.of([indentWithTab]),
+        markdown({ extensions: [Strikethrough, TaskList] }),
+        hideMarkers
+      ]
+    })
 
-    editorView = new EditorView({
+    new EditorView({
       state,
-      parent: containerRef,
-    });
-
-    props.onReady?.(editorView);
-  });
-
-  createEffect(() => {
-    if (!editorView || props.value === undefined) {
-      return;
-    }
-
-    const currentValue = editorView.state.doc.toString();
-    if (currentValue === props.value) {
-      return;
-    }
-
-    const clampedHead = Math.min(
-      editorView.state.selection.main.head,
-      props.value.length
-    );
-
-    isApplyingExternal.value = true;
-    editorView.dispatch({
-      changes: { from: 0, to: editorView.state.doc.length, insert: props.value },
-      selection: EditorSelection.single(clampedHead),
-    });
-    isApplyingExternal.value = false;
-  });
-
-  onCleanup(() => {
-    editorView?.destroy();
-    editorView = null;
-  });
+      parent: containerRef
+    })
+  })
 
   return (
     <div
-    ref={(el) => { containerRef = el; }}
-    class={props.class}
-    style={{ width: "100%", height: "100%" }}
+      ref={(el) => { containerRef = el; }}
+      style={{ width:  "100%", height: "100%" }}
     />
-  );
-/* c8 ignore start */
+  )
 }
-/* c8 ignore stop */
+
+/* v8 ignore next -- @preserve */
+export { MarkdownEditor };

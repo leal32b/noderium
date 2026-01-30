@@ -10,7 +10,7 @@ export default defineConfig(async () => ({
   test: {
     environment: "jsdom",
     globals: true,
-    include: ['**/*.test.{ts,tsx}'],
+    include: ['test/**/*.test.{ts,tsx}'],
     logHeapUsage: true,
     pool: 'vmThreads',
     silent: true,

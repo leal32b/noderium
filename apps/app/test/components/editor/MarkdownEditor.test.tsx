@@ -1,7 +1,7 @@
 import { render } from "@solidjs/testing-library";
 import { EditorView } from "@codemirror/view";
 import { language } from "@codemirror/language";
-import { MarkdownEditor2 } from '../../../src/components/editor2/MarkdownEditor2';
+import { MarkdownEditor } from '../../../src/components/editor/MarkdownEditor';
 
 type SutTypes = {
   container: HTMLElement;
@@ -11,7 +11,7 @@ type SutTypes = {
 }
 
 const makeSut = (): SutTypes => {
-  const { container } = render(() => <MarkdownEditor2 />);
+  const { container } = render(() => <MarkdownEditor />);
   const editor = container.querySelector('.cm-editor') as HTMLElement;
   const view = EditorView.findFromDOM(editor)!;
   const content = editor.querySelector('.cm-content') as HTMLElement;
@@ -19,7 +19,7 @@ const makeSut = (): SutTypes => {
   return { container, editor, view, content };
 };
 
-describe("MarkdownEditor2", () => {
+describe("MarkdownEditor", () => {
   it("creates a new editor view", () => {
     const { container } = makeSut();
 
