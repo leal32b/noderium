@@ -1,3 +1,5 @@
+import { fileURLToPath } from 'node:url'
+
 import { defineConfig } from 'vite'
 import solid from 'vite-plugin-solid'
 
@@ -7,6 +9,12 @@ const host = process.env.TAURI_DEV_HOST
 export default defineConfig(() => ({
   clearScreen: false,
   plugins: [solid()],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('src', import.meta.url)),
+      '~': fileURLToPath(new URL('test', import.meta.url))
+    }
+  },
   server: {
     hmr: host
       ? {

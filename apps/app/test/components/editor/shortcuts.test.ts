@@ -1,8 +1,9 @@
 import { EditorSelection, EditorState } from '@codemirror/state'
 import { EditorView } from '@codemirror/view'
 
-import { toggleBold, toggleInlineCode, toggleItalic } from '../../../src/components/editor/shortcuts'
-import { createEditorView } from './__helpers__/editorHelpers'
+import { toggleBold, toggleInlineCode, toggleItalic } from '@/components/editor/shortcuts'
+
+import { createEditorView } from '~/components/editor/__helpers__/editorHelpers'
 
 type SutTypes = {
   toggleBold: typeof toggleBold

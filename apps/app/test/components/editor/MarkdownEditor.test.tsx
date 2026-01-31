@@ -2,7 +2,7 @@ import { language } from '@codemirror/language'
 import { EditorView } from '@codemirror/view'
 import { render } from '@solidjs/testing-library'
 
-import { MarkdownEditor } from '../../../src/components/editor/MarkdownEditor'
+import { MarkdownEditor } from '@/components/editor/MarkdownEditor'
 
 type SutTypes = {
   container: HTMLElement

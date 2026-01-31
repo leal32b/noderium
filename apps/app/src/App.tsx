@@ -1,5 +1,5 @@
-import './App.css'
-import { MarkdownEditor } from './components/editor/MarkdownEditor'
+import '@/App.css'
+import { MarkdownEditor } from '@/components/editor/MarkdownEditor'
 
 function App() {
   return (

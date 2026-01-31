@@ -5,8 +5,8 @@ import { EditorView, keymap } from '@codemirror/view'
 import { Strikethrough, TaskList } from '@lezer/markdown'
 import { onMount } from 'solid-js'
 
-import { hideMarkers } from './hideMarkers'
-import { shortcuts } from './shortcuts'
+import { hideMarkers } from '@/components/editor/hideMarkers'
+import { shortcuts } from '@/components/editor/shortcuts'
 
 const DEFAULT_CONTENT = `
 # Welcome to Noderium
