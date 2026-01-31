@@ -15,8 +15,8 @@
     "tauri": "tauri",
     "sync-version": "node scripts/update-tauri-version.js && git add src-tauri/tauri.conf.json src-tauri/Cargo.toml",
     "bench:hide": "node scripts/bench-markdown-hide.js",
-    "lint": "eslint src/",
-    "lint:fix": "eslint src/ --fix"
+    "lint": "eslint",
+    "lint:fix": "eslint --fix"
   },
   "license": "MIT",
   "dependencies": {

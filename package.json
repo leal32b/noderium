@@ -4,6 +4,7 @@
   "description": "Local-first note-taking app with bidirectional links and graph view. Built with Vite, Tauri, Rust, SolidJS and SQLite",
   "scripts": {
     "app:dev": "pnpm --filter noderium-app tauri dev",
+    "app:lint": "pnpm --filter noderium-app lint:fix",
     "app:test": "pnpm --filter noderium-app test:ci",
     "docs:dev": "pnpm --filter noderium-docs start",
     "build": "pnpm -r build",
