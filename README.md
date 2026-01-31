@@ -10,7 +10,7 @@
     <img src="https://img.shields.io/badge/PRs-Welcome-blue.svg" alt="PRs Welcome">
     <img src="https://img.shields.io/github/actions/workflow/status/leal32b/noderium/ci-app.yml?label=app&link=https%3A%2F%2Fgithub.com%2Fleal32b%2Fnoderium%2Factions%2Fworkflows%2Fci-app.yml" alt="CI App">
     <img src="https://img.shields.io/github/actions/workflow/status/leal32b/noderium/ci-docs.yml?label=docs&link=https%3A%2F%2Fgithub.com%2Fleal32b%2Fnoderium%2Factions%2Fworkflows%2Fci-docs.yml" alt="CI Docs">
-    <img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/leal32b/18a36db0bca9c3f0458afa76d4bc2e34/raw/c338a3a198531290a208c56821f5fe47fa4ba273/coverage.json" alt="Coverage">
+    <img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/leal32b/18a36db0bca9c3f0458afa76d4bc2e34/raw/coverage.json" alt="Coverage">
     <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
   </p>
 </div>
