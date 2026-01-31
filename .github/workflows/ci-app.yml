@@ -86,7 +86,7 @@ jobs:
           echo "coverage=$COV" >> $GITHUB_ENV
 
       - name: Update gist with coverage (Shields.io)
-        uses: schneegans/dynamic-badges-action@v1
+        uses: schneegans/dynamic-badges-action@v1.7.0
         with:
           auth: ${{ secrets.GIST_TOKEN }}
           gistID: 18a36db0bca9c3f0458afa76d4bc2e34
