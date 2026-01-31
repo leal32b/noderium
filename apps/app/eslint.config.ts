@@ -39,7 +39,8 @@ export default tseslint.config(
       'coverage/',
       'dist/',
       'node_modules/',
-      'src-tauri/'
+      'src-tauri/',
+      'scripts/'
     ]
   }
 )

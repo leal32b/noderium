@@ -2,39 +2,39 @@ import { EditorState } from '@codemirror/state'
 import { Decoration, EditorView, ViewPlugin } from '@codemirror/view'
 
 type DecorationPlugin = {
-  decorations: typeof Decoration.none;
-  update: (update: unknown) => void;
+  decorations: typeof Decoration.none
+  update: (update: unknown) => void
 }
 
 const getPlugin = <T>(view: EditorView, extension: T): DecorationPlugin => {
-  const plugin = view.plugin(extension as unknown as ViewPlugin<DecorationPlugin>);
-  if (!plugin) throw new Error("Plugin not available");
+  const plugin = view.plugin(extension as unknown as ViewPlugin<DecorationPlugin>)
+  if (!plugin) throw new Error('Plugin not available')
 
-  return plugin;
+  return plugin
 }
 
-const collectReplacedRanges = (plugin: DecorationPlugin, doc: EditorState["doc"]): string[] => {
-  const results: string[] = [];
+const collectReplacedRanges = (plugin: DecorationPlugin, doc: EditorState['doc']): string[] => {
+  const results: string[] = []
   plugin.decorations.between(0, doc.length, (from, to) => {
-    results.push(doc.sliceString(from, to));
-  });
+    results.push(doc.sliceString(from, to))
+  })
 
-  return results;
+  return results
 }
 
 const collectReplacedRangesForLine = (
-  plugin: DecorationPlugin, 
-  doc: EditorState["doc"], 
+  plugin: DecorationPlugin,
+  doc: EditorState['doc'],
   lineNumber: number
 ): string[] => {
-  const results: string[] = [];
-  const line = doc.line(lineNumber);
-  
-  plugin.decorations.between(line.from, line.to, (from, to) => {
-    results.push(doc.sliceString(from, to));
-  });
-  
-  return results;
-};
+  const results: string[] = []
+  const line = doc.line(lineNumber)
 
-export { getPlugin, collectReplacedRanges, collectReplacedRangesForLine }
+  plugin.decorations.between(line.from, line.to, (from, to) => {
+    results.push(doc.sliceString(from, to))
+  })
+
+  return results
+}
+
+export { collectReplacedRanges, collectReplacedRangesForLine, getPlugin }

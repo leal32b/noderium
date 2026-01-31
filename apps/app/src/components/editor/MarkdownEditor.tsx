@@ -1,9 +1,10 @@
-import { EditorState } from "@codemirror/state";
-import { EditorView, keymap } from "@codemirror/view";
-import { indentWithTab, history, historyKeymap } from "@codemirror/commands";
-import { markdown } from "@codemirror/lang-markdown";
-import { Strikethrough, TaskList } from "@lezer/markdown";
-import { onMount } from "solid-js";
+import { history, historyKeymap, indentWithTab } from '@codemirror/commands'
+import { markdown } from '@codemirror/lang-markdown'
+import { EditorState } from '@codemirror/state'
+import { EditorView, keymap } from '@codemirror/view'
+import { Strikethrough, TaskList } from '@lezer/markdown'
+import { onMount } from 'solid-js'
+
 import { hideMarkers } from './hideMarkers'
 import { shortcuts } from './shortcuts'
 
@@ -25,10 +26,10 @@ __EmphasisMark__
   npm i
 \`\`\`
 [[Wikilink]]
-`;
+`
 
 const MarkdownEditor = () => {
-  let containerRef!: HTMLDivElement;
+  let containerRef!: HTMLDivElement
 
   onMount(() => {
     const state = EditorState.create({
@@ -43,18 +44,18 @@ const MarkdownEditor = () => {
     })
 
     new EditorView({
-      state,
-      parent: containerRef
+      parent: containerRef,
+      state
     })
   })
 
   return (
     <div
-      ref={(el) => { containerRef = el; }}
-      style={{ width:  "100%", height: "100%" }}
+      ref={(el) => { containerRef = el }}
+      style={{ height: '100%', width: '100%' }}
     />
   )
 }
 
 /* v8 ignore next -- @preserve */
-export { MarkdownEditor };
+export { MarkdownEditor }
