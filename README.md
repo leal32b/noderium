@@ -5,10 +5,13 @@
   </p>
 
   <p>
+    <img src="https://img.shields.io/badge/stack-Tauri_v2_%7C_Rust_%7C_SolidJS-888" alt="Tech Stack">
+    <img src="https://img.shields.io/github/issues-search/leal32b/noderium?query=is%3Aissue%20is%3Aopen&label=issues" alt="issues">
+    <img src="https://img.shields.io/badge/PRs-Welcome-blue.svg" alt="PRs Welcome">
+    <img src="https://img.shields.io/github/actions/workflow/status/leal32b/noderium/ci-app.yml?label=app&link=https%3A%2F%2Fgithub.com%2Fleal32b%2Fnoderium%2Factions%2Fworkflows%2Fci-app.yml" alt="CI App">
+    <img src="https://img.shields.io/github/actions/workflow/status/leal32b/noderium/ci-docs.yml?label=docs&link=https%3A%2F%2Fgithub.com%2Fleal32b%2Fnoderium%2Factions%2Fworkflows%2Fci-docs.yml" alt="CI Docs">
+    <img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/leal32b/18a36db0bca9c3f0458afa76d4bc2e34/raw/coverage.json" alt="Coverage">
     <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
-    <img src="https://img.shields.io/badge/build-passing-brightgreen" alt="Build Status">
-    <img src="https://img.shields.io/badge/PRs-welcome-orange.svg" alt="PRs Welcome">
-    <img src="https://img.shields.io/badge/stack-Tauri_v2_%7C_Rust_%7C_SolidJS-red" alt="Tech Stack">
   </p>
 </div>
 
@@ -48,7 +51,11 @@ Designed for extreme performance and developer experience.
 | **Core** | **Rust** | Zero-copy Markdown parser, async file I/O, memory safety |
 | **Database** | **SQLite** | Relational indexing of knowledge graph. Rebuilds if deleted |
 | **Frontend** | [SolidJS](https://www.solidjs.com/) | Fine-grained reactivity without Virtual DOM |
+| **Editor** | [CodeMirror 6](https://codemirror.net/) | Extensible text editor with Markdown support |
 | **Styling** | TailwindCSS | Rapid UI iteration |
+| **Testing** | [Vitest](https://vitest.dev/) | Fast unit testing powered by Vite |
+| **Linting** | ESLint + TypeScript ESLint | Code quality and consistency |
+| **Versioning** | [Changesets](https://github.com/changesets/changesets) | Automated versioning and changelogs |
 
 ### The Truth Flow
 
@@ -111,18 +118,32 @@ cd noderium
 pnpm install
 
 # Run the app (starts Vite + Rust compiler)
-pnpm dev:app
+pnpm app:dev
 ```
+
+### Development Commands
+
+| Command | Description |
+|---------|-------------|
+| `pnpm app:dev` | Run the app in development mode |
+| `pnpm app:test` | Run tests with coverage |
+| `pnpm docs:dev` | Run documentation site locally |
+| `pnpm build` | Build all packages |
+| `pnpm --filter noderium-app lint` | Run ESLint on app source |
+| `pnpm --filter noderium-app lint:fix` | Auto-fix linting issues |
+| `pnpm --filter noderium-app test:watch` | Run tests in watch mode |
 
 ### Monorepo Structure
 
 ```
 noderium/
 ├── apps/
-│   ├── app/          # Main application (Tauri + SolidJS)
-│   │   ├── src/      # SolidJS Frontend (UI)
-│   │   └── src-tauri/ # Rust Backend (Core Logic)
-│   └── docs/         # Documentation (Docusaurus)
+│   ├── app/           # Main application (Tauri + SolidJS)
+│   │   ├── src/       # SolidJS Frontend (UI)
+│   │   ├── src-tauri/ # Rust Backend (Core Logic)
+│   │   └── test/      # Unit tests (Vitest)
+│   └── docs/          # Documentation (Docusaurus)
+├── .changeset/        # Changesets configuration
 └── pnpm-workspace.yaml
 ```
 

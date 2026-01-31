@@ -8,6 +8,7 @@ const __dirname = dirname(__filename);
 const packageJsonPath = join(__dirname, '../package.json');
 const tauriConfigPath = join(__dirname, '../src-tauri/tauri.conf.json');
 const cargoTomlPath = join(__dirname, '../src-tauri/Cargo.toml');
+const cargoLockPath = join(__dirname, '../src-tauri/Cargo.lock');
 
 const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'));
 const newVersion = packageJson.version;
@@ -22,3 +23,12 @@ let cargoToml = readFileSync(cargoTomlPath, 'utf-8');
 cargoToml = cargoToml.replace(/^version = ".*?"/m, `version = "${newVersion}"`);
 writeFileSync(cargoTomlPath, cargoToml);
 console.log('✅ Cargo.toml updated');
+
+let cargoLock = readFileSync(cargoLockPath, 'utf-8');
+cargoLock = cargoLock.replace(
+  /name = "noderium-app"\nversion = "[^"]*"/,
+  `name = "noderium-app"\nversion = "${newVersion}"`
+);
+writeFileSync(cargoLockPath, cargoLock);
+console.log('✅ Cargo.lock updated');
+
