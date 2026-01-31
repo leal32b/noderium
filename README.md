@@ -48,7 +48,11 @@ Designed for extreme performance and developer experience.
 | **Core** | **Rust** | Zero-copy Markdown parser, async file I/O, memory safety |
 | **Database** | **SQLite** | Relational indexing of knowledge graph. Rebuilds if deleted |
 | **Frontend** | [SolidJS](https://www.solidjs.com/) | Fine-grained reactivity without Virtual DOM |
+| **Editor** | [CodeMirror 6](https://codemirror.net/) | Extensible text editor with Markdown support |
 | **Styling** | TailwindCSS | Rapid UI iteration |
+| **Testing** | [Vitest](https://vitest.dev/) | Fast unit testing powered by Vite |
+| **Linting** | ESLint + TypeScript ESLint | Code quality and consistency |
+| **Versioning** | [Changesets](https://github.com/changesets/changesets) | Automated versioning and changelogs |
 
 ### The Truth Flow
 
@@ -111,18 +115,32 @@ cd noderium
 pnpm install
 
 # Run the app (starts Vite + Rust compiler)
-pnpm dev:app
+pnpm app:dev
 ```
+
+### Development Commands
+
+| Command | Description |
+|---------|-------------|
+| `pnpm app:dev` | Run the app in development mode |
+| `pnpm app:test` | Run tests with coverage |
+| `pnpm docs:dev` | Run documentation site locally |
+| `pnpm build` | Build all packages |
+| `pnpm --filter noderium-app lint` | Run ESLint on app source |
+| `pnpm --filter noderium-app lint:fix` | Auto-fix linting issues |
+| `pnpm --filter noderium-app test:watch` | Run tests in watch mode |
 
 ### Monorepo Structure
 
 ```
 noderium/
 ├── apps/
-│   ├── app/          # Main application (Tauri + SolidJS)
-│   │   ├── src/      # SolidJS Frontend (UI)
-│   │   └── src-tauri/ # Rust Backend (Core Logic)
-│   └── docs/         # Documentation (Docusaurus)
+│   ├── app/           # Main application (Tauri + SolidJS)
+│   │   ├── src/       # SolidJS Frontend (UI)
+│   │   ├── src-tauri/ # Rust Backend (Core Logic)
+│   │   └── test/      # Unit tests (Vitest)
+│   └── docs/          # Documentation (Docusaurus)
+├── .changeset/        # Changesets configuration
 └── pnpm-workspace.yaml
 ```
 
