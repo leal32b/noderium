@@ -1,9 +1,8 @@
-import '@/App.css'
 import { MarkdownEditor } from '@/components/editor/MarkdownEditor'
 
 function App() {
   return (
-    <main style={{ height: '100vh', margin: 0, padding: 0, width: '100vw' }}>
+    <main class="h-screen w-screen m-0 p-0 bg-main">
       <MarkdownEditor />
     </main>
   )
