@@ -1,18 +1,32 @@
+import { HighlightStyle, syntaxHighlighting } from '@codemirror/language'
 import { EditorView } from '@codemirror/view'
+import { tags } from '@lezer/highlight'
 
-// Tema CM6 que só define o shell visual (fundo, texto, borda)
-const editorTheme = EditorView.theme(
+const inlineCodeTheme = HighlightStyle.define([{
+  backgroundColor: 'var(--color-bg-editor-selected)',
+  fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+  tag: tags.monospace
+}])
+const codeHighlight = syntaxHighlighting(inlineCodeTheme)
+
+const mainTheme = EditorView.theme(
   {
     '.cm-content': {
-      caretColor: 'var(--text-editor)'
+      caretColor: 'var(--text-editor)',
+      fontFamily: 'sans-serif'
+    },
+    '.cm-gutters': {
+      color: 'red'
+    },
+    '.cm-line.cm-code-block': {
+      fontFamily: 'ui-monospace'
     },
     '.cm-selectionBackground, .cm-content ::selection': {
       backgroundColor: 'var(--color-bg-editor-selected)',
       color: 'var(--color-text-editor-selected)'
     },
     '&': {
-      color: 'var(--color-text-editor)',
-      fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace'
+      color: 'var(--color-text-editor)'
     },
     '&.cm-editor.cm-focused': {
       outline: 'none'
@@ -21,4 +35,4 @@ const editorTheme = EditorView.theme(
   { dark: false }
 )
 
-export { editorTheme }
+export { codeHighlight, mainTheme }

@@ -1,24 +1,23 @@
-/* src/index.css */
-/* @import "unocss/reset/tailwind.css"; */
-
 :root {
-  /* Grays — corpo e base do controle */
-  --main-body-gray: #cfcfd2;        /* corpo principal do SNES */
-  --button-zone-gray: #b7b8bc;      /* área dos botões */
-  --dark-d-pad-gray: #4b4b4f;       /* D-Pad / botões Start-Select */
-  /* Roxos — botões frontais SNES */
-  --light-purple: #b49ad8;          /* botão claro */
-  --deep-purple: #5b3f8c;           /* botão escuro */
-  /* ABXY — Super Famicom */
+  /* Grays — body and base of the control */
+  --main-body-gray: #cfcfd2;        /* main body of SNES */
+  --button-zone-gray: #b7b8bc;      /* button area */
+  --dark-d-pad-gray: #4b4b4f;       /* D-Pad / start and select buttons */
+  /* Purples — front buttons of SNES */
+  --light-purple: #b49ad8;          /* light button */
+  --deep-purple: #5b3f8c;           /* dark button */
+  /* ABXY — SFC */
   --sfc-vivid-red: #d12f2f;         /* B */
   --sfc-lime-green: #3fa34d;        /* A */
   --sfc-bright-yellow: #f0c419;     /* Y */
   --sfc-deep-blue: #2f5fd1;         /* X */
 
   --color-bg-main: var(--main-body-gray);
-  --color-bg-editor-selected: var(--button-zone-gray); 
+  --color-bg-editor-selected: var(--button-zone-gray);
   --color-text-editor: var(--dark-d-pad-gray);
   --color-text-editor-selected: var(--main-body-gray);
+
+  font-family: 'system-ui';
 }
 
 html.dark {
