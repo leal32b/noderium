@@ -10,8 +10,8 @@ const host = process.env.TAURI_DEV_HOST
 export default defineConfig(() => ({
   clearScreen: false,
   plugins: [
-    solid(),
-    UnoCSS()
+    UnoCSS(),
+    solid()
   ],
   resolve: {
     alias: {

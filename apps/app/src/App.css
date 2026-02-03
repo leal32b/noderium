@@ -1,30 +1,31 @@
 :root {
-  /* Grays — body and base of the control */
-  --main-body-gray: #cfcfd2;        /* main body of SNES */
-  --button-zone-gray: #b7b8bc;      /* button area */
-  --dark-d-pad-gray: #4b4b4f;       /* D-Pad / start and select buttons */
-  /* Purples — front buttons of SNES */
-  --light-purple: #b49ad8;          /* light button */
-  --deep-purple: #5b3f8c;           /* dark button */
-  /* ABXY — SFC */
-  --sfc-vivid-red: #d12f2f;         /* B */
-  --sfc-lime-green: #3fa34d;        /* A */
-  --sfc-bright-yellow: #f0c419;     /* Y */
-  --sfc-deep-blue: #2f5fd1;         /* X */
+  --body-gray:    #cfcfd2;
+  --zone-gray:    #b7b8bc;
+  --dark-gray:    #4b4b4f;
+  --dark-slate:   #181b20;
+  --light-purple: #b49ad8;
+  --deep-purple:  #5b3f8c;
+  --vivid-red:    #d12f2f;
+  --lime-green:   #3fa34d;
+  --bright-yellow:#f0c419;
+  --deep-blue:    #2f5fd1;
 
-  --color-bg-main: var(--main-body-gray);
-  --color-bg-editor-selected: var(--button-zone-gray);
-  --color-text-editor: var(--dark-d-pad-gray);
-  --color-text-editor-selected: var(--main-body-gray);
+  --color-bg-main: var(--body-gray);
+  --color-bg-editor-selected: var(--zone-gray);
+  --color-text-editor: var(--dark-gray);
+  --color-text-editor-selected: var(--dark-gray);
+  --color-test-inline: var(--light-purple);
 
   font-family: 'system-ui';
+  color: var(--color-text-editor);
 }
 
 html.dark {
-  --color-bg-main: var(--dark-d-pad-gray);
-  --color-bg-editor-selected: var(--button-zone-gray); 
-  --color-text-editor: var(--main-body-gray);
-  --color-text-editor-selected: var(--dark-d-pad-gray);
+  --color-bg-main: var(--dark-slate);
+  --color-bg-editor-selected: var(--zone-gray); 
+  --color-text-editor: var(--body-gray);
+  --color-text-editor-selected: var(--body-gray);
+  --color-test-inline: var(--deep-purple);
 }
 
 body {

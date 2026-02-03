@@ -53,7 +53,10 @@ const MarkdownEditor = () => {
   })
 
   return (
-    <div ref={(el) => { containerRef = el }} />
+    <div
+      class="flex-1 overflow-auto"
+      ref={(el) => { containerRef = el }}
+    />
   )
 }
 

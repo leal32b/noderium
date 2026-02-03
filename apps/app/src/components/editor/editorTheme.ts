@@ -3,8 +3,9 @@ import { EditorView } from '@codemirror/view'
 import { tags } from '@lezer/highlight'
 
 const inlineCodeTheme = HighlightStyle.define([{
-  backgroundColor: 'var(--color-bg-editor-selected)',
+  backgroundColor: 'var(--color-test-inline)',
   fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+  fontSize: '14px',
   tag: tags.monospace
 }])
 const codeHighlight = syntaxHighlighting(inlineCodeTheme)
@@ -14,9 +15,6 @@ const mainTheme = EditorView.theme(
     '.cm-content': {
       caretColor: 'var(--text-editor)',
       fontFamily: 'sans-serif'
-    },
-    '.cm-gutters': {
-      color: 'red'
     },
     '.cm-line.cm-code-block': {
       fontFamily: 'ui-monospace'
