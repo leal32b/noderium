@@ -1,5 +1,6 @@
 .pnpm-store
 node_modules
 
+.DS_Store
 tsconfig.node.tsbuildinfo
 task.md

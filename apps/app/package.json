@@ -26,9 +26,12 @@
     "@codemirror/language-data": "^6.5.2",
     "@codemirror/state": "^6.5.4",
     "@codemirror/view": "^6.39.12",
+    "@iconify-json/material-symbols": "^1.2.53",
+    "@lezer/highlight": "^1.2.3",
     "@lezer/markdown": "^1.6.3",
     "@tauri-apps/api": "^2.9.1",
     "@tauri-apps/plugin-opener": "^2.5.3",
+    "@unocss/preset-icons": "^66.6.0",
     "solid-js": "^1.9.11"
   },
   "devDependencies": {
