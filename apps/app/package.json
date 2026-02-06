@@ -9,6 +9,7 @@
     "build": "vite build",
     "serve": "vite preview",
     "test": "vitest",
+    "test:related": "vitest related",
     "test:verbose": "npm test -- --silent=false",
     "test:watch": "npm run test:verbose -- --watch",
     "test:ci": "npm test -- --coverage",

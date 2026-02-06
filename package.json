@@ -7,6 +7,7 @@
     "app:dev": "pnpm --filter noderium-app tauri dev",
     "app:lint": "pnpm --filter noderium-app lint:fix",
     "app:test": "pnpm --filter noderium-app test:ci",
+    "app:test:related": "pnpm --filter noderium-app test:related",
     "docs:dev": "pnpm --filter noderium-docs start",
     "build": "pnpm -r build",
     "release": "changeset tag",
