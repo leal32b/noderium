@@ -3,7 +3,7 @@ import { Navbar } from '@/components/layout/Navbar'
 
 function App() {
   return (
-    <main class="h-screen bg-main flex flex-col">
+    <main class="h-screen flex flex-col">
       <Navbar />
       <MarkdownEditor />
     </main>
