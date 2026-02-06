@@ -5,6 +5,7 @@ import { EditorView, keymap } from '@codemirror/view'
 import { Strikethrough, TaskList } from '@lezer/markdown'
 import { onMount } from 'solid-js'
 
+import { codeHighlight, mainTheme } from '@/components/editor/editorTheme'
 import { hideMarkers } from '@/components/editor/hideMarkers'
 import { shortcuts } from '@/components/editor/shortcuts'
 
@@ -35,9 +36,11 @@ const MarkdownEditor = () => {
     const state = EditorState.create({
       doc: DEFAULT_CONTENT,
       extensions: [
-        history(),
-        keymap.of([...historyKeymap, indentWithTab]),
         markdown({ extensions: [Strikethrough, TaskList] }),
+        keymap.of([...historyKeymap, indentWithTab]),
+        history(),
+        mainTheme,
+        codeHighlight,
         shortcuts,
         hideMarkers
       ]
@@ -51,8 +54,8 @@ const MarkdownEditor = () => {
 
   return (
     <div
+      class="flex-1 overflow-auto"
       ref={(el) => { containerRef = el }}
-      style={{ height: '100%', width: '100%' }}
     />
   )
 }

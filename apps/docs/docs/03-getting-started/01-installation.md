@@ -42,14 +42,14 @@ pnpm install
 ```
 
 This will install all dependencies for the monorepo, including:
-- Frontend dependencies (SolidJS, TailwindCSS)
+- Frontend dependencies (SolidJS, UnoCSS, CodeMirror)
 - Documentation site dependencies (Docusaurus)
 - Shared package dependencies
 
 ### 3. Run the Application
 
 ```bash
-pnpm dev:app
+pnpm app:dev
 ```
 
 This starts both:
@@ -65,10 +65,12 @@ The application will open automatically once compiled.
 ```
 noderium/
 ├── apps/
-│   ├── app/          # Main application (Tauri + SolidJS)
-│   │   ├── src/      # SolidJS Frontend (UI)
-│   │   └── src-tauri/ # Rust Backend (Core Logic)
-│   └── docs/         # Documentation (Docusaurus)
+│   ├── app/           # Main application (Tauri + SolidJS)
+│   │   ├── src/       # SolidJS Frontend (UI)
+│   │   ├── src-tauri/ # Rust Backend (Core Logic)
+│   │   └── test/      # Unit tests (Vitest)
+│   └── docs/          # Documentation (Docusaurus)
+├── .changeset/        # Changesets configuration
 ├── pnpm-workspace.yaml
 └── package.json
 ```
@@ -150,9 +152,10 @@ corepack prepare pnpm@latest --activate
 
 Once installed, you're ready to:
 
-1. **Explore the app**: Create your first note and see the graph in action
-2. **Read the architecture**: Understand [The Five Pillars](/docs/introduction/pillars) that guide Noderium
-3. **Contribute**: Check out our [Contributing Guide](/docs/contributing/overview)
+1. **Explore the editor**: The Markdown editor supports syntax highlighting, keyboard shortcuts (Cmd/Ctrl+B for bold, Cmd/Ctrl+I for italic), and a distraction-free "hide markers" mode
+2. **Toggle themes**: Use the theme toggle in the navbar to switch between light and dark modes
+3. **Read the architecture**: Understand [The Five Pillars](/docs/introduction/pillars) that guide Noderium
+4. **Contribute**: Check out our [Contributing Guide](/docs/contributing/overview)
 
 ---
 
@@ -160,6 +163,8 @@ Once installed, you're ready to:
 
 | Command | Description |
 |---------|-------------|
-| `pnpm dev:app` | Start the desktop app in development mode |
-| `pnpm dev:docs` | Start the documentation site locally |
+| `pnpm app:dev` | Start the desktop app in development mode |
+| `pnpm app:test` | Run tests with coverage |
+| `pnpm docs:dev` | Start the documentation site locally |
 | `pnpm build` | Build all packages for production |
+| `pnpm --filter noderium-app test:watch` | Run tests in watch mode |

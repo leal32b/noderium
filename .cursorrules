@@ -1,9 +1,15 @@
 You are an expert in TDD, DDD, TypeScript, Vitest, Tauri v2, Rust, SolidJS, CodeMirror 6,
 TailwindCSS, SQLite, ESLint, pnpm monorepos and extreme organization/performance.
 
-================================================================================
-PROJECT CONTEXT (Noderium)
-================================================================================
+## CURRENT TASK CONTEXT
+CRITICAL: Before starting any work, check if task.md exists in the project root.
+If task.md exists, consider the following items (+ general project guidelines):
+- Read it carefully to understand the current work in progress
+- Align all decisions and suggestions with the task's objectives
+- Use the task context to inform implementation choices
+- Reference task requirements when proposing solutions
+
+## PROJECT CONTEXT (Noderium)
 Personal Knowledge Management app: a "thinking partner" for knowledge workers.
 
 The Three Fundamental Tensions (why 80% abandon PKM tools):
@@ -12,11 +18,11 @@ The Three Fundamental Tensions (why 80% abandon PKM tools):
 3. Retrieval Failure: search has 10% accuracy, trust erodes (abandonment).
 
 Core Beliefs (non-negotiable):
-1. Your knowledge is an extension of your identity.
-2. Cognitive load is real and finite (every org decision steals from thinking).
-3. Trust is the foundation (transparency, local control, results).
-4. AI changes the game (but only if local-first, yours, and transparent).
-5. Simplicity in complexity is luxury (focused constraints liberate).
+1. Your knowledge is an extension of your identity — It deserves respect, privacy, and control.
+2. Cognitive load is real and finite — Every organization decision steals from thinking.
+3. Trust is the foundation — Transparency, local control, and results build trust.
+4. AI changes the game — But only if it's local-first, yours, and transparent.
+5. Simplicity in complexity is luxury — Focused constraints liberate more than infinite options.
 
 The Five Design Pillars (never compromise):
 1. Minimum-Effort Capture - thought to saved in <5 seconds
@@ -33,35 +39,60 @@ Core Architecture Principle:
 Local-first by default. Cloud is optional and transparent.
 UX goal: feels like thinking, not working. Avoid feature bloat.
 
-================================================================================
-MONOREPO STRUCTURE (pnpm workspaces)
-================================================================================
+Target Metrics:
+- 65%+ retention at 6 months (vs industry 20%)
+- 95%+ retrieval accuracy (vs industry 10%)
+- <5 seconds capture time
+- <10 minutes to productive onboarding
+
+## MONOREPO STRUCTURE (pnpm workspaces)
 noderium/
   apps/
     app/           # Main Tauri application
       src/         # SolidJS frontend (UI layer)
       src-tauri/   # Rust backend (core logic)
+      test/        # Unit tests (Vitest)
     docs/          # Docusaurus documentation
   .changeset/      # Changesets for versioning
+  task.md          # Current work context (if exists)
 
 Commands:
-  pnpm install     # Install all workspace dependencies
-  pnpm dev:app     # Run desktop app (Vite + Tauri)
-  pnpm dev:docs    # Run documentation site
-  pnpm test        # Run tests across workspaces
+  pnpm install                        # Install all workspace dependencies
+  pnpm app:dev                        # Run desktop app (Vite + Tauri)
+  pnpm app:test                       # Run tests with coverage
+  pnpm docs:dev                       # Run documentation site
+  pnpm build                          # Build all packages
+  pnpm --filter noderium-app lint     # Run ESLint on app source
+  pnpm --filter noderium-app lint:fix # Auto-fix linting issues
+  pnpm --filter noderium-app test:watch # Run tests in watch mode
 
-================================================================================
-GLOBAL PRINCIPLES
-================================================================================
+## TECH STACK
+| Layer          | Technology                | Why                                        |
+|----------------|---------------------------|--------------------------------------------|
+| Runtime        | Tauri v2                  | Tiny binaries (~10MB), native security     |
+| Core           | Rust                      | Zero-copy parser, async I/O, memory safety |
+| Database       | SQLite                    | Relational indexing of knowledge graph     |
+| Frontend       | SolidJS                   | Fine-grained reactivity without VDOM       |
+| Editor         | CodeMirror 6              | Extensible text editor with Markdown       |
+| Styling        | TailwindCSS               | Rapid UI iteration                         |
+| Testing        | Vitest                    | Fast unit testing powered by Vite          |
+| Linting        | ESLint + TypeScript ESLint| Code quality and consistency               |
+| Versioning     | Changesets                | Automated versioning and changelogs        |
+| Documentation  | Docusaurus                | Static site generator for docs             |
+
+CI/CD:
+- GitHub Actions for app (ci-app.yml) and docs (ci-docs.yml)
+- 100% test coverage requirement (tracked via c8)
+- Automated linting, testing, and build verification
+
+## GLOBAL PRINCIPLES
 - Prefer smallest, fastest, simplest solution that meets the goal.
 - Optimize for startup time (<1s), interaction latency (<100ms), memory, battery.
 - Avoid unnecessary dependencies, re-renders, and IO.
 - Keep architecture clean, modular, and discoverable.
 - Use ASCII in edits unless file already uses Unicode.
 
-================================================================================
-DDD VOCABULARY (use consistently)
-================================================================================
+## DDD VOCABULARY (use consistently)
 Domain terms from product docs:
 - capture: act of saving a thought/note (<5s)
 - vault: user's local knowledge repository (folder of markdown files)
@@ -78,9 +109,7 @@ Bounded contexts:
 - Vault Domain: file I/O, watcher, markdown parsing
 - Sync Domain: optional cloud, conflict resolution
 
-================================================================================
-TDD / VITEST
-================================================================================
+## TDD / VITEST
 - Always write/adjust tests first or alongside behavior changes.
 - Favor deterministic tests; avoid timers, random, and IO when possible.
 - Test public behavior, not internal implementation details.
@@ -106,22 +135,17 @@ File structure per feature (co-located):
   utils.test.ts       # Utility tests
   index.ts            # Public exports (no tests needed)
 
-================================================================================
-TYPESCRIPT / SOLIDJS
-================================================================================
+## TYPESCRIPT / SOLIDJS
 - Prefer strict typing, narrow types, and explicit return types for public APIs.
 - Favor functional composition; keep components small and single-purpose.
 - Minimize reactive dependencies and expensive computations.
 - Use memoization where it removes recomputation without adding complexity.
 - Prefer createEffect for side effects, createMemo for derived state.
 - Avoid React patterns; embrace SolidJS fine-grained reactivity.
+- Type imports: use `import type { X }` for type-only imports.
+- Props: define with interface, e.g., `interface MyComponentProps { ... }`.
 
-Type imports: use `import type { X }` for type-only imports.
-Props: define with interface, e.g., `interface MyComponentProps { ... }`.
-
-================================================================================
-CODEMIRROR 6
-================================================================================
+## CODEMIRROR 6
 CodeMirror 6 is used for the Markdown editor. Key patterns:
 
 ViewPlugin pattern:
@@ -147,18 +171,14 @@ Widget best practices:
 - Use event delegation; attach listeners in toDOM().
 - Return false from eq() only when content differs.
 
-================================================================================
-TAILWINDCSS / UI
-================================================================================
+## TAILWINDCSS / UI
 - Keep class lists readable and consistent; avoid excessive variants.
 - Prefer design tokens/utilities already in the project.
 - UI should be minimal, calm, and fast.
 - Follow the principle: "Beauty over features" - every pixel has purpose.
 - Dark mode ready; use CSS custom properties for theming.
 
-================================================================================
-TAURI V2 / RUST
-================================================================================
+## TAURI V2 / RUST
 Tauri v2 specific:
 - Use plugin system (@tauri-apps/plugin-*) for OS features.
 - Define capabilities in src-tauri/capabilities/ for security.
@@ -185,11 +205,20 @@ Dynamic import pattern for Tauri plugins (with fallback):
     }
   }
 
-================================================================================
-SQLITE / LOCAL-FIRST STORAGE
-================================================================================
+## SQLITE / LOCAL-FIRST STORAGE
 Key principle: SQLite is a cache/index, not the source of truth.
 Markdown files are the source of truth; DB can be rebuilt from them.
+
+The Truth Flow:
+  User edits note.md
+         ↓
+  Rust (Watcher) detects change
+         ↓
+  Rust (Parser) extracts [[wiki-links]], #tags, metadata
+         ↓
+  SQLite updated instantly
+         ↓
+  SolidJS receives event, updates UI
 
 - Prefer efficient schema design; indexes for hot paths.
 - Use transactions for multi-step writes.
@@ -197,9 +226,7 @@ Markdown files are the source of truth; DB can be rebuilt from them.
 - Keep migrations simple and reversible.
 - Use FTS5 for full-text search when implemented.
 
-================================================================================
-PERFORMANCE EXPECTATIONS
-================================================================================
+## PERFORMANCE EXPECTATIONS
 Concrete targets (from product pillars):
 - Capture: <5 seconds from thought to saved
 - Retrieval: <3 seconds to find via conversation
@@ -212,9 +239,7 @@ Guidelines:
 - Defer non-critical work; measure before optimizing.
 - Use Web Workers for heavy computation if needed.
 
-================================================================================
-CONVENTIONAL COMMITS
-================================================================================
+## CONVENTIONAL COMMITS
 Format: <type>(<scope>): <description>
 
 Types:
@@ -254,9 +279,7 @@ Branch naming:
   docs/<description>      e.g., docs/contributing-guide
   chore/<description>     e.g., chore/update-deps
 
-================================================================================
-CHANGESETS (versioning)
-================================================================================
+## CHANGESETS (versioning)
 Use changesets for version management:
   pnpm changeset        # Create a new changeset
   pnpm changeset version # Bump versions based on changesets
@@ -264,10 +287,8 @@ Use changesets for version management:
 Changeset types: major | minor | patch
 Write user-facing descriptions in changesets.
 
-================================================================================
-DOCUMENTATION TEMPLATES (in apps/docs/docs/00-templates/)
-================================================================================
-Use these templates for technical documents:
+## DOCUMENTATION TEMPLATES
+Use these templates for technical documents (in Space files):
 - template-prd.md:     Product Requirements Document (features, user stories)
 - template-rfc.md:     Request for Comments (technical proposals, architecture)
 - template-adr.md:     Architecture Decision Record (decisions, trade-offs)
@@ -282,11 +303,29 @@ Issue types (use appropriate template):
 - Refactoring: code improvement without behavior change
 - Documentation: documentation improvements
 
-================================================================================
-WHEN UNCERTAIN
-================================================================================
+Product Documentation:
+- 01-vision.md:  Why Noderium exists, core beliefs, product vision
+- 02-pillars.md: Architecture principles that resolve the tensions
+- 03-roadmap.md: Development phases and success metrics
+
+## CURRENT DEVELOPMENT PHASE
+Phase 1: The Editor (Current)
+- [x] Monorepo & Tauri v2 setup
+- [ ] Rust-based Markdown File I/O
+- [ ] Basic SQLite indexing
+- [ ] File system watcher
+
+Next phases:
+- Phase 2: The Graph (visualization, backlinks)
+- Phase 3: The Experience (search, mobile, conversational retrieval)
+
+See 03-roadmap.md for complete roadmap.
+
+## WHEN UNCERTAIN
+- Check task.md first for current work context.
 - Choose the most lightweight approach.
 - Document assumptions briefly in code comments if needed.
 - Refer to the Five Pillars when making architectural decisions.
 - Ask: "Does this reduce cognitive load for the user?"
 - Remember: users abandon because systems cost more than they're worth.
+- When in doubt, consult README.md and product documentation (01-vision.md, 02-pillars.md).

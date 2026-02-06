@@ -18,6 +18,10 @@ The foundation of everything.
 
 - [x] Monorepo setup with pnpm workspaces
 - [x] Tauri v2 application scaffold
+- [x] **Markdown editor** (CodeMirror 6) with syntax highlighting
+- [x] **Hide markers plugin** — distraction-free editing (markers hidden when cursor is not on line)
+- [x] **Keyboard shortcuts** — `Cmd/Ctrl+B` (bold), `Cmd/Ctrl+I` (italic), `Cmd/Ctrl+E` (inline code)
+- [x] **Comprehensive test suite** — 100% coverage enforced
 - [ ] Rust-based Markdown File I/O
 - [ ] Basic SQLite indexing
 - [ ] File system watcher (Rust)
@@ -114,7 +118,7 @@ Month 3: "Maybe a different tool?"
 | **Core/Backend** | **Rust** | Zero-copy Markdown parser, async file I/O, memory safety |
 | **Database** | **SQLite** | Relational indexing of knowledge graph. Rebuilds itself if deleted |
 | **Frontend** | [SolidJS](https://www.solidjs.com/) | Superior performance vs React. Fine-grained reactivity without VDOM |
-| **Styling** | TailwindCSS | Rapid UI iteration |
+| **Styling** | [UnoCSS](https://unocss.dev/) | Atomic CSS with instant performance |
 
 ### The Data Flow (Truth Flow)
 

@@ -52,12 +52,20 @@ Designed for extreme performance and developer experience.
 | **Database** | **SQLite** | Relational indexing of knowledge graph. Rebuilds if deleted |
 | **Frontend** | [SolidJS](https://www.solidjs.com/) | Fine-grained reactivity without Virtual DOM |
 | **Editor** | [CodeMirror 6](https://codemirror.net/) | Extensible text editor with Markdown support |
-| **Styling** | TailwindCSS | Rapid UI iteration |
+| **Styling** | [UnoCSS](https://unocss.dev/) | Atomic CSS with instant performance |
 | **Testing** | [Vitest](https://vitest.dev/) | Fast unit testing powered by Vite |
 | **Linting** | ESLint + TypeScript ESLint | Code quality and consistency |
 | **Versioning** | [Changesets](https://github.com/changesets/changesets) | Automated versioning and changelogs |
 
-### The Truth Flow
+### Current Editor Features
+
+The Markdown editor is the foundation of the Noderium experience:
+
+- **CodeMirror 6**: Modern, extensible text editor with markdown support
+- **Hide Markers**: Markdown syntax markers are hidden when not editing that line (distraction-free)
+- **Keyboard Shortcuts**: `Cmd/Ctrl+B` (bold), `Cmd/Ctrl+I` (italic), `Cmd/Ctrl+E` (code)
+
+### The Truth Flow (Vision)
 
 ```
 User edits note.md
@@ -81,6 +89,11 @@ We are on **Day 1**. Current focus: foundation and architecture.
 
 ### Phase 1: The Editor (Current)
 - [x] Monorepo & Tauri v2 setup
+- [x] Markdown editor (CodeMirror 6) with syntax highlighting
+- [x] Hide markers plugin (distraction-free editing)
+- [x] Keyboard shortcuts (bold, italic, code)
+- [x] Theme system (light/dark mode)
+- [x] Comprehensive test suite (100% coverage)
 - [ ] Rust-based Markdown File I/O
 - [ ] Basic SQLite indexing
 - [ ] File system watcher

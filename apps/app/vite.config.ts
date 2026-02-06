@@ -1,5 +1,6 @@
 import { fileURLToPath } from 'node:url'
 
+import UnoCSS from 'unocss/vite'
 import { defineConfig } from 'vite'
 import solid from 'vite-plugin-solid'
 
@@ -8,7 +9,10 @@ const host = process.env.TAURI_DEV_HOST
 // https://vite.dev/config/
 export default defineConfig(() => ({
   clearScreen: false,
-  plugins: [solid()],
+  plugins: [
+    UnoCSS(),
+    solid()
+  ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('src', import.meta.url)),

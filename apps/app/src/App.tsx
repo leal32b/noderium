@@ -1,9 +1,10 @@
-import '@/App.css'
 import { MarkdownEditor } from '@/components/editor/MarkdownEditor'
+import { Navbar } from '@/components/layout/Navbar'
 
 function App() {
   return (
-    <main style={{ height: '100vh', margin: 0, padding: 0, width: '100vw' }}>
+    <main class="h-screen bg-main flex flex-col">
+      <Navbar />
       <MarkdownEditor />
     </main>
   )
