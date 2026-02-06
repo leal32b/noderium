@@ -74,15 +74,21 @@ const config: Config = {
         // },
         {
           type: 'docSidebar',
-          sidebarId: 'gettingStartedSidebar',
+          sidebarId: 'developmentSidebar',
           position: 'left',
-          label: 'Getting Started',
+          label: 'Development',
         },
         {
           type: 'docSidebar',
           sidebarId: 'contributingSidebar',
           position: 'left',
           label: 'Contributing',
+        },
+        {
+          type: 'docSidebar',
+          sidebarId: 'gettingStartedSidebar',
+          position: 'left',
+          label: 'Getting Started',
         },
         {
           href: 'https://github.com/leal32b/noderium',
