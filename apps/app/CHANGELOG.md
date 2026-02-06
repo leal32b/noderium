@@ -1,5 +1,11 @@
 # noderium-app
 
+## 0.2.1
+
+### Patch Changes
+
+- de94916: Add Unocss
+
 ## 0.2.0
 
 ### Minor Changes
