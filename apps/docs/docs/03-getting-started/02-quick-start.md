@@ -3,7 +3,7 @@
 > Your first 10 minutes with Noderium—from zero to productive.
 
 :::caution Work in Progress
-Noderium is currently in **Phase 1** of development. The features described below represent our **product vision** and are being actively developed. Some functionality (such as AI-powered auto-organization and conversational retrieval) is not yet available. Check our [Roadmap](/docs/introduction/roadmap) for the current status.
+Noderium is currently in **Phase 1** of development. Some features described below represent our **product vision** and are being actively developed. Currently available: **Markdown editor with syntax highlighting, keyboard shortcuts, distraction-free hide markers, and theme switching**. Features like AI-powered auto-organization and conversational retrieval are not yet available. Check our [Roadmap](/docs/introduction/roadmap) for the current status.
 :::
 
 ---
@@ -25,9 +25,21 @@ Download → Open → Capture First Note → See Auto-Organization → Talk to Y
 When you first open Noderium, you'll see a clean, focused interface. No configuration wizards. No decision fatigue.
 
 **What you'll notice:**
-- A simple editor in the center
-- A sidebar showing your knowledge graph (empty for now)
-- A command palette accessible via `Cmd+K` (macOS) or `Ctrl+K` (Windows/Linux)
+- A clean Markdown editor in the center (CodeMirror 6)
+- A navbar with theme toggle (light/dark mode)
+- A distraction-free writing experience
+
+### Currently Available Features
+
+The Markdown editor already supports:
+
+| Feature | Description |
+|---------|-------------|
+| **Syntax Highlighting** | Full Markdown support including code blocks |
+| **Hide Markers** | Markdown syntax markers are hidden when cursor is not on that line |
+| **Keyboard Shortcuts** | `Cmd/Ctrl+B` (bold), `Cmd/Ctrl+I` (italic), `Cmd/Ctrl+E` (inline code) |
+| **Theme Toggle** | Switch between light and dark modes via navbar |
+| **Tab Indentation** | `Tab` key for indenting text |
 
 ---
 
