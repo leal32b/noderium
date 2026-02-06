@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Local-first note-taking app with bidirectional links and graph view. Built with Vite, Tauri, Rust, SolidJS and SQLite",
   "scripts": {
+    "prepare": "husky",
     "app:dev": "pnpm --filter noderium-app tauri dev",
     "app:lint": "pnpm --filter noderium-app lint:fix",
     "app:test": "pnpm --filter noderium-app test:ci",
@@ -23,6 +24,9 @@
   },
   "homepage": "https://github.com/leal32b/noderium#readme",
   "devDependencies": {
-    "@changesets/cli": "^2.29.8"
+    "@changesets/cli": "^2.29.8",
+    "@commitlint/cli": "^19.6.0",
+    "@commitlint/config-conventional": "^19.6.0",
+    "husky": "^9.1.7"
   }
 }
