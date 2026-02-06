@@ -1,0 +1,6 @@
+{
+  "*.{ts,tsx}": [
+    "pnpm -C apps/app exec vitest related",
+    "pnpm -C apps/app exec eslint --fix"
+  ]
+}
