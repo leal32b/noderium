@@ -37,6 +37,7 @@ const MarkdownEditor = () => {
       doc: DEFAULT_CONTENT,
       extensions: [
         markdown({ extensions: [Strikethrough, TaskList] }),
+        EditorView.lineWrapping,
         keymap.of([...historyKeymap, indentWithTab]),
         history(),
         mainTheme,
@@ -54,7 +55,7 @@ const MarkdownEditor = () => {
 
   return (
     <div
-      class="flex-1 overflow-auto"
+      class="flex h-full overflow-auto justify-center"
       ref={(el) => { containerRef = el }}
     />
   )

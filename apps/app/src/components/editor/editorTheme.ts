@@ -22,7 +22,9 @@ const mainTheme = EditorView.theme(
     '.cm-selectionBackground, .cm-content ::selection': {
     },
     '&': {
-      color: 'var(--color-base-content)'
+      color: 'var(--color-base-content)',
+      maxWidth: '720px',
+      width: '100%'
     },
     '&.cm-editor.cm-focused': {
       outline: 'none'
