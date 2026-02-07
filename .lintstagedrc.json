@@ -1,0 +1,6 @@
+{
+  "*.{ts,tsx}": [
+    "pnpm app:lint",
+    "pnpm app:test:related"
+  ]
+}

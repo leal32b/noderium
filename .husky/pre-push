@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+pnpm app:lint
+pnpm app:test
