@@ -14,17 +14,39 @@ const makeSut = (): SutTypes => {
 }
 
 describe('Navbar', () => {
-  it('should render', () => {
+  it('renders the component', () => {
     const { container } = makeSut()
 
     expect(container.firstElementChild).toBeDefined()
   })
 
-  it('should toggle theme', () => {
+  it('renders the title "Noderium"', () => {
     makeSut()
 
-    screen.getByTestId('navbar-toggle-theme').click()
+    expect(screen.getByText('Noderium')).toBeDefined()
+  })
 
-    expect(isDark()).toBe(true)
+  it('has a menu button', () => {
+    const { container } = makeSut()
+    const menuButton = container.querySelector('.i-material-symbols-menu')
+
+    expect(menuButton).toBeDefined()
+  })
+
+  it('has a more options button', () => {
+    const { container } = makeSut()
+    const moreButton = container.querySelector('.i-material-symbols-more-horiz')
+
+    expect(moreButton).toBeDefined()
+  })
+
+  it('toggles theme when clicking the toggle theme option', () => {
+    makeSut()
+    const initialTheme = isDark()
+
+    const toggleThemeOption = screen.getByText('Toggle theme')
+    toggleThemeOption.click()
+
+    expect(isDark()).toBe(!initialTheme)
   })
 })
