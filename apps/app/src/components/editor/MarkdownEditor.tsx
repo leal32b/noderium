@@ -55,7 +55,7 @@ const MarkdownEditor = () => {
 
   return (
     <div
-      class="flex h-full overflow-auto justify-center"
+      class="flex h-full overflow-auto justify-center pt-12"
       ref={(el) => { containerRef = el }}
     />
   )
