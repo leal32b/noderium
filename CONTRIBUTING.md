@@ -49,7 +49,7 @@ noderium/
     ```
 3. **Run the App:** This command starts the Rust backend and the SolidJS frontend with Hot Module Replacement (HMR).
     ```bash
-    pnpm dev:app
+    pnpm app:dev
     ```
 
 ## 💻 Development Workflow

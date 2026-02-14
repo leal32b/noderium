@@ -42,7 +42,7 @@ pnpm install
 ```
 
 This will install all dependencies for the monorepo, including:
-- Frontend dependencies (SolidJS, UnoCSS, CodeMirror)
+- Frontend dependencies (SolidJS, Tailwind CSS, DaisyUI, CodeMirror)
 - Documentation site dependencies (Docusaurus)
 - Shared package dependencies
 

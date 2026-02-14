@@ -52,7 +52,7 @@ Designed for extreme performance and developer experience.
 | **Database** | **SQLite** | Relational indexing of knowledge graph. Rebuilds if deleted |
 | **Frontend** | [SolidJS](https://www.solidjs.com/) | Fine-grained reactivity without Virtual DOM |
 | **Editor** | [CodeMirror 6](https://codemirror.net/) | Extensible text editor with Markdown support |
-| **Styling** | [UnoCSS](https://unocss.dev/) | Atomic CSS with instant performance |
+| **Styling** | [Tailwind CSS v4](https://tailwindcss.com/) + [DaisyUI](https://daisyui.com/) | Utility-first CSS with a rich component library |
 | **Testing** | [Vitest](https://vitest.dev/) | Fast unit testing powered by Vite |
 | **Linting** | ESLint + TypeScript ESLint | Code quality and consistency |
 | **Versioning** | [Changesets](https://github.com/changesets/changesets) | Automated versioning and changelogs |
@@ -93,6 +93,8 @@ We are on **Day 1**. Current focus: foundation and architecture.
 - [x] Hide markers plugin (distraction-free editing)
 - [x] Keyboard shortcuts (bold, italic, code)
 - [x] Theme system (light/dark mode)
+- [x] Theme system (light/dark mode with DaisyUI)
+- [x] Layout system (Drawer with collapsible sidebars + Navbar)
 - [x] Comprehensive test suite (100% coverage)
 - [ ] Rust-based Markdown File I/O
 - [ ] Basic SQLite indexing

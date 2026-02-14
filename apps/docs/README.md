@@ -30,6 +30,6 @@ You can also run the documentation site from the root of the monorepo:
 
 ```bash
 # From the root directory
-pnpm dev:docs   # Start development server
-pnpm build:docs # Build for production
+pnpm docs:dev  # Start development server
+pnpm build     # Build all packages for production
 ```

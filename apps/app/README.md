@@ -15,7 +15,7 @@ This application is part of a [pnpm monorepo](https://pnpm.io/workspaces). To ru
     ```
 3.  **Run the app in development mode:**
     ```bash
-    pnpm dev:app
+    pnpm app:dev
     ```
 
 ### Building the App

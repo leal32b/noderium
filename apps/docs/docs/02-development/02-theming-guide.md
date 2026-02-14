@@ -199,7 +199,7 @@ To modify a built-in theme (like `light` or `dark`), override only the variables
 
 ## Using Themes in the Application
 
-### 1. Switch Theme Dynamically (React/Solid)
+### 1. Switch Theme Dynamically (SolidJS)
 
 ```tsx
 // Change the entire page theme
@@ -210,7 +210,7 @@ const changeTheme = (themeName: string) => {
 // Usage:
 <button onClick={() => changeTheme('dark')}>Dark Theme</button>
 <button onClick={() => changeTheme('light')}>Light Theme</button>
-<button onClick={() => changeTheme('noderium')}>Noderium Theme</button>
+<button onClick={() => changeTheme('cupcake')}>Cupcake Theme</button>
 ```
 
 ### 2. Light/Dark Toggle (your current code)
@@ -233,7 +233,7 @@ export { isDark, toggleTheme }
 ### 3. Save User Preference
 
 ```tsx
-const themes = ['light', 'dark', 'noderium', 'cupcake'] as const
+const themes = ['light', 'dark', 'cupcake', 'dracula'] as const
 type Theme = typeof themes[number]
 
 const getStoredTheme = (): Theme => {
@@ -311,23 +311,30 @@ const daisyVars = [...document.styleSheets]
 console.log(daisyVars)
 ```
 
-### 4. List Available Themes in UnoCSS
+### 4. Enable Built-in Themes
 
-In `uno.config.ts`:
+In `App.css`, themes are enabled via the `@plugin "daisyui"` directive. Use `--default` to set the default theme:
 
-```typescript
-presetDaisy({
-  themes: [
-    // Available built-in themes:
-    'light', 'dark', 'cupcake', 'bumblebee', 'emerald', 
-    'corporate', 'synthwave', 'retro', 'cyberpunk', 'valentine',
-    'halloween', 'garden', 'forest', 'aqua', 'lofi', 'pastel',
-    'fantasy', 'wireframe', 'black', 'luxury', 'dracula', 'cmyk',
-    'autumn', 'business', 'acid', 'lemonade', 'night', 'coffee',
-    'winter', 'dim', 'nord', 'sunset', 'caramellatte', 'abyss', 'silk'
-  ]
-})
+```css
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: light --default, dark;
+}
 ```
+
+To enable additional themes, add them to the list:
+
+```css
+@plugin "daisyui" {
+  themes: light --default, dark, cupcake, dracula, nord, sunset;
+}
+```
+
+**All available built-in themes:**
+
+| Light Themes | Dark Themes |
+|-------------|-------------|
+| `light`, `cupcake`, `bumblebee`, `emerald`, `corporate`, `retro`, `valentine`, `garden`, `aqua`, `lofi`, `pastel`, `fantasy`, `wireframe`, `cmyk`, `autumn`, `acid`, `lemonade`, `winter`, `caramellatte`, `silk` | `dark`, `synthwave`, `cyberpunk`, `halloween`, `forest`, `black`, `luxury`, `dracula`, `night`, `coffee`, `business`, `dim`, `nord`, `sunset`, `abyss` |
 
 ---
 
@@ -373,7 +380,7 @@ const Card = () => {
 ## Additional Resources
 
 - **Official daisyUI documentation**: https://daisyui.com/docs/themes/
-- **UnoCSS preset daisy**: https://github.com/unscatty/unocss-preset-daisy
+- **Tailwind CSS v4**: https://tailwindcss.com/docs
 - **OKLCH Color Picker**: https://oklch.com/
 - **theme-change**: https://github.com/saadeghi/theme-change (library for managing themes)
 

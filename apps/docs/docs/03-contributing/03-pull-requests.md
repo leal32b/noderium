@@ -41,7 +41,7 @@ git checkout -b chore/update-deps
 pnpm install
 
 # Start development
-pnpm dev:app
+pnpm app:dev
 
 # Make your changes...
 ```
@@ -304,7 +304,7 @@ git push --force-with-lease origin your-branch
 ### CI Failures
 
 1. Check the CI logs for specific errors
-2. Run tests locally: `pnpm turbo run test lint`
+2. Run tests locally: `pnpm app:test` and `pnpm app:lint`
 3. Fix issues and push new commits
 
 ### Stale PRs

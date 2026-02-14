@@ -21,6 +21,8 @@ The foundation of everything.
 - [x] **Markdown editor** (CodeMirror 6) with syntax highlighting
 - [x] **Hide markers plugin** — distraction-free editing (markers hidden when cursor is not on line)
 - [x] **Keyboard shortcuts** — `Cmd/Ctrl+B` (bold), `Cmd/Ctrl+I` (italic), `Cmd/Ctrl+E` (inline code)
+- [x] **Theme system** — Light/dark mode with DaisyUI themes
+- [x] **Layout system** — Drawer with collapsible sidebars and navbar
 - [x] **Comprehensive test suite** — 100% coverage enforced
 - [ ] Rust-based Markdown File I/O
 - [ ] Basic SQLite indexing
@@ -118,7 +120,7 @@ Month 3: "Maybe a different tool?"
 | **Core/Backend** | **Rust** | Zero-copy Markdown parser, async file I/O, memory safety |
 | **Database** | **SQLite** | Relational indexing of knowledge graph. Rebuilds itself if deleted |
 | **Frontend** | [SolidJS](https://www.solidjs.com/) | Superior performance vs React. Fine-grained reactivity without VDOM |
-| **Styling** | [UnoCSS](https://unocss.dev/) | Atomic CSS with instant performance |
+| **Styling** | [Tailwind CSS v4](https://tailwindcss.com/) + [DaisyUI](https://daisyui.com/) | Utility-first CSS with a rich component library |
 
 ### The Data Flow (Truth Flow)
 

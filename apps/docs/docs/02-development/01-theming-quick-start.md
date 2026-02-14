@@ -30,20 +30,69 @@ import { ThemeSelector } from './components/ThemeSelector'
 
 ## Available Themes
 
-**Currently enabled in the project:**
-- `light` - Default light theme
-- `dark` - Default dark theme  
-- `noderium` - Custom theme (see `App.css`)
+**Currently enabled in the project** (see `App.css`):
+- `light` — Default theme
+- `dark` — Dark theme
 
-**To enable more themes**, edit `uno.config.ts`:
+**To enable more themes**, edit `App.css`:
 
-```typescript
-presetDaisy({
-  themes: ['light', 'dark', 'cupcake', 'synthwave', 'dracula', ...]
-})
+```css
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: light --default, dark, cupcake, synthwave, dracula;
+}
 ```
 
-**Complete list:** light, dark, cupcake, bumblebee, emerald, corporate, synthwave, retro, cyberpunk, valentine, halloween, garden, forest, aqua, lofi, pastel, fantasy, wireframe, black, luxury, dracula, cmyk, autumn, business, acid, lemonade, night, coffee, winter, dim, nord, sunset, caramellatte, abyss, silk
+:::tip
+Use `--default` after a theme name to set it as the default. If no `themes` config is provided, **all** built-in themes are available.
+:::
+
+### All DaisyUI Built-in Themes
+
+#### Light Themes
+
+| Theme | Description |
+|-------|-------------|
+| `light` | Default light theme |
+| `cupcake` | Soft pastel colors |
+| `bumblebee` | Yellow/amber accent |
+| `emerald` | Green accent |
+| `corporate` | Professional blue tones |
+| `retro` | Vintage/retro palette |
+| `valentine` | Pink/romantic tones |
+| `garden` | Natural greens |
+| `aqua` | Cyan/aqua tones |
+| `lofi` | Minimal, low-contrast |
+| `pastel` | Soft pastel palette |
+| `fantasy` | Purple/magical tones |
+| `wireframe` | Minimal, monochrome |
+| `cmyk` | Print-inspired colors |
+| `autumn` | Warm fall tones |
+| `acid` | Neon/vibrant colors |
+| `lemonade` | Yellow/green fresh tones |
+| `winter` | Cool blue tones |
+| `caramellatte` | Warm caramel tones |
+| `silk` | Elegant, soft palette |
+
+#### Dark Themes
+
+| Theme | Description |
+|-------|-------------|
+| `dark` | Default dark theme |
+| `synthwave` | Neon 80s aesthetic |
+| `cyberpunk` | Cyberpunk neon style |
+| `halloween` | Orange/purple dark |
+| `forest` | Dark greens |
+| `black` | Pure black background |
+| `luxury` | Gold accents on dark |
+| `dracula` | Dracula color scheme |
+| `night` | Deep blue dark |
+| `coffee` | Warm brown dark |
+| `business` | Professional dark |
+| `dim` | Subtle dark palette |
+| `nord` | Nord color scheme |
+| `sunset` | Warm sunset tones |
+| `abyss` | Deep dark blue |
 
 ---
 
@@ -116,7 +165,7 @@ oklch(lightness% chroma hue)
 | `--color-success` | Positive feedback |
 | `--color-error` | Errors and alerts |
 
-### CSS Classes (UnoCSS/Tailwind)
+### CSS Classes (Tailwind CSS)
 
 ```html
 <div class="bg-base-100 text-base-content">
