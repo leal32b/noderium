@@ -1,6 +1,11 @@
-import { MarkdownEditor } from '@/components/editor/MarkdownEditor'
+import { lazy, Suspense } from 'solid-js'
+
 import { Drawer } from '@/components/layout/Drawer'
 import { Navbar } from '@/components/layout/Navbar'
+
+const MarkdownEditor = lazy(() =>
+  import('@/components/editor/MarkdownEditor').then(m => ({ default: m.MarkdownEditor }))
+)
 
 function App() {
   return (
@@ -9,7 +14,9 @@ function App() {
         content={(
           <>
             <Navbar />
-            <MarkdownEditor />
+            <Suspense>
+              <MarkdownEditor />
+            </Suspense>
           </>
         )}
         sideContent={(<></>)}

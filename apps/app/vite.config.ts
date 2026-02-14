@@ -9,6 +9,16 @@ const host = process.env.TAURI_DEV_HOST
 
 // https://vite.dev/config/
 export default defineConfig(() => ({
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('@codemirror/')) return 'codemirror'
+          if (id.includes('@lezer/')) return 'lezer'
+        }
+      }
+    }
+  },
   clearScreen: false,
   plugins: [
     solid(),
