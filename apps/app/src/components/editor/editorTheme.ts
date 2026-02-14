@@ -14,16 +14,21 @@ const mainTheme = EditorView.theme(
   {
     '.cm-content': {
       caretColor: 'var(--color-primary-content)',
-      fontFamily: 'sans-serif'
+      fontFamily: 'sans-serif',
+      marginInline: 'auto',
+      maxWidth: '720px'
     },
     '.cm-line.cm-code-block': {
       fontFamily: 'ui-monospace'
+    },
+    '.cm-scroller': {
+      overflow: 'auto'
     },
     '.cm-selectionBackground, .cm-content ::selection': {
     },
     '&': {
       color: 'var(--color-base-content)',
-      maxWidth: '720px',
+      height: '100%',
       width: '100%'
     },
     '&.cm-editor.cm-focused': {
