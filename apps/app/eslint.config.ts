@@ -32,6 +32,7 @@ export default defineConfig(
   {
     rules: {
       // Stylistic rules
+      '@stylistic/brace-style': 'off',
       '@stylistic/max-len': ['warn', { code: 100, ignoreStrings: true, ignoreUrls: true }],
       // TypeScript rules
       '@typescript-eslint/no-unsafe-assignment': 'off',

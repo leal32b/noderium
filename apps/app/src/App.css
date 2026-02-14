@@ -1,33 +1,16 @@
-:root {
-  --body-gray:    #cfcfd2;
-  --zone-gray:    #b7b8bc;
-  --dark-gray:    #4b4b4f;
-  --dark-slate:   #181b20;
-  --light-purple: #b49ad8;
-  --deep-purple:  #5b3f8c;
-  --vivid-red:    #d12f2f;
-  --lime-green:   #3fa34d;
-  --bright-yellow:#f0c419;
-  --deep-blue:    #2f5fd1;
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: light --default, dark;
+}
 
-  --color-bg-main: var(--body-gray);
-  --color-bg-editor-selected: var(--zone-gray);
-  --color-text-editor: var(--dark-gray);
-  --color-text-editor-selected: var(--dark-gray);
-  --color-test-inline: var(--light-purple);
-
+/* :root {
   font-family: 'system-ui';
-  color: var(--color-text-editor);
-}
+} */
 
-html.dark {
-  --color-bg-main: var(--dark-slate);
-  --color-bg-editor-selected: var(--zone-gray); 
-  --color-text-editor: var(--body-gray);
-  --color-text-editor-selected: var(--body-gray);
-  --color-test-inline: var(--deep-purple);
-}
-
-body {
+/* body {
   margin: 0;
+} */
+
+.btn {
+  @apply shadow-none;
 }

@@ -1,11 +1,26 @@
-import { MarkdownEditor } from '@/components/editor/MarkdownEditor'
+import { lazy, Suspense } from 'solid-js'
+
+import { Drawer } from '@/components/layout/Drawer'
 import { Navbar } from '@/components/layout/Navbar'
+
+const MarkdownEditor = lazy(() =>
+  import('@/components/editor/MarkdownEditor').then(m => ({ default: m.MarkdownEditor }))
+)
 
 function App() {
   return (
-    <main class="h-screen bg-main flex flex-col">
-      <Navbar />
-      <MarkdownEditor />
+    <main>
+      <Drawer
+        content={(
+          <>
+            <Navbar />
+            <Suspense>
+              <MarkdownEditor />
+            </Suspense>
+          </>
+        )}
+        sideContent={(<></>)}
+      />
     </main>
   )
 }

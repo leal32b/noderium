@@ -1,6 +1,7 @@
 import { fileURLToPath } from 'node:url'
 
-import UnoCSS from 'unocss/vite'
+import tailwindcss from '@tailwindcss/vite'
+import { visualizer } from 'rollup-plugin-visualizer'
 import { defineConfig } from 'vite'
 import solid from 'vite-plugin-solid'
 
@@ -8,10 +9,24 @@ const host = process.env.TAURI_DEV_HOST
 
 // https://vite.dev/config/
 export default defineConfig(() => ({
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('@codemirror/')) return 'codemirror'
+          if (id.includes('@lezer/')) return 'lezer'
+        }
+      }
+    }
+  },
   clearScreen: false,
   plugins: [
-    UnoCSS(),
-    solid()
+    solid(),
+    tailwindcss(),
+    visualizer({
+      filename: 'stats.html',
+      gzipSize: true
+    })
   ],
   resolve: {
     alias: {

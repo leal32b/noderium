@@ -1,24 +1,64 @@
+import {
+  IconDots,
+  IconLayoutSidebarLeftCollapseFilled,
+  IconLayoutSidebarLeftExpand,
+  IconLayoutSidebarRightCollapseFilled,
+  IconLayoutSidebarRightExpand,
+  IconMoonFilled,
+  IconSunFilled
+} from '@tabler/icons-solidjs'
 import { type Component } from 'solid-js'
 
+import { isLeftCollapsed, isRightCollapsed, toggleLeftCollapsed, toggleRightCollapsed } from '@/stores/layout'
 import { isDark, toggleTheme } from '@/stores/theme'
 
 const Navbar: Component = () => {
   return (
-    <nav class="flex h-8 items-center px-2">
-      <div>Noderium</div>
-      <div class="ml-auto flex items-center gap-2">
-        <span
-          aria-label={isDark() ? 'Switch to light mode' : 'Switch to dark mode'}
-          class="cursor-pointer h-5 w-5 hover:text-hover"
-          classList={{
-            'i-material-symbols-dark-mode': isDark(),
-            'i-material-symbols-light-mode': !isDark()
-          }}
-          data-testid="navbar-toggle-theme"
-          onClick={toggleTheme}
-        />
+    <div class="navbar min-h-0">
+      <div class="flex-none">
+        <button aria-label="Toggle left sidebar" class="btn btn-sm btn-square btn-ghost" onClick={() => toggleLeftCollapsed()}>
+          {
+            isLeftCollapsed()
+              ? <IconLayoutSidebarLeftCollapseFilled class="size-5" />
+              : <IconLayoutSidebarLeftExpand class="size-5" />
+          }
+        </button>
       </div>
-    </nav>
+      <div class="flex-1 text-center">Noderium</div>
+      <div class="flex-none">
+        <div class="dropdown dropdown-end">
+          <button aria-label="More options" class="btn btn-sm btn-square btn-ghost" role="button" tabindex="0">
+            <IconDots class="size-4" />
+          </button>
+          <ul
+            class="menu menu-sm dropdown-content bg-base-300 rounded-box z-1 mt-3 w-52 p-2"
+            tabindex="-1"
+          >
+            <li onClick={() => {
+              (document.activeElement as HTMLElement)?.blur()
+              toggleTheme()
+            }}
+            >
+              <a>
+                {
+                  isDark()
+                    ? <IconMoonFilled class="size-4" />
+                    : <IconSunFilled class="size-4" />
+                }
+                Toggle theme
+              </a>
+            </li>
+          </ul>
+        </div>
+        <button aria-label="Toggle right sidebar" class="btn btn-sm btn-square btn-ghost" onClick={() => toggleRightCollapsed()}>
+          {
+            isRightCollapsed()
+              ? <IconLayoutSidebarRightCollapseFilled class="size-5" />
+              : <IconLayoutSidebarRightExpand class="size-5" />
+          }
+        </button>
+      </div>
+    </div>
   )
 }
 
