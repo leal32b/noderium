@@ -1,5 +1,11 @@
 # noderium-app
 
+## 0.2.2
+
+### Patch Changes
+
+- cd8bd26: Add DaisyUI
+
 ## 0.2.1
 
 ### Patch Changes
