@@ -1,6 +1,7 @@
 import { fileURLToPath } from 'node:url'
 
 import tailwindcss from '@tailwindcss/vite'
+import { visualizer } from 'rollup-plugin-visualizer'
 import { defineConfig } from 'vite'
 import solid from 'vite-plugin-solid'
 
@@ -11,7 +12,11 @@ export default defineConfig(() => ({
   clearScreen: false,
   plugins: [
     solid(),
-    tailwindcss()
+    tailwindcss(),
+    visualizer({
+      filename: 'stats.html',
+      gzipSize: true
+    })
   ],
   resolve: {
     alias: {
