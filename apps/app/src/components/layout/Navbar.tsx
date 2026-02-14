@@ -16,7 +16,7 @@ const Navbar: Component = () => {
   return (
     <div class="navbar min-h-0">
       <div class="flex-none">
-        <button class="btn btn-sm btn-square btn-ghost" onClick={() => toggleLeftCollapsed()}>
+        <button aria-label="Toggle left sidebar" class="btn btn-sm btn-square btn-ghost" onClick={() => toggleLeftCollapsed()}>
           {
             isLeftCollapsed()
               ? <IconLayoutSidebarLeftCollapseFilled class="size-5" />
@@ -27,7 +27,7 @@ const Navbar: Component = () => {
       <div class="flex-1 text-center">Noderium</div>
       <div class="flex-none">
         <div class="dropdown dropdown-end">
-          <button class="btn btn-sm btn-square btn-ghost" role="button" tabindex="0">
+          <button aria-label="More options" class="btn btn-sm btn-square btn-ghost" role="button" tabindex="0">
             <IconDots class="size-4" />
           </button>
           <ul
@@ -50,7 +50,7 @@ const Navbar: Component = () => {
             </li>
           </ul>
         </div>
-        <button class="btn btn-sm btn-square btn-ghost" onClick={() => toggleRightCollapsed()}>
+        <button aria-label="Toggle right sidebar" class="btn btn-sm btn-square btn-ghost" onClick={() => toggleRightCollapsed()}>
           {
             isRightCollapsed()
               ? <IconLayoutSidebarRightCollapseFilled class="size-5" />
