@@ -1,6 +1,4 @@
 import { render } from 'solid-js/web'
-import '@unocss/reset/tailwind.css'
-import 'virtual:uno.css'
 
 import '@/App.css'
 import App from '@/App'

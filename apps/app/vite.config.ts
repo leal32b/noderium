@@ -1,6 +1,6 @@
 import { fileURLToPath } from 'node:url'
 
-import UnoCSS from 'unocss/vite'
+import tailwindcss from '@tailwindcss/vite'
 import { defineConfig } from 'vite'
 import solid from 'vite-plugin-solid'
 
@@ -10,8 +10,8 @@ const host = process.env.TAURI_DEV_HOST
 export default defineConfig(() => ({
   clearScreen: false,
   plugins: [
-    UnoCSS(),
-    solid()
+    solid(),
+    tailwindcss()
   ],
   resolve: {
     alias: {
