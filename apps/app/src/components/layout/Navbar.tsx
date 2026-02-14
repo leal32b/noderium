@@ -1,58 +1,61 @@
+import {
+  IconDots,
+  IconLayoutSidebarLeftCollapseFilled,
+  IconLayoutSidebarLeftExpand,
+  IconLayoutSidebarRightCollapseFilled,
+  IconLayoutSidebarRightExpand,
+  IconMoonFilled,
+  IconSunFilled
+} from '@tabler/icons-solidjs'
 import { type Component } from 'solid-js'
 
-import { toggleLeftCollapsed, toggleRightCollapsed } from '@/stores/layout'
+import { isLeftCollapsed, isRightCollapsed, toggleLeftCollapsed, toggleRightCollapsed } from '@/stores/layout'
 import { isDark, toggleTheme } from '@/stores/theme'
-
-const closeDetails = (details: HTMLDetailsElement) => {
-  details.removeAttribute('open')
-}
 
 const Navbar: Component = () => {
   return (
-    <div class="navbar min-h-0 fixed top-0 left-0 right-0 z-50">
-      <div class="navbar-start">
-        {/* Left menu */}
-        <button
-          class="btn btn-sm p-1 btn-ghost"
-          onClick={() => toggleLeftCollapsed()}
-        >
-          <span class="i-material-symbols-transition-slide-outline h-5 w-5" />
+    <div class="navbar min-h-0">
+      <div class="flex-none">
+        <button class="btn btn-sm btn-square btn-ghost" onClick={() => toggleLeftCollapsed()}>
+          {
+            isLeftCollapsed()
+              ? <IconLayoutSidebarLeftCollapseFilled class="size-5" />
+              : <IconLayoutSidebarLeftExpand class="size-5" />
+          }
         </button>
       </div>
-      <div class="navbar-center">
-        {/* Title */}
-        <span>Noderium</span>
-      </div>
-      <div class="navbar-end">
-        {/* More menu */}
-        <details class="dropdown dropdown-end">
-          <summary class="btn btn-sm p-1 btn-ghost">
-            <span class="i-material-symbols-more-horiz h-5 w-5" />
-          </summary>
-          <ul class="menu menu-sm dropdown-content mt-2 p-2 shadow w-52 rounded-box bg-base-300">
-            <li onClick={(e) => {
+      <div class="flex-1 text-center">Noderium</div>
+      <div class="flex-none">
+        <div class="dropdown dropdown-end">
+          <button class="btn btn-sm btn-square btn-ghost" role="button" tabindex="0">
+            <IconDots class="size-4" />
+          </button>
+          <ul
+            class="menu menu-sm dropdown-content bg-base-300 rounded-box z-1 mt-3 w-52 p-2"
+            tabindex="-1"
+          >
+            <li onClick={() => {
+              (document.activeElement as HTMLElement)?.blur()
               toggleTheme()
-              closeDetails(e.currentTarget.closest('details')!) // Fecha
             }}
             >
-              <a class="flex items-center gap-2">
-                <span
-                  class="w-4 h-4"
-                  classList={{
-                    'i-material-symbols-dark-mode': isDark(),
-                    'i-material-symbols-light-mode': !isDark()
-                  }}
-                />
+              <a>
+                {
+                  isDark()
+                    ? <IconMoonFilled class="size-4" />
+                    : <IconSunFilled class="size-4" />
+                }
                 Toggle theme
               </a>
             </li>
           </ul>
-        </details>
-        <button
-          class="btn btn-sm p-1 btn-ghost"
-          onClick={() => toggleRightCollapsed()}
-        >
-          <span class="i-material-symbols-transition-slide-outline rotate-180 h-5 w-5" />
+        </div>
+        <button class="btn btn-sm btn-square btn-ghost" onClick={() => toggleRightCollapsed()}>
+          {
+            isRightCollapsed()
+              ? <IconLayoutSidebarRightCollapseFilled class="size-5" />
+              : <IconLayoutSidebarRightExpand class="size-5" />
+          }
         </button>
       </div>
     </div>
