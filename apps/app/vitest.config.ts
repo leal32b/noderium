@@ -20,7 +20,8 @@ export default defineConfig(() => ({
         'src/index.tsx',
         'src/vite-env.d.ts',
         'src/**/*.test.{ts,tsx}',
-        'src/**/{index,theme,types}.ts'
+        'src/**/index.ts',
+        'src/**/stores/**.ts'
       ],
       include: ['src/**/*.{ts,tsx}'],
       provider: 'v8',
