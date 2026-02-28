@@ -1,6 +1,11 @@
+import '@/app/styles/App.css'
 import { render } from 'solid-js/web'
 
-import '@/App.css'
-import App from '@/App'
+import App from '@/app/App'
 
-render(() => <App />, document.getElementById('root') as HTMLElement)
+render(
+  () => (
+    <App />
+  ),
+  document.getElementById('root')!
+)

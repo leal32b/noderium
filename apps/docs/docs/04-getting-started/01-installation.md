@@ -67,8 +67,7 @@ noderium/
 ├── apps/
 │   ├── app/           # Main application (Tauri + SolidJS)
 │   │   ├── src/       # SolidJS Frontend (UI)
-│   │   ├── src-tauri/ # Rust Backend (Core Logic)
-│   │   └── test/      # Unit tests (Vitest)
+│   │   └── src-tauri/ # Rust Backend (Core Logic)
 │   └── docs/          # Documentation (Docusaurus)
 ├── .changeset/        # Changesets configuration
 ├── pnpm-workspace.yaml
@@ -163,8 +162,9 @@ Once installed, you're ready to:
 
 | Command | Description |
 |---------|-------------|
-| `pnpm app:dev` | Start the desktop app in development mode |
+| `pnpm app:dev` | Run the app in development mode |
 | `pnpm app:test` | Run tests with coverage |
-| `pnpm docs:dev` | Start the documentation site locally |
-| `pnpm build` | Build all packages for production |
-| `pnpm --filter noderium-app test:watch` | Run tests in watch mode |
+| `pnpm app:test:watch` | Run tests in watch mode |
+| `pnpm docs:dev` | Run documentation site locally |
+| `pnpm build` | Build all packages |
+| `pnpm app:lint` | Run ESLint on app source and auto-fix |

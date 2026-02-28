@@ -1,10 +1,11 @@
 {
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.patterns": {
+    "eslint.config.ts": "steiger.*",
     "package.json": "pnpm-*.yaml",
-    "tsconfig.json": "tsconfig.node.json",
-    "vite.config.ts": "vitest.config.ts",
     "tauri.conf.json": "Cargo.*",
+    "tsconfig.json": "tsconfig.node.json",
+    "vite.config.ts": "vitest.*"
   },
   "cSpell.words": [
     "cdylib",
@@ -24,5 +25,21 @@
   "eslint.useFlatConfig": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "always"
-  }
+  },
+  "css.lint.unknownAtRules": "ignore",
+  "explorerSort.rules": [
+    {
+      "name": "FSD Structure",
+      "pathPattern": "**/app/src/**",
+      "priorities": [
+        { "condition": "name === 'app'", "priority": 10 },
+        { "condition": "name === 'pages'", "priority": 9 },
+        { "condition": "name === 'widgets'", "priority": 8 },
+        { "condition": "name === 'features'", "priority": 7 },
+        { "condition": "name === 'entities'", "priority": 6 },
+        { "condition": "name === 'shared'", "priority": 5 }
+      ]
+    }
+  ],
+  "explorerSort.respectGitignore": true
 }

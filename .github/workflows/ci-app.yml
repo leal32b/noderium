@@ -81,21 +81,25 @@ jobs:
 
       - name: Run Frontend Tests (Vitest)
         run: pnpm --filter noderium-app test:ci
+
+      - name: Run Frontend FSD (steiger)
+        run: pnpm --filter noderium-app steiger
       
       - name: Extract coverage percentage
         id: coverage
         run: |
           COV=$(jq -r '.total.lines.pct' apps/app/coverage/coverage-summary.json)
-          echo "coverage=$COV" >> $GITHUB_ENV
+          echo "coverage=$COV" >> $GITHUB_OUTPUT
 
       - name: Update gist with coverage (Shields.io)
         uses: schneegans/dynamic-badges-action@v1.7.0
+        id: update-gist
         with:
           auth: ${{ secrets.GIST_TOKEN }}
           gistID: 18a36db0bca9c3f0458afa76d4bc2e34
           filename: coverage.json
           label: coverage
-          message: ${{ env.coverage }}%
+          message: ${{ steps.coverage.outputs.coverage }}%
           color: brightgreen
 
       - name: Build Frontend

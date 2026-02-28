@@ -7,7 +7,6 @@ import solid from 'vite-plugin-solid'
 
 const host = process.env.TAURI_DEV_HOST
 
-// https://vite.dev/config/
 export default defineConfig(() => ({
   build: {
     rollupOptions: {
@@ -30,8 +29,7 @@ export default defineConfig(() => ({
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('src', import.meta.url)),
-      '~': fileURLToPath(new URL('test', import.meta.url))
+      '@': fileURLToPath(new URL('src', import.meta.url))
     }
   },
   server: {

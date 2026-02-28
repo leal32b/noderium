@@ -8,5 +8,11 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true
   },
-  "include": ["vite.config.ts", "vitest.config.ts", "eslint.config.ts"]
+  "include": [
+    "eslint.config.ts",
+    "steiger.config.ts",
+    "vite.config.ts",
+    "vitest.config.ts",
+    "vitest.setup.ts"
+  ]
 }
