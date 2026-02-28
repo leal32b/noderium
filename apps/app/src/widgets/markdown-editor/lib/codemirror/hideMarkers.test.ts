@@ -1,9 +1,8 @@
 import type { ViewUpdate } from '@codemirror/view'
 
+import { collectReplacedRangesForLine, getPlugin } from './__helpers__/decoratorsHelper'
+import { createEditorView } from './__helpers__/editorHelpers'
 import { hideMarkers } from '@/widgets/markdown-editor/lib/codemirror/hideMarkers'
-
-import { collectReplacedRangesForLine, getPlugin } from '~/widgets/markdown-editor/lib/codemirror/__helpers__/decoratorsHelper'
-import { createEditorView } from '~/widgets/markdown-editor/lib/codemirror/__helpers__/editorHelpers'
 
 type SutTypes = {
   sut: typeof hideMarkers

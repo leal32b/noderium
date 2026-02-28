@@ -1,11 +1,15 @@
 import { createSignal } from 'solid-js'
 
-const dataTheme = document.documentElement.getAttribute('data-theme') === 'dark'
-const [isDark, setIsDark] = createSignal(dataTheme)
+const getThemeFromDom = () => document.documentElement.getAttribute('data-theme') === 'dark'
+const [isDark, setIsDark] = createSignal(getThemeFromDom())
 
-const toggleTheme = () => {
-  setIsDark(!isDark())
-  document.documentElement.setAttribute('data-theme', isDark() ? 'dark' : 'light')
+const setTheme = (dark: boolean) => {
+  setIsDark(dark)
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light')
 }
 
-export const themeStore = { isDark, toggleTheme }
+const toggleTheme = () => {
+  setTheme(!isDark())
+}
+
+export const themeStore = { isDark, setTheme, toggleTheme }

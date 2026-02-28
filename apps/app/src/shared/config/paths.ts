@@ -1,6 +1,5 @@
 const PATHS = {
-  note: () => '/',
-  settings: () => '/settings'
+  note: () => '/'
 }
 
 export { PATHS }

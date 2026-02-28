@@ -142,11 +142,10 @@ pnpm app:dev
 |---------|-------------|
 | `pnpm app:dev` | Run the app in development mode |
 | `pnpm app:test` | Run tests with coverage |
+| `pnpm app:test:watch` | Run tests in watch mode |
 | `pnpm docs:dev` | Run documentation site locally |
 | `pnpm build` | Build all packages |
-| `pnpm --filter noderium-app lint` | Run ESLint on app source |
-| `pnpm --filter noderium-app lint:fix` | Auto-fix linting issues |
-| `pnpm --filter noderium-app test:watch` | Run tests in watch mode |
+| `pnpm app:lint` | Run ESLint on app source and auto-fix |
 
 ### Monorepo Structure
 
@@ -155,8 +154,7 @@ noderium/
 ├── apps/
 │   ├── app/           # Main application (Tauri + SolidJS)
 │   │   ├── src/       # SolidJS Frontend (UI)
-│   │   ├── src-tauri/ # Rust Backend (Core Logic)
-│   │   └── test/      # Unit tests (Vitest)
+│   │   └── src-tauri/ # Rust Backend (Core Logic)
 │   └── docs/          # Documentation (Docusaurus)
 ├── .changeset/        # Changesets configuration
 └── pnpm-workspace.yaml

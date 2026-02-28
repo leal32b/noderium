@@ -15,6 +15,10 @@ const makeSut = (): SutTypes => {
 }
 
 describe('Navbar', () => {
+  beforeEach(() => {
+    themeStore.setTheme(false)
+  })
+
   it('renders the component', () => {
     const { container } = makeSut()
 
@@ -65,7 +69,7 @@ describe('Navbar', () => {
 
   it('toggles theme to dark when clicking the toggle theme option', () => {
     makeSut()
-    document.documentElement.setAttribute('data-theme', 'light')
+    themeStore.setTheme(false)
 
     const toggleThemeOption = screen.getByText('Toggle theme')
     toggleThemeOption.click()
@@ -74,7 +78,7 @@ describe('Navbar', () => {
 
   it('toggles theme to light when clicking the toggle theme option', () => {
     makeSut()
-    document.documentElement.setAttribute('data-theme', 'dark')
+    themeStore.setTheme(true)
 
     const toggleThemeOption = screen.getByText('Toggle theme')
     toggleThemeOption.click()

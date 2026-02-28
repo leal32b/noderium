@@ -3,19 +3,18 @@ import { fileURLToPath } from 'node:url'
 import solid from 'vite-plugin-solid'
 import { defineConfig } from 'vitest/config'
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [solid()],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('src', import.meta.url)),
-      '~': fileURLToPath(new URL('test', import.meta.url))
+      '@': fileURLToPath(new URL('src', import.meta.url))
     },
     conditions: ['browser']
   },
   test: {
     coverage: {
       exclude: [
+        'src/**/__helpers__/**',
         'src/**/*.test.{ts,tsx}',
         'src/**/App.tsx',
         'src/**/config/**.ts',
@@ -30,7 +29,7 @@ export default defineConfig({
     },
     environment: 'jsdom',
     globals: true,
-    include: ['test/**/*.test.{ts,tsx}'],
+    include: ['src/**/*.test.{ts,tsx}'],
     logHeapUsage: true,
     pool: 'vmThreads',
     server: {
@@ -38,7 +37,6 @@ export default defineConfig({
         inline: ['@solidjs/router']
       }
     },
-    // pool: 'threads',
     setupFiles: ['./vitest.setup.ts'],
     silent: true,
     watch: false

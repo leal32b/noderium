@@ -7,5 +7,11 @@ export default defineConfig([
     rules: {
       'fsd/insignificant-slice': 'off'
     }
+  },
+  {
+    files: ['./src/**/*.test.{ts,tsx}'],
+    rules: {
+      'fsd/no-public-api-sidestep': 'off'
+    }
   }
 ] as Parameters<typeof defineConfig>[0]) as unknown

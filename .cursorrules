@@ -1,5 +1,5 @@
 You are an expert in TDD, DDD, TypeScript, Vitest, Tauri v2, Rust, SolidJS, CodeMirror 6,
-TailwindCSS, SQLite, ESLint, pnpm monorepos and extreme organization/performance.
+TailwindCSS v4, DaisyUI, SQLite, ESLint, Feature-Sliced Design, Steiger, pnpm monorepos and extreme organization/performance.
 
 ## CURRENT TASK CONTEXT
 CRITICAL: Before starting any work, check if task.md exists in the project root.
@@ -59,7 +59,10 @@ noderium/
 Commands:
   pnpm install                        # Install all workspace dependencies
   pnpm app:dev                        # Run desktop app (Vite + Tauri)
+  pnpm app:lint                       # Run and auto-fix app linting
   pnpm app:test                       # Run tests with coverage
+  pnpm app:test:related               # Run related tests only
+  pnpm app:steiger                    # Run architectural checks (FSD)
   pnpm docs:dev                       # Run documentation site
   pnpm build                          # Build all packages
   pnpm --filter noderium-app lint     # Run ESLint on app source
@@ -74,15 +77,16 @@ Commands:
 | Database       | SQLite                    | Relational indexing of knowledge graph     |
 | Frontend       | SolidJS                   | Fine-grained reactivity without VDOM       |
 | Editor         | CodeMirror 6              | Extensible text editor with Markdown       |
-| Styling        | TailwindCSS               | Rapid UI iteration                         |
+| Styling        | TailwindCSS v4 + DaisyUI  | Utility-first styling + consistent UI      |
 | Testing        | Vitest                    | Fast unit testing powered by Vite          |
 | Linting        | ESLint + TypeScript ESLint| Code quality and consistency               |
+| Architecture   | FSD + Steiger             | Enforced scalable boundaries               |
 | Versioning     | Changesets                | Automated versioning and changelogs        |
 | Documentation  | Docusaurus                | Static site generator for docs             |
 
 CI/CD:
 - GitHub Actions for app (ci-app.yml) and docs (ci-docs.yml)
-- 100% test coverage requirement (tracked via c8)
+- 100% test coverage requirement (Vitest coverage thresholds)
 - Automated linting, testing, and build verification
 
 ## GLOBAL PRINCIPLES
@@ -116,7 +120,7 @@ Bounded contexts:
 - Keep tests fast; mock filesystem/network; prefer in-memory SQLite.
 - Use descriptive test names: "<behavior> when <condition>".
 - Keep coverage always at 100%.
-- Use c8 ignore comments sparingly (only for truly untestable code like DOM).
+- Use Vitest coverage ignores sparingly (only for truly untestable paths).
 
 Test file naming: <module>.test.ts or <module>.test.tsx
 Test structure: describe blocks for grouping, it blocks for cases.
@@ -144,6 +148,13 @@ File structure per feature (co-located):
 - Avoid React patterns; embrace SolidJS fine-grained reactivity.
 - Type imports: use `import type { X }` for type-only imports.
 - Props: define with interface, e.g., `interface MyComponentProps { ... }`.
+
+## FEATURE-SLICED DESIGN (FSD)
+- Respect layer boundaries: app > processes > pages > widgets > features > entities > shared.
+- Do not bypass public APIs; avoid deep imports across slices.
+- Prefer absolute aliases (`@/...`) except where project rules require relative imports (e.g., index.ts).
+- Keep business logic out of UI layer files.
+- Run `pnpm app:steiger` after architecture-impacting changes.
 
 ## CODEMIRROR 6
 CodeMirror 6 is used for the Markdown editor. Key patterns:
@@ -311,6 +322,12 @@ Product Documentation:
 ## CURRENT DEVELOPMENT PHASE
 Phase 1: The Editor (Current)
 - [x] Monorepo & Tauri v2 setup
+- [x] Markdown editor (CodeMirror 6) with syntax highlighting
+- [x] Hide markers plugin (distraction-free editing)
+- [x] Keyboard shortcuts (bold, italic, code)
+- [x] Theme system (light/dark mode with DaisyUI)
+- [x] Layout system (Drawer with collapsible sidebars + Navbar)
+- [x] Comprehensive test suite (100% coverage)
 - [ ] Rust-based Markdown File I/O
 - [ ] Basic SQLite indexing
 - [ ] File system watcher

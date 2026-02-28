@@ -74,8 +74,7 @@ export default defineConfig(
       'no-multiple-empty-lines': ['error', { max: 1, maxBOF: 0, maxEOF: 0 }],
       // Pefectionist rules
       'perfectionist/sort-imports': ['error', {
-        customGroups: [{ elementNamePattern: '^~/.+', groupName: 'test' }],
-        groups: ['builtin', 'external', 'internal', 'test'],
+        groups: ['builtin', 'external', 'internal'],
         internalPattern: ['^(@/|.{1,2}/).+']
       }]
     }
@@ -92,15 +91,25 @@ export default defineConfig(
     }
   },
   {
-    files: ['test/**/*.{ts,tsx}'],
+    files: ['**/*.{ts,tsx}'],
+    ignores: ['**/*.test.{ts,tsx}', '**/index.ts'],
     rules: {
       '@typescript-eslint/no-restricted-imports': ['error', {
-        patterns: [
-          {
-            message: 'In tests, import directly from the specific module instead of a barrel file.',
-            regex: '(/index$|/(?:ui|model|lib|api|config|assets)$)'
-          }
-        ]
+        patterns: [{
+          message: 'In .ts/.tsx files, import through public barrels (index.ts), not internal files.',
+          regex: '/(?:ui|model|lib|api|config|assets)/[^/]+/.+'
+        }]
+      }]
+    }
+  },
+  {
+    files: ['**/*.test.{ts,tsx}'],
+    rules: {
+      '@typescript-eslint/no-restricted-imports': ['error', {
+        patterns: [{
+          message: 'In tests, import directly from the specific module instead of a barrel file.',
+          regex: '(/index$|/(?:ui|model|lib|api|config|assets)$)'
+        }]
       }]
     }
   },

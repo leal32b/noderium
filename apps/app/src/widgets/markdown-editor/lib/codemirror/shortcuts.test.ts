@@ -1,9 +1,8 @@
 import { EditorSelection, EditorState } from '@codemirror/state'
 import { EditorView } from '@codemirror/view'
 
+import { createEditorView } from './__helpers__/editorHelpers'
 import { toggleBold, toggleInlineCode, toggleItalic } from '@/widgets/markdown-editor/lib/codemirror/shortcuts'
-
-import { createEditorView } from '~/widgets/markdown-editor/lib/codemirror/__helpers__/editorHelpers'
 
 type SutTypes = {
   toggleBold: typeof toggleBold

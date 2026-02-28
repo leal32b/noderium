@@ -1,6 +1,6 @@
 import type { Component, JSX } from 'solid-js'
 
-import { appShellStore } from '../model/app-shell.store'
+import { appShellStore } from '../model'
 
 type DrawerProps = {
   content: JSX.Element
