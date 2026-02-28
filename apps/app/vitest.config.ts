@@ -1,10 +1,10 @@
 import { fileURLToPath } from 'node:url'
 
-import { defineConfig } from 'vite'
 import solid from 'vite-plugin-solid'
+import { defineConfig } from 'vitest/config'
 
 // https://vite.dev/config/
-export default defineConfig(() => ({
+export default defineConfig({
   plugins: [solid()],
   resolve: {
     alias: {
@@ -16,12 +16,12 @@ export default defineConfig(() => ({
   test: {
     coverage: {
       exclude: [
-        'src/App.tsx',
-        'src/index.tsx',
-        'src/vite-env.d.ts',
         'src/**/*.test.{ts,tsx}',
+        'src/**/App.tsx',
+        'src/**/config/**.ts',
         'src/**/index.ts',
-        'src/**/stores/**.ts'
+        'src/index.tsx',
+        'src/vite-env.d.ts'
       ],
       include: ['src/**/*.{ts,tsx}'],
       provider: 'v8',
@@ -33,7 +33,14 @@ export default defineConfig(() => ({
     include: ['test/**/*.test.{ts,tsx}'],
     logHeapUsage: true,
     pool: 'vmThreads',
+    server: {
+      deps: {
+        inline: ['@solidjs/router']
+      }
+    },
+    // pool: 'threads',
+    setupFiles: ['./vitest.setup.ts'],
     silent: true,
     watch: false
   }
-}))
+})

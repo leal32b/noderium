@@ -1,5 +1,6 @@
 .pnpm-store
 node_modules
+sample-vault
 
 .DS_Store
 tsconfig.node.tsbuildinfo

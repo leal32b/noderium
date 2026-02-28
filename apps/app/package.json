@@ -17,7 +17,8 @@
     "sync-version": "node scripts/update-tauri-version.js && git add src-tauri/tauri.conf.json src-tauri/Cargo.toml",
     "bench:hide": "node scripts/bench-markdown-hide.js",
     "lint": "eslint",
-    "lint:fix": "eslint --fix"
+    "lint:fix": "eslint --fix",
+    "steiger": "steiger src"
   },
   "license": "MIT",
   "dependencies": {
@@ -28,11 +29,13 @@
     "@codemirror/view": "^6.39.12",
     "@lezer/highlight": "^1.2.3",
     "@lezer/markdown": "^1.6.3",
+    "@solidjs/router": "^0.15.4",
     "@tabler/icons-solidjs": "^3.36.1",
     "solid-js": "^1.9.11"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
+    "@feature-sliced/steiger-plugin": "^0.5.7",
     "@iconify-json/material-symbols": "^1.2.53",
     "@solidjs/testing-library": "^0.8.10",
     "@stylistic/eslint-plugin": "^5.7.1",
@@ -42,11 +45,13 @@
     "@vitest/coverage-v8": "^4.0.18",
     "daisyui": "^5.5.18",
     "eslint": "^9.39.2",
+    "eslint-plugin-fsd-lint": "^1.0.10",
     "eslint-plugin-perfectionist": "^5.4.0",
     "eslint-plugin-solid": "^0.14.5",
     "globals": "^17.2.0",
     "jsdom": "^27.4.0",
     "rollup-plugin-visualizer": "^6.0.5",
+    "steiger": "^0.5.11",
     "tailwindcss": "^4.1.18",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.54.0",

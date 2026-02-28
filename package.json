@@ -8,6 +8,7 @@
     "app:lint": "pnpm --filter noderium-app lint:fix",
     "app:test": "pnpm --filter noderium-app test:ci",
     "app:test:related": "pnpm --filter noderium-app test:related",
+    "app:steiger": "pnpm --filter noderium-app steiger",
     "docs:dev": "pnpm --filter noderium-docs start",
     "build": "pnpm -r build",
     "release": "changeset tag",
