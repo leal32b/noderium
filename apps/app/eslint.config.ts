@@ -1,3 +1,4 @@
+import { fixupPluginRules } from '@eslint/compat'
 import eslint from '@eslint/js'
 import stylistic from '@stylistic/eslint-plugin'
 import fsd from 'eslint-plugin-fsd-lint'
@@ -8,6 +9,7 @@ import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
 const __dirname = (import.meta as { dirname: string } & ImportMeta).dirname
+const fsdCompat = fixupPluginRules(fsd as unknown as Parameters<typeof fixupPluginRules>[0])
 
 export default defineConfig(
   eslint.configs.recommended,
@@ -15,7 +17,7 @@ export default defineConfig(
   solid as unknown as Parameters<typeof defineConfig>[0],
   {
     plugins: {
-      'fsd-lint': fsd
+      'fsd-lint': fsdCompat
     },
     rules: {
       'fsd-lint/forbidden-imports': 'error',

@@ -34,6 +34,7 @@
     "solid-js": "^1.9.11"
   },
   "devDependencies": {
+    "@eslint/compat": "^2.0.2",
     "@eslint/js": "^10.0.1",
     "@feature-sliced/steiger-plugin": "^0.5.7",
     "@iconify-json/material-symbols": "^1.2.59",
