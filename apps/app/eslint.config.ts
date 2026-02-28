@@ -1,6 +1,5 @@
 import eslint from '@eslint/js'
 import stylistic from '@stylistic/eslint-plugin'
-// import fsd from 'eslint-plugin-fsd-lint'
 import fsd from 'eslint-plugin-fsd-lint'
 import perfectionist from 'eslint-plugin-perfectionist'
 import solid from 'eslint-plugin-solid/configs/typescript'
@@ -14,7 +13,6 @@ export default defineConfig(
   eslint.configs.recommended,
   tseslint.configs.recommendedTypeChecked,
   solid as unknown as Parameters<typeof defineConfig>[0],
-  // fsd.configs.recommended as unknown as Parameters<typeof defineConfig>[0],
   {
     plugins: {
       'fsd-lint': fsd
