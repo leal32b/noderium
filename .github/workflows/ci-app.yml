@@ -81,6 +81,9 @@ jobs:
 
       - name: Run Frontend Tests (Vitest)
         run: pnpm --filter noderium-app test:ci
+
+      - name: Run Frontend FSD (steiger)
+        run: pnpm --filter noderium-app steiger
       
       - name: Extract coverage percentage
         id: coverage
