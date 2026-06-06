@@ -127,6 +127,18 @@ impl Store {
         Ok(())
     }
 
+    /// Resolve the note id for a given journal date (ISO `YYYY-MM-DD`).
+    pub fn note_id_by_journal_date(&self, date: &str) -> Result<Option<String>> {
+        Ok(self
+            .conn
+            .query_row(
+                "SELECT id FROM notes WHERE journal_date = ?1 LIMIT 1",
+                params![date],
+                |row| row.get::<_, String>(0),
+            )
+            .optional()?)
+    }
+
     pub fn get_note(&self, id: &str) -> Result<Option<Note>> {
         Ok(self
             .conn
