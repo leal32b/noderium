@@ -1,5 +1,6 @@
 import { exportSnapshot } from '@noderium/editor/binding'
 import { useLoroEditor } from '@noderium/editor/hook'
+import type { UseLoroEditorOptions } from '@noderium/editor/hook'
 import { createSignal, Show } from 'solid-js'
 import type { Component } from 'solid-js'
 
@@ -11,6 +12,8 @@ export interface EditorPaneProps {
   initialBlocks?: number
   /** Note this editor persists to (defaults to the spike demo note). */
   noteId?: string
+  /** Re-hydrate the editor from the note's stored snapshot on open (Tauri only). */
+  loadPersisted?: boolean
 }
 
 // Stable note id for the spike's persistence demo.
@@ -20,9 +23,11 @@ export const EditorPane: Component<EditorPaneProps> = (props) => {
   let mountEl!: HTMLDivElement
   const { t } = useI18n()
   const noteId = () => props.noteId ?? SPIKE_NOTE_ID
-  const { lastLatency, peakLatency, editor } = useLoroEditor(() => mountEl, {
-    initialBlocks: props.initialBlocks ?? 100,
-  })
+  const editorOptions: UseLoroEditorOptions = { initialBlocks: props.initialBlocks ?? 100 }
+  if (props.loadPersisted && isTauri()) {
+    editorOptions.loadSnapshot = () => core.loadEditorSnapshot(noteId())
+  }
+  const { lastLatency, peakLatency, editor } = useLoroEditor(() => mountEl, editorOptions)
   const [status, setStatus] = createSignal('')
   const [markdown, setMarkdown] = createSignal('')
 

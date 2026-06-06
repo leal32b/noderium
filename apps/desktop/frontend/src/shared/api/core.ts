@@ -33,6 +33,11 @@ export const core = {
   saveEditorSnapshot: (noteId: string, snapshot: Uint8Array): Promise<void> =>
     invoke('save_editor_snapshot', { noteId, snapshot: Array.from(snapshot) }),
 
+  loadEditorSnapshot: async (noteId: string): Promise<Uint8Array | undefined> => {
+    const bytes = await invoke<number[] | null>('load_editor_snapshot', { noteId })
+    return bytes ? new Uint8Array(bytes) : undefined
+  },
+
   exportNoteMarkdown: (noteId: string): Promise<string> =>
     invoke('export_note_markdown', { noteId }),
 
