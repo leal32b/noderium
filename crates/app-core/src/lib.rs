@@ -109,7 +109,11 @@ impl Workspace {
             created_at: now,
             updated_at: now,
         })?;
-        self.persist(&id, &NoteDoc::new())?;
+        // Only seed an empty CRDT doc on genuine first creation — never clobber
+        // a note that already has persisted content.
+        if self.store.load_snapshot(&id)?.is_none() {
+            self.persist(&id, &NoteDoc::new())?;
+        }
         Ok(id)
     }
 
@@ -404,6 +408,37 @@ body with [[Link]]\n";
 
         let other_day = ws.open_journal("2026-06-07", 3).unwrap();
         assert_ne!(first, other_day);
+    }
+
+    #[test]
+    fn journal_content_survives_reopen() {
+        let ws = Workspace::open_in_memory().unwrap();
+        let id = ws.open_journal("2026-06-06", 1).unwrap();
+
+        // Simulate the editor's Persist flow: a generic create_note (no title /
+        // journal_date) followed by saving the editor snapshot.
+        ws.create_note(&id, "journal", None, 2).unwrap();
+        let snapshot = noderium_crdt::blocks_to_prosemirror_snapshot(&[BlockData {
+            id: "b1".into(),
+            block_type: "paragraph".into(),
+            text: "hello journal".into(),
+        }])
+        .unwrap();
+        ws.import_editor_snapshot(&id, &snapshot).unwrap();
+
+        // Reopening the same day must return the same note without wiping content.
+        let reopened = ws.open_journal("2026-06-06", 3).unwrap();
+        assert_eq!(reopened, id);
+
+        let blocks = ws.blocks(&reopened).unwrap();
+        assert_eq!(blocks.len(), 1);
+        assert_eq!(blocks[0].text, "hello journal");
+
+        // The stored snapshot is still the editor's (re-hydration would work).
+        let stored = ws.note_snapshot(&reopened).unwrap().unwrap();
+        let parsed = noderium_crdt::blocks_from_prosemirror_snapshot(&stored).unwrap();
+        assert_eq!(parsed.len(), 1);
+        assert_eq!(parsed[0].text, "hello journal");
     }
 
     #[test]

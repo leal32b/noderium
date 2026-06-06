@@ -108,12 +108,14 @@ impl Store {
 
     pub fn upsert_note(&self, note: &Note) -> Result<()> {
         self.conn.execute(
+            // COALESCE keeps an existing title/journal_date when the incoming
+            // value is NULL, so a generic note upsert can't wipe journal metadata.
             "INSERT INTO notes (id, type, title, journal_date, created_at, updated_at)
              VALUES (?1, ?2, ?3, ?4, ?5, ?6)
              ON CONFLICT(id) DO UPDATE SET
                type = excluded.type,
-               title = excluded.title,
-               journal_date = excluded.journal_date,
+               title = COALESCE(excluded.title, title),
+               journal_date = COALESCE(excluded.journal_date, journal_date),
                updated_at = excluded.updated_at",
             params![
                 note.id,
