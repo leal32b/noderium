@@ -2,13 +2,16 @@ import { createSignal, onCleanup, onMount } from 'solid-js'
 import type { Accessor } from 'solid-js'
 
 import { createLoroEditor, seedParagraphs } from './loro-binding'
-import type { LoroEditor } from './loro-binding'
+import type { CreateLoroEditorOptions, LoroEditor } from './loro-binding'
 
 export interface UseLoroEditorOptions {
   /** Seed the editor with this many paragraph blocks. */
   initialBlocks?: number
   /** Focus the editor on mount (default true). */
   autofocus?: boolean
+  /** Optional async loader for a stored snapshot to re-hydrate from. When it
+   *  resolves to a snapshot, seeding is skipped and the content is restored. */
+  loadSnapshot?: () => Promise<Uint8Array | undefined>
 }
 
 export interface UseLoroEditorResult {
@@ -34,18 +37,20 @@ export function useLoroEditor(
   const [peakLatency, setPeak] = createSignal(0)
   const [editor, setEditor] = createSignal<LoroEditor | undefined>(undefined)
 
-  onMount(() => {
-    const mount = getMount()
-    if (!mount) return
+  let instance: LoroEditor | undefined
 
-    const instance = createLoroEditor(mount, {
+  const start = (mount: HTMLElement, snapshot: Uint8Array | undefined) => {
+    const editorOptions: CreateLoroEditorOptions = {
       onLatency: (ms) => {
         setLast(ms)
         setPeak((p) => Math.max(p, ms))
       },
-    })
+    }
+    if (snapshot) editorOptions.snapshot = snapshot
+    instance = createLoroEditor(mount, editorOptions)
 
-    if (options.initialBlocks) {
+    // Only seed when there is no restored content.
+    if (!snapshot && options.initialBlocks) {
       seedParagraphs(instance.view, options.initialBlocks)
       // The seed is one bulk transaction, not a keystroke — don't let it skew
       // the meter; reset so the readout reflects real typing only.
@@ -53,10 +58,20 @@ export function useLoroEditor(
       setPeak(0)
     }
     if (options.autofocus !== false) instance.view.focus()
-
     setEditor(instance)
-    onCleanup(() => instance.destroy())
+  }
+
+  onMount(() => {
+    const mount = getMount()
+    if (!mount) return
+    if (options.loadSnapshot) {
+      void options.loadSnapshot().then((snapshot) => start(mount, snapshot))
+    } else {
+      start(mount, undefined)
+    }
   })
+
+  onCleanup(() => instance?.destroy())
 
   return { lastLatency, peakLatency, editor }
 }

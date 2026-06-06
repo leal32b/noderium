@@ -18,6 +18,8 @@ export interface LoroEditor {
 export interface CreateLoroEditorOptions {
   /** Called after each doc-changing transaction with its apply→render time (ms). */
   onLatency?: (ms: number) => void
+  /** A previously exported snapshot to re-hydrate the document from. */
+  snapshot?: Uint8Array
 }
 
 /**
@@ -31,6 +33,11 @@ export function createLoroEditor(
   options: CreateLoroEditorOptions = {},
 ): LoroEditor {
   const doc = new LoroDoc()
+  // Re-hydrate from a stored snapshot before the sync plugin builds the PM doc,
+  // so the editor opens with the note's persisted content (Loro is cross-session).
+  if (options.snapshot) {
+    doc.import(options.snapshot)
+  }
 
   const state = EditorState.create({
     schema,
