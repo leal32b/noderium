@@ -114,6 +114,34 @@ impl Workspace {
         Ok(self.store.search_blocks(query)?)
     }
 
+    /// Export a note as deterministic markdown (FR-9, anti-lock-in). Always
+    /// available regardless of sync/CRDT state.
+    pub fn export_note_markdown(&self, note_id: &str) -> Result<String> {
+        let note = self
+            .store
+            .get_note(note_id)?
+            .ok_or_else(|| CoreError::NoteNotFound(note_id.to_string()))?;
+        let blocks = self.store.blocks_for_note(note_id)?;
+        let frontmatter = noderium_core::NoteFrontmatter {
+            id: &note.id,
+            note_type: &note.note_type,
+            title: note.title.as_deref(),
+            created_at_ms: note.created_at,
+        };
+        let export_blocks: Vec<noderium_core::ExportBlock> = blocks
+            .iter()
+            .map(|b| noderium_core::ExportBlock {
+                id: &b.id,
+                block_type: &b.block_type,
+                text: &b.text,
+            })
+            .collect();
+        Ok(noderium_core::note_to_markdown(
+            &frontmatter,
+            &export_blocks,
+        ))
+    }
+
     // --- internals ---
 
     fn load_doc(&self, note_id: &str) -> Result<NoteDoc> {
@@ -182,6 +210,33 @@ mod tests {
 
         // The snapshot itself is persisted as the source of truth.
         assert!(!ws.blocks("n1").unwrap().is_empty());
+    }
+
+    #[test]
+    fn exports_a_note_to_markdown() {
+        let ws = Workspace::open_in_memory().unwrap();
+        ws.create_note("n1", "atomic", Some("Fruit"), 0).unwrap();
+        let snapshot = noderium_crdt::blocks_to_prosemirror_snapshot(&[
+            BlockData {
+                id: "b1".into(),
+                block_type: "heading".into(),
+                text: "Title".into(),
+            },
+            BlockData {
+                id: "b2".into(),
+                block_type: "paragraph".into(),
+                text: "the body".into(),
+            },
+        ])
+        .unwrap();
+        ws.import_editor_snapshot("n1", &snapshot).unwrap();
+
+        let md = ws.export_note_markdown("n1").unwrap();
+        assert!(md.contains("id: n1"));
+        assert!(md.contains("type: atomic"));
+        assert!(md.contains("title: Fruit"));
+        assert!(md.contains("# Title ^b1"));
+        assert!(md.contains("the body ^b2"));
     }
 
     #[test]
