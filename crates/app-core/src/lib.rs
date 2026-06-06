@@ -150,6 +150,11 @@ impl Workspace {
         Ok(self.store.backlinks(note_id)?)
     }
 
+    /// The stored CRDT snapshot for a note (for re-hydrating the JS editor), if any.
+    pub fn note_snapshot(&self, note_id: &str) -> Result<Option<Vec<u8>>> {
+        Ok(self.store.load_snapshot(note_id)?)
+    }
+
     /// Drop and re-derive a note's block index purely from its CRDT snapshot.
     /// (After this the SQLite rows are byte-for-byte reproducible from Loro.)
     pub fn rebuild_index_from_crdt(&self, note_id: &str) -> Result<()> {
