@@ -114,6 +114,36 @@ impl Workspace {
         Ok(self.store.search_blocks(query)?)
     }
 
+    /// Import a markdown note (Obsidian-style: frontmatter + `[[wikilinks]]`,
+    /// ADR-015). Parses to blocks, builds a CRDT snapshot as the source of truth,
+    /// then derives the index. Round-trips with [`Self::export_note_markdown`].
+    pub fn import_markdown(&self, note_id: &str, markdown: &str, now: i64) -> Result<()> {
+        let parsed = noderium_core::parse_markdown(markdown);
+        let note_type = parsed
+            .frontmatter
+            .get("type")
+            .map(String::as_str)
+            .unwrap_or("atomic");
+        let title = parsed.frontmatter.get("title").map(String::as_str);
+        self.create_note(note_id, note_type, title, now)?;
+
+        let blocks: Vec<noderium_crdt::BlockData> = parsed
+            .blocks
+            .iter()
+            .enumerate()
+            .map(|(index, block)| noderium_crdt::BlockData {
+                id: block
+                    .id
+                    .clone()
+                    .unwrap_or_else(|| format!("{note_id}-b{index}")),
+                block_type: block.block_type.clone(),
+                text: block.text.clone(),
+            })
+            .collect();
+        let snapshot = noderium_crdt::blocks_to_prosemirror_snapshot(&blocks)?;
+        self.import_editor_snapshot(note_id, &snapshot)
+    }
+
     /// Export a note as deterministic markdown (FR-9, anti-lock-in). Always
     /// available regardless of sync/CRDT state.
     pub fn export_note_markdown(&self, note_id: &str) -> Result<String> {
@@ -210,6 +240,33 @@ mod tests {
 
         // The snapshot itself is persisted as the source of truth.
         assert!(!ws.blocks("n1").unwrap().is_empty());
+    }
+
+    #[test]
+    fn imports_markdown_then_indexes_and_round_trips() {
+        let ws = Workspace::open_in_memory().unwrap();
+        let md = "---\n\
+title: Imported\n\
+type: atomic\n\
+---\n\n\
+# Heading\n\n\
+body with [[Link]]\n";
+        ws.import_markdown("n1", md, 0).unwrap();
+
+        let note = ws.note("n1").unwrap().unwrap();
+        assert_eq!(note.title.as_deref(), Some("Imported"));
+        assert_eq!(note.note_type, "atomic");
+
+        let blocks = ws.blocks("n1").unwrap();
+        assert_eq!(blocks.len(), 2);
+        assert_eq!(blocks[0].block_type, "heading");
+        assert_eq!(blocks[0].text, "Heading");
+        assert_eq!(ws.search("body").unwrap().len(), 1);
+
+        // Exporting it back recovers the markdown content.
+        let out = ws.export_note_markdown("n1").unwrap();
+        assert!(out.contains("# Heading"));
+        assert!(out.contains("body with [[Link]]"));
     }
 
     #[test]
