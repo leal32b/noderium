@@ -7,14 +7,21 @@ mod commands;
 use std::sync::Mutex;
 
 use noderium_app_core::Workspace;
+use tauri::Manager;
 
 fn main() {
-    // v1 local: an in-memory workspace. A persistent on-disk path (app data dir)
-    // is wired when the persistence/migration UX lands.
-    let workspace = Workspace::open_in_memory().expect("failed to initialize workspace");
-
     tauri::Builder::default()
-        .manage(Mutex::new(workspace))
+        .setup(|app| {
+            // Persist to a SQLite file in the OS app-data dir (local-first,
+            // durable across restarts). On macOS: ~/Library/Application Support/
+            // app.noderium.desktop/noderium.db
+            let data_dir = app.path().app_data_dir()?;
+            std::fs::create_dir_all(&data_dir)?;
+            let db_path = data_dir.join("noderium.db");
+            let workspace = Workspace::open(&db_path)?;
+            app.manage(Mutex::new(workspace));
+            Ok(())
+        })
         .invoke_handler(tauri::generate_handler![
             commands::create_note,
             commands::add_block,
