@@ -1,27 +1,19 @@
 /**
- * Thin wrapper over Tauri's `invoke` (ADR-005): the frontend calls the Rust
- * `app-core` via commands/events, never HTTP. In Phase 2 the Tauri runtime is
- * not wired yet, so this stub throws if no Tauri global is present. Replaced by
- * `@tauri-apps/api/core` once the desktop shell exists.
+ * Bridge to the Rust core (ADR-005): the frontend calls `app-core` via Tauri
+ * commands, never HTTP. Thin wrapper over the official Tauri API so the rest of
+ * the app depends on our surface, not the SDK directly.
  */
-interface TauriGlobal {
-  core: { invoke: <T>(cmd: string, args?: Record<string, unknown>) => Promise<T> }
-}
-
-function getTauri(): TauriGlobal | undefined {
-  return (globalThis as { __TAURI__?: TauriGlobal }).__TAURI__
-}
+import { invoke as tauriInvoke, isTauri as tauriIsTauri } from '@tauri-apps/api/core'
 
 export function isTauri(): boolean {
-  return getTauri() !== undefined
+  return tauriIsTauri()
 }
 
 export async function invoke<T>(cmd: string, args?: Record<string, unknown>): Promise<T> {
-  const tauri = getTauri()
-  if (!tauri) {
+  if (!isTauri()) {
     throw new Error(
-      `Tauri runtime not available (cmd "${cmd}"). The desktop shell is wired in a later phase.`,
+      `Tauri runtime not available (cmd "${cmd}"). Run the app via Tauri, not the browser.`,
     )
   }
-  return tauri.core.invoke<T>(cmd, args)
+  return tauriInvoke<T>(cmd, args)
 }

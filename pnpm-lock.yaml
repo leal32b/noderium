@@ -44,6 +44,9 @@ importers:
       '@tanstack/solid-query':
         specifier: ^5.100.11
         version: 5.101.0(solid-js@1.9.13)
+      '@tauri-apps/api':
+        specifier: ^2.1.1
+        version: 2.11.0
       lucide-solid:
         specifier: ^1.16.0
         version: 1.17.0(solid-js@1.9.13)
@@ -1016,6 +1019,9 @@ packages:
     resolution: {integrity: sha512-XoPWynbaWquvSisMvUirakfD9OmLas1cOwt1gBDUTn8HC2CVkZm+O/jBgEa5SL5LrY6vxmWjzzskhXkywLfymw==}
     peerDependencies:
       solid-js: ^1.6.0
+
+  '@tauri-apps/api@2.11.0':
+    resolution: {integrity: sha512-7CinYODhky9lmO23xHnUFv0Xt43fbtWMyxZcLcRBlFkcgXKuEirBvHpmtJ89YMhyeGcq20Wuc47Fa4XjyniywA==}
 
   '@testing-library/dom@10.4.1':
     resolution: {integrity: sha512-o4PXJQidqJl82ckFaXUeoAW+XysPLauYI43Abki5hABd853iMhitooc6znOnczgbTYmEP6U6/y1ZyKAIsvMKGg==}
@@ -3702,6 +3708,8 @@ snapshots:
     dependencies:
       '@tanstack/query-core': 5.101.0
       solid-js: 1.9.13
+
+  '@tauri-apps/api@2.11.0': {}
 
   '@testing-library/dom@10.4.1':
     dependencies:
