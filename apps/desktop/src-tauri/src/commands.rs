@@ -80,3 +80,15 @@ pub fn note_blocks(
 pub fn search(ws: State<'_, SharedWorkspace>, query: String) -> Result<Vec<String>, String> {
     lock(&ws)?.search(&query).map_err(to_message)
 }
+
+/// Persist a snapshot exported by the JS editor (loro-prosemirror) and reindex.
+#[tauri::command]
+pub fn save_editor_snapshot(
+    ws: State<'_, SharedWorkspace>,
+    note_id: String,
+    snapshot: Vec<u8>,
+) -> Result<(), String> {
+    lock(&ws)?
+        .import_editor_snapshot(&note_id, &snapshot)
+        .map_err(to_message)
+}

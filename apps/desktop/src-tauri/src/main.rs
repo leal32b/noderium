@@ -20,6 +20,7 @@ fn main() {
             commands::add_block,
             commands::note_blocks,
             commands::search,
+            commands::save_editor_snapshot,
         ])
         .run(tauri::generate_context!())
         .expect("error while running Noderium");
