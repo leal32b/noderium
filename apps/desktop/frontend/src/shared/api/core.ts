@@ -8,20 +8,21 @@ export interface BlockDto {
 }
 
 /**
- * Typed client for the noderium-app-core Tauri commands. Keys are snake_case to
- * match the Rust command parameter names exactly.
+ * Typed client for the noderium-app-core Tauri commands. Argument keys are
+ * camelCase: Tauri converts Rust's snake_case command params to camelCase on the
+ * JS side (e.g. `note_type` -> `noteType`).
  */
 export const core = {
   createNote: (id: string, noteType: string, title?: string): Promise<void> =>
-    invoke('create_note', { id, note_type: noteType, title: title ?? null }),
+    invoke('create_note', { id, noteType, title: title ?? null }),
 
   addBlock: (noteId: string, blockType: string, text: string): Promise<string> =>
-    invoke('add_block', { note_id: noteId, block_type: blockType, text }),
+    invoke('add_block', { noteId, blockType, text }),
 
-  noteBlocks: (noteId: string): Promise<BlockDto[]> => invoke('note_blocks', { note_id: noteId }),
+  noteBlocks: (noteId: string): Promise<BlockDto[]> => invoke('note_blocks', { noteId }),
 
   search: (query: string): Promise<string[]> => invoke('search', { query }),
 
   saveEditorSnapshot: (noteId: string, snapshot: Uint8Array): Promise<void> =>
-    invoke('save_editor_snapshot', { note_id: noteId, snapshot: Array.from(snapshot) }),
+    invoke('save_editor_snapshot', { noteId, snapshot: Array.from(snapshot) }),
 }
