@@ -94,6 +94,25 @@ impl Workspace {
         Ok(())
     }
 
+    /// Open today's (or any date's) journal note, creating it once on first use
+    /// (FR-1). `date` is ISO `YYYY-MM-DD`. Returns the note id.
+    pub fn open_journal(&self, date: &str, now: i64) -> Result<String> {
+        if let Some(id) = self.store.note_id_by_journal_date(date)? {
+            return Ok(id);
+        }
+        let id = format!("journal-{date}");
+        self.store.upsert_note(&Note {
+            id: id.clone(),
+            note_type: "journal".to_string(),
+            title: Some(date.to_string()),
+            journal_date: Some(date.to_string()),
+            created_at: now,
+            updated_at: now,
+        })?;
+        self.persist(&id, &NoteDoc::new())?;
+        Ok(id)
+    }
+
     /// Append a block to a note (CRDT op), then refresh its derived index.
     pub fn add_block(&self, note_id: &str, block_type: &str, text: &str) -> Result<String> {
         let doc = self.load_doc(note_id)?;
@@ -365,6 +384,21 @@ body with [[Link]]\n";
         let out = ws.export_note_markdown("n1").unwrap();
         assert!(out.contains("# Heading"));
         assert!(out.contains("body with [[Link]]"));
+    }
+
+    #[test]
+    fn journal_is_created_once_per_date() {
+        let ws = Workspace::open_in_memory().unwrap();
+        let first = ws.open_journal("2026-06-06", 1).unwrap();
+        let again = ws.open_journal("2026-06-06", 2).unwrap();
+        assert_eq!(first, again, "same date returns the same journal note");
+
+        let note = ws.note(&first).unwrap().unwrap();
+        assert_eq!(note.note_type, "journal");
+        assert_eq!(note.journal_date.as_deref(), Some("2026-06-06"));
+
+        let other_day = ws.open_journal("2026-06-07", 3).unwrap();
+        assert_ne!(first, other_day);
     }
 
     #[test]
