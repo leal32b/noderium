@@ -110,17 +110,25 @@ impl Workspace {
         self.store.save_snapshot(note_id, snapshot, &[])?;
         let blocks = noderium_crdt::blocks_from_prosemirror_snapshot(snapshot)?;
         self.store.delete_blocks_for_note(note_id)?;
-        for (index, block) in blocks.into_iter().enumerate() {
+        for (index, block) in blocks.iter().enumerate() {
             self.store.upsert_block(&Block {
-                id: block.id,
+                id: block.id.clone(),
                 note_id: note_id.to_string(),
                 parent_id: None,
                 order_key: format!("{index:08}"),
-                block_type: block.block_type,
-                text: block.text,
+                block_type: block.block_type.clone(),
+                text: block.text.clone(),
             })?;
         }
-        Ok(())
+        self.reindex_links(
+            note_id,
+            blocks.iter().map(|b| (b.id.as_str(), b.text.as_str())),
+        )
+    }
+
+    /// Blocks (with their note) that link to `note_id` via `[[wikilinks]]`.
+    pub fn backlinks(&self, note_id: &str) -> Result<Vec<noderium_store::Backlink>> {
+        Ok(self.store.backlinks(note_id)?)
     }
 
     /// Drop and re-derive a note's block index purely from its CRDT snapshot.
@@ -258,16 +266,38 @@ impl Workspace {
     }
 
     fn reindex(&self, note_id: &str, doc: &NoteDoc) -> Result<()> {
+        let blocks = doc.blocks()?;
         self.store.delete_blocks_for_note(note_id)?;
-        for (index, block) in doc.blocks()?.into_iter().enumerate() {
+        for (index, block) in blocks.iter().enumerate() {
             self.store.upsert_block(&Block {
-                id: block.id,
+                id: block.id.clone(),
                 note_id: note_id.to_string(),
                 parent_id: None,
                 order_key: format!("{index:08}"),
-                block_type: block.block_type,
-                text: block.text,
+                block_type: block.block_type.clone(),
+                text: block.text.clone(),
             })?;
+        }
+        self.reindex_links(
+            note_id,
+            blocks.iter().map(|b| (b.id.as_str(), b.text.as_str())),
+        )
+    }
+
+    /// Rebuild the link graph for a note: parse `[[wikilinks]]` from each block
+    /// and store edges to notes that exist (resolved by title).
+    fn reindex_links<'a>(
+        &self,
+        note_id: &str,
+        blocks: impl Iterator<Item = (&'a str, &'a str)>,
+    ) -> Result<()> {
+        self.store.delete_links_from_note(note_id)?;
+        for (block_id, text) in blocks {
+            for target_title in noderium_core::extract_wikilinks(text) {
+                if let Some(target_id) = self.store.note_id_by_title(&target_title)? {
+                    self.store.insert_link(block_id, &target_id, "wikilink")?;
+                }
+            }
         }
         Ok(())
     }
@@ -335,6 +365,29 @@ body with [[Link]]\n";
         let out = ws.export_note_markdown("n1").unwrap();
         assert!(out.contains("# Heading"));
         assert!(out.contains("body with [[Link]]"));
+    }
+
+    #[test]
+    fn wikilinks_become_backlinks() {
+        let ws = Workspace::open_in_memory().unwrap();
+        // Target note exists with a title that a wikilink can resolve to.
+        ws.create_note("target", "atomic", Some("Target Note"), 0)
+            .unwrap();
+        // Source note references it.
+        ws.import_markdown(
+            "source",
+            "---\ntitle: Source\n---\n\nsee [[Target Note]] for more\n",
+            0,
+        )
+        .unwrap();
+
+        let back = ws.backlinks("target").unwrap();
+        assert_eq!(back.len(), 1);
+        assert_eq!(back[0].source_note_id, "source");
+        assert!(back[0].text.contains("Target Note"));
+
+        // A note with no inbound links has no backlinks.
+        assert!(ws.backlinks("source").unwrap().is_empty());
     }
 
     #[test]
