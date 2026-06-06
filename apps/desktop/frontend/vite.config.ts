@@ -19,6 +19,12 @@ export default defineConfig({
       '@shared': fileURLToPath(new URL('./src/shared', import.meta.url)),
     },
   },
+  // @noderium/editor is consumed as TS source; loro-crdt loads WASM. Keep them
+  // out of esbuild pre-bundling so Vite transforms the source and serves the
+  // wasm asset correctly.
+  optimizeDeps: {
+    exclude: ['@noderium/editor', 'loro-crdt', 'loro-prosemirror'],
+  },
   // Tauri integration: stable dev server, no clobbering of Rust build output.
   clearScreen: false,
   server: {

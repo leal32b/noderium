@@ -1,0 +1,14 @@
+.ProseMirror {
+  outline: none;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  min-height: 280px;
+}
+
+.ProseMirror p {
+  margin: 0.25rem 0;
+}
+
+.ProseMirror:focus {
+  outline: none;
+}

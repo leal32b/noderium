@@ -8,12 +8,17 @@ const dict: typeof enUS = {
   navigation: {
     home: 'Início',
     settings: 'Configurações',
+    editor: 'Editor',
   },
   app: {
     welcome: {
       title: 'Bem-vindo ao Noderium',
       subtitle: 'Capturar → destilar → reter. Seu segundo cérebro, local-first.',
     },
+  },
+  editor: {
+    title: 'Editor de blocos (Spike #1)',
+    subtitle: 'ProseMirror + Loro CRDT. Digite à vontade — o medidor mostra a latência por tecla.',
   },
   topbar: {
     toggleSidebar: 'Alternar barra lateral',
@@ -36,6 +41,7 @@ const dict: typeof enUS = {
     navigate: {
       home: 'Ir para Início',
       settings: 'Ir para Configurações',
+      editor: 'Ir para Editor',
     },
     actions: {
       toggleTheme: 'Alternar tema claro/escuro',

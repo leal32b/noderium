@@ -8,12 +8,17 @@ export default {
   navigation: {
     home: 'Home',
     settings: 'Settings',
+    editor: 'Editor',
   },
   app: {
     welcome: {
       title: 'Welcome to Noderium',
       subtitle: 'Capture → distill → retain. Your second brain, local-first.',
     },
+  },
+  editor: {
+    title: 'Block editor (Spike #1)',
+    subtitle: 'ProseMirror + Loro CRDT. Type anywhere — the meter shows keystroke latency.',
   },
   topbar: {
     toggleSidebar: 'Toggle sidebar',
@@ -36,6 +41,7 @@ export default {
     navigate: {
       home: 'Go to Home',
       settings: 'Go to Settings',
+      editor: 'Go to Editor',
     },
     actions: {
       toggleTheme: 'Toggle light/dark theme',
