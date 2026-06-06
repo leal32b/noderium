@@ -125,8 +125,8 @@ cargo fmt --all -- --check
 ## Known limitations
 
 - The desktop app opens an **in-app-data SQLite** file; there is no migration UX yet.
-- The editor does **not** yet load a note's persisted content back in on open
-  (it starts empty/seeded); persistence is one-way (editor → core) for now.
+- The **journal** editor re-hydrates from its stored snapshot on open (round-trips);
+  the `/editor` spike page still seeds 100 demo blocks and does not load.
 - Search returns block **ids**; surfacing snippets is a follow-up.
 - Frontmatter parsing is a minimal `key: value` reader, not full YAML.
 - SRS has no review UI yet (scheduler + queue exist and are tested).
