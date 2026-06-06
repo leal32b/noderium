@@ -1,0 +1,28 @@
+# Rust
+/target
+**/target
+Cargo.lock.bak
+
+# Node
+node_modules
+dist
+.pnpm-store
+
+# Build output
+/build
+*.tsbuildinfo
+
+# Env / secrets
+.env
+.env.local
+*.local
+
+# Editor / OS
+.DS_Store
+.idea
+.vscode/*
+!.vscode/extensions.json
+*.swp
+
+# Tauri
+apps/*/src-tauri/gen

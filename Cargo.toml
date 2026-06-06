@@ -1,0 +1,31 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/core",
+    "crates/store",
+    "crates/crdt",
+    "crates/search",
+    "crates/ai",
+    "crates/srs",
+    "crates/sync-client",
+    "crates/app-core",
+    "apps/desktop/src-tauri",
+    "server/sync-server",
+]
+
+# Shared metadata inherited by member crates via `*.workspace = true`.
+[workspace.package]
+version = "0.0.1"
+edition = "2021"
+rust-version = "1.92"
+license = "Apache-2.0"
+repository = "https://github.com/noderium/noderium"
+authors = ["Noderium contributors"]
+
+[workspace.dependencies]
+# Populated as crates gain real dependencies in later phases.
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1

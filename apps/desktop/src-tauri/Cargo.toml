@@ -1,0 +1,18 @@
+[package]
+name = "noderium-desktop"
+description = "Tauri 2 desktop shell: commands, events, app-core plugin (ADR-004)."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[[bin]]
+name = "noderium-desktop"
+path = "src/main.rs"
+
+[dependencies]
+# Tauri runtime + noderium-app-core wired in Phase 2 (needs tauri.conf.json,
+# build.rs, and a built frontend dist/). Kept as a plain binary for now so the
+# workspace compiles without those artifacts.

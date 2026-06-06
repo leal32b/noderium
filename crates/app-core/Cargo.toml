@@ -1,0 +1,16 @@
+[package]
+name = "noderium-app-core"
+description = "Facade orchestrating core+store+crdt+search+srs; exposed via Tauri/FFI."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[dependencies]
+# noderium-core = { path = "../core" }
+# noderium-store = { path = "../store" }
+# noderium-crdt = { path = "../crdt" }
+# noderium-search = { path = "../search" }
+# noderium-srs = { path = "../srs" }

@@ -1,0 +1,11 @@
+[package]
+name = "noderium-sync-client"
+description = "Client sync engine + E2E crypto (Argon2id, envelopes)."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[dependencies]

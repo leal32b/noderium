@@ -1,0 +1,11 @@
+[package]
+name = "noderium-search"
+description = "Hybrid search: FTS5 (BM25) + vector, fused by Reciprocal Rank Fusion."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+authors.workspace = true
+
+[dependencies]
