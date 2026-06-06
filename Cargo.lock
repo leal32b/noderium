@@ -2348,6 +2348,7 @@ version = "0.0.1"
 name = "noderium-app-core"
 version = "0.0.1"
 dependencies = [
+ "noderium-core",
  "noderium-crdt",
  "noderium-store",
  "thiserror 2.0.18",
@@ -2356,6 +2357,9 @@ dependencies = [
 [[package]]
 name = "noderium-core"
 version = "0.0.1"
+dependencies = [
+ "time",
+]
 
 [[package]]
 name = "noderium-crdt"
