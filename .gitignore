@@ -4,13 +4,21 @@
 Cargo.lock.bak
 
 # Node
-node_modules
-dist
-.pnpm-store
+node_modules/
+**/node_modules/
+.pnpm-store/
 
 # Build output
+dist/
+**/dist/
 /build
+**/build/
 *.tsbuildinfo
+
+# Vite / tooling caches
+**/.vite/
+**/.turbo/
+.eslintcache
 
 # Env / secrets
 .env
@@ -23,6 +31,12 @@ dist
 .vscode/*
 !.vscode/extensions.json
 *.swp
+
+# Claude Code local dev config (not tracked)
+.claude/launch.json
+
+# Husky generated wrappers (hooks themselves are tracked)
+.husky/_/
 
 # Tauri
 apps/*/src-tauri/gen

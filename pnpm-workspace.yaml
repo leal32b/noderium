@@ -1,4 +1,7 @@
+# JS packages. Note: the desktop frontend is nested at apps/desktop/frontend,
+# so we glob 'apps/*/frontend' rather than the doc's 'apps/*' (which would match
+# the non-package apps/desktop directory).
 packages:
-  - 'apps/*'
+  - 'apps/*/frontend'
   - 'packages/*'
   - 'docs'

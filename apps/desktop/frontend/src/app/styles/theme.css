@@ -1,0 +1,61 @@
+/* Semantic design tokens (ADR-012). Swap data-theme / data-density on <html>;
+   instant re-theme, no rebuild. UnoCSS colors map to these vars (uno.config.ts). */
+
+:root,
+[data-theme='light'] {
+  /* Surfaces */
+  --surface-background: #ffffff;
+  --surface-raised: #ffffff;
+  --surface-sunken: #fafafa;
+
+  /* Text */
+  --text-primary: #18181b;
+  --text-secondary: #52525b;
+  --text-tertiary: #71717a;
+
+  /* Borders */
+  --border-default: #e4e4e7;
+
+  /* Actions */
+  --action-primary-default: #2563eb;
+  --action-primary-hover: #1d4ed8;
+  --action-primary-text: #ffffff;
+  --action-secondary-default: #f4f4f5;
+  --action-secondary-hover: #e4e4e7;
+
+  /* Feedback */
+  --feedback-success-bg: #f0fdf4;
+  --feedback-danger-bg: #fef2f2;
+}
+
+[data-theme='dark'] {
+  --surface-background: #09090b;
+  --surface-raised: #18181b;
+  --surface-sunken: #131316;
+
+  --text-primary: #fafafa;
+  --text-secondary: #a1a1aa;
+  --text-tertiary: #71717a;
+
+  --border-default: #27272a;
+
+  --action-primary-default: #3b82f6;
+  --action-primary-hover: #60a5fa;
+  --action-primary-text: #0b1120;
+  --action-secondary-default: #27272a;
+  --action-secondary-hover: #3f3f46;
+
+  --feedback-success-bg: #052e16;
+  --feedback-danger-bg: #450a0a;
+}
+
+/* Density: scales the base rhythm used by spacing utilities tied to vars. */
+[data-density='comfortable'] {
+  --density-space: 1rem;
+  --density-row-height: 2.25rem;
+}
+
+[data-density='compact'] {
+  --density-space: 0.625rem;
+  --density-row-height: 1.75rem;
+}

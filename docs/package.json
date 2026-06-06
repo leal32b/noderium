@@ -1,0 +1,7 @@
+{
+  "name": "@noderium/docs",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Astro Starlight documentation (ADR-014). Scaffolded later.",
+  "license": "Apache-2.0"
+}

@@ -1,0 +1,13 @@
+/* @refresh reload */
+import 'virtual:uno.css'
+import './styles/theme.css'
+import './styles/global.css'
+
+import { render } from 'solid-js/web'
+
+import { App } from './App'
+
+const root = document.getElementById('root')
+if (!root) throw new Error('Root element #root not found')
+
+render(() => <App />, root)
