@@ -1,5 +1,7 @@
 export { schema } from './schema'
 export { createLoroEditor, seedParagraphs, positionInsideBlock } from './loro-binding'
 export type { LoroEditor, CreateLoroEditorOptions } from './loro-binding'
+export { useLoroEditor } from './useLoroEditor'
+export type { UseLoroEditorOptions, UseLoroEditorResult } from './useLoroEditor'
 export { ProseMirrorEditor } from './ProseMirrorEditor'
 export type { ProseMirrorEditorProps } from './ProseMirrorEditor'

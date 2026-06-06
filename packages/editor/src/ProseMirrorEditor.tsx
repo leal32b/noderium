@@ -1,7 +1,6 @@
-import { createSignal, onCleanup, onMount } from 'solid-js'
 import type { Component } from 'solid-js'
 
-import { createLoroEditor, seedParagraphs } from './loro-binding'
+import { useLoroEditor } from './useLoroEditor'
 
 export interface ProseMirrorEditorProps {
   /** Seed the editor with this many paragraph blocks (default 100). */
@@ -14,19 +13,8 @@ export interface ProseMirrorEditorProps {
  */
 export const ProseMirrorEditor: Component<ProseMirrorEditorProps> = (props) => {
   let mountEl!: HTMLDivElement
-  const [last, setLast] = createSignal(0)
-  const [peak, setPeak] = createSignal(0)
-
-  onMount(() => {
-    const editor = createLoroEditor(mountEl, {
-      onLatency: (ms) => {
-        setLast(ms)
-        setPeak((p) => Math.max(p, ms))
-      },
-    })
-    seedParagraphs(editor.view, props.initialBlocks ?? 100)
-    editor.view.focus()
-    onCleanup(() => editor.destroy())
+  const { lastLatency, peakLatency } = useLoroEditor(() => mountEl, {
+    initialBlocks: props.initialBlocks ?? 100,
   })
 
   return (
@@ -37,11 +25,11 @@ export const ProseMirrorEditor: Component<ProseMirrorEditorProps> = (props) => {
           gap: '1rem',
           padding: '0.5rem',
           'font-variant-numeric': 'tabular-nums',
-          color: last() > 16 ? '#dc2626' : '#16a34a',
+          color: lastLatency() > 16 ? '#dc2626' : '#16a34a',
         }}
       >
-        <span>last: {last().toFixed(2)} ms</span>
-        <span>peak: {peak().toFixed(2)} ms</span>
+        <span>last: {lastLatency().toFixed(2)} ms</span>
+        <span>peak: {peakLatency().toFixed(2)} ms</span>
         <span style={{ color: '#71717a' }}>budget: 16 ms</span>
       </div>
       <div

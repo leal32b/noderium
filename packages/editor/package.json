@@ -6,6 +6,12 @@
   "description": "Block editor: ProseMirror + loro-prosemirror (WASM). Spike #1 (ADR-004).",
   "license": "Apache-2.0",
   "main": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./hook": "./src/useLoroEditor.ts",
+    "./binding": "./src/loro-binding.ts",
+    "./schema": "./src/schema.ts"
+  },
   "scripts": {
     "test": "vitest run",
     "test:latency": "vitest run latency",
