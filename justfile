@@ -5,18 +5,24 @@
 default:
     @just --list
 
-# Run the desktop app in dev mode (frontend scaffolded in Phase 2).
+# Run the desktop frontend dev server (Vite).
 dev:
-    @echo "dev: frontend not yet scaffolded (Phase 2). Building Rust workspace instead."
-    cargo build
+    pnpm --filter @noderium/desktop-frontend dev
 
-# Build everything (Rust workspace; JS packages added in later phases).
+# Build everything (Rust workspace + desktop frontend).
 build:
     cargo build --release
+    pnpm --filter @noderium/desktop-frontend build
 
-# Run all tests.
+# Run all tests (Rust + frontend + editor).
 test:
     cargo test
+    pnpm --filter @noderium/desktop-frontend test
+    just test-editor
+
+# Editor latency spike (Spike #1, ADR-004). Fails the build if p95 > 16ms.
+test-editor:
+    pnpm --filter @noderium/editor test
 
 # Lint: clippy for Rust (JS lint added in Phase 2).
 lint:
