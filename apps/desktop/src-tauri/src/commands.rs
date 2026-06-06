@@ -134,6 +134,15 @@ pub fn export_note_markdown(
         .map_err(to_message)
 }
 
+/// Load a note's stored snapshot so the editor can re-hydrate on open.
+#[tauri::command]
+pub fn load_editor_snapshot(
+    ws: State<'_, SharedWorkspace>,
+    note_id: String,
+) -> Result<Option<Vec<u8>>, String> {
+    lock(&ws)?.note_snapshot(&note_id).map_err(to_message)
+}
+
 /// Persist a snapshot exported by the JS editor (loro-prosemirror) and reindex.
 #[tauri::command]
 pub fn save_editor_snapshot(

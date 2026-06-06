@@ -28,6 +28,7 @@ fn main() {
             commands::note_blocks,
             commands::search,
             commands::save_editor_snapshot,
+            commands::load_editor_snapshot,
             commands::export_note_markdown,
             commands::open_journal,
             commands::backlinks,
