@@ -69,6 +69,12 @@ export function seedParagraphs(view: EditorView, count: number): void {
   view.dispatch(tr)
 }
 
+/** Export the editor's Loro document as a snapshot (the bytes sent to the Rust
+ *  core to persist + index; loro-prosemirror-shaped). */
+export function exportSnapshot(editor: LoroEditor): Uint8Array {
+  return editor.doc.export({ mode: 'snapshot' })
+}
+
 /** Document position just inside the content of block `index`. */
 export function positionInsideBlock(view: EditorView, index: number): number {
   let offset = 0

@@ -21,4 +21,7 @@ export const core = {
   noteBlocks: (noteId: string): Promise<BlockDto[]> => invoke('note_blocks', { note_id: noteId }),
 
   search: (query: string): Promise<string[]> => invoke('search', { query }),
+
+  saveEditorSnapshot: (noteId: string, snapshot: Uint8Array): Promise<void> =>
+    invoke('save_editor_snapshot', { note_id: noteId, snapshot: Array.from(snapshot) }),
 }
