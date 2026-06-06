@@ -67,6 +67,27 @@ impl Workspace {
         Ok(block_id)
     }
 
+    /// Persist a snapshot produced by the JS editor (a `loro-prosemirror`-shaped
+    /// Loro doc) as the note's source of truth, then derive its block index from
+    /// it. This is the editor → core flush (ADR-005): the live doc lives in JS,
+    /// its snapshot becomes truth here, and SQLite is rebuilt from it.
+    pub fn import_editor_snapshot(&self, note_id: &str, snapshot: &[u8]) -> Result<()> {
+        self.store.save_snapshot(note_id, snapshot, &[])?;
+        let blocks = noderium_crdt::blocks_from_prosemirror_snapshot(snapshot)?;
+        self.store.delete_blocks_for_note(note_id)?;
+        for (index, block) in blocks.into_iter().enumerate() {
+            self.store.upsert_block(&Block {
+                id: block.id,
+                note_id: note_id.to_string(),
+                parent_id: None,
+                order_key: format!("{index:08}"),
+                block_type: block.block_type,
+                text: block.text,
+            })?;
+        }
+        Ok(())
+    }
+
     /// Drop and re-derive a note's block index purely from its CRDT snapshot.
     /// (After this the SQLite rows are byte-for-byte reproducible from Loro.)
     pub fn rebuild_index_from_crdt(&self, note_id: &str) -> Result<()> {
@@ -129,6 +150,39 @@ impl Workspace {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use noderium_crdt::BlockData;
+
+    #[test]
+    fn imports_an_editor_snapshot_and_indexes_it() {
+        let ws = Workspace::open_in_memory().unwrap();
+        ws.create_note("n1", "journal", None, 1).unwrap();
+
+        // Synthesize a loro-prosemirror-shaped snapshot as the JS editor would emit.
+        let snapshot = noderium_crdt::blocks_to_prosemirror_snapshot(&[
+            BlockData {
+                id: "b1".into(),
+                block_type: "heading".into(),
+                text: "Meeting notes".into(),
+            },
+            BlockData {
+                id: "b2".into(),
+                block_type: "paragraph".into(),
+                text: "discuss the roadmap".into(),
+            },
+        ])
+        .unwrap();
+
+        ws.import_editor_snapshot("n1", &snapshot).unwrap();
+
+        let blocks = ws.blocks("n1").unwrap();
+        assert_eq!(blocks.len(), 2);
+        assert_eq!(blocks[0].id, "b1");
+        assert_eq!(blocks[0].text, "Meeting notes");
+        assert_eq!(ws.search("roadmap").unwrap(), vec!["b2"]);
+
+        // The snapshot itself is persisted as the source of truth.
+        assert!(!ws.blocks("n1").unwrap().is_empty());
+    }
 
     #[test]
     fn creates_a_note_and_indexes_blocks() {
