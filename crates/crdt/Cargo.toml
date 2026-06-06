@@ -9,3 +9,5 @@ repository.workspace = true
 authors.workspace = true
 
 [dependencies]
+loro = "1.13"
+thiserror = "2"
