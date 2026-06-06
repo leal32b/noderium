@@ -3,7 +3,7 @@
 
 pub mod import;
 pub mod markdown;
-pub use import::{parse_markdown, ParsedBlock, ParsedNote, WikiLink};
+pub use import::{extract_wikilinks, parse_markdown, ParsedBlock, ParsedNote, WikiLink};
 pub use markdown::{note_to_markdown, ExportBlock, NoteFrontmatter};
 
 // pub mod block;        // block model: id, type, properties, ordering

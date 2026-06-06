@@ -129,7 +129,9 @@ fn classify(line: &str) -> (String, String) {
     ("paragraph".to_string(), line.trim_end().to_string())
 }
 
-fn extract_wikilinks(text: &str) -> Vec<String> {
+/// Extract `[[wikilink]]` targets from a string (alias form `[[Target|alias]]`
+/// yields `Target`). Used to build the backlink graph.
+pub fn extract_wikilinks(text: &str) -> Vec<String> {
     let mut out = Vec::new();
     let mut rest = text;
     while let Some(start) = rest.find("[[") {
