@@ -7,6 +7,9 @@
 use loro::{ExportMode, LoroDoc, LoroError, LoroMap, LoroText, LoroValue, TreeParentId};
 use thiserror::Error;
 
+pub mod prosemirror;
+pub use prosemirror::{blocks_from_prosemirror_snapshot, blocks_to_prosemirror_snapshot};
+
 #[derive(Debug, Error)]
 pub enum CrdtError {
     #[error(transparent)]
