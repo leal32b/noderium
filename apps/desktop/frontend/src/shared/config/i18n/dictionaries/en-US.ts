@@ -7,6 +7,7 @@ export default {
   },
   navigation: {
     home: 'Home',
+    journal: 'Journal',
     settings: 'Settings',
     editor: 'Editor',
   },
@@ -19,6 +20,19 @@ export default {
   editor: {
     title: 'Block editor (Spike #1)',
     subtitle: 'ProseMirror + Loro CRDT. Type anywhere — the meter shows keystroke latency.',
+  },
+  journal: {
+    title: 'Journal',
+  },
+  search: {
+    title: 'Search',
+    placeholder: 'Search your notes…',
+    run: 'Search',
+    matches: 'matches',
+  },
+  backlinks: {
+    title: 'Backlinks',
+    empty: 'No backlinks yet.',
   },
   topbar: {
     toggleSidebar: 'Toggle sidebar',
@@ -40,6 +54,7 @@ export default {
     },
     navigate: {
       home: 'Go to Home',
+      journal: 'Go to Journal',
       settings: 'Go to Settings',
       editor: 'Go to Editor',
     },

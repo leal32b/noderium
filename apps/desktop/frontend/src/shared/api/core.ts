@@ -7,6 +7,13 @@ export interface BlockDto {
   text: string
 }
 
+/** A backlink as returned by the Rust `backlinks` command. */
+export interface BacklinkDto {
+  source_note_id: string
+  source_block_id: string
+  text: string
+}
+
 /**
  * Typed client for the noderium-app-core Tauri commands. Argument keys are
  * camelCase: Tauri converts Rust's snake_case command params to camelCase on the
@@ -28,4 +35,11 @@ export const core = {
 
   exportNoteMarkdown: (noteId: string): Promise<string> =>
     invoke('export_note_markdown', { noteId }),
+
+  openJournal: (date: string): Promise<string> => invoke('open_journal', { date }),
+
+  backlinks: (noteId: string): Promise<BacklinkDto[]> => invoke('backlinks', { noteId }),
+
+  importMarkdown: (noteId: string, markdown: string): Promise<void> =>
+    invoke('import_markdown', { noteId, markdown }),
 }

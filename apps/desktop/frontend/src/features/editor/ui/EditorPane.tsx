@@ -9,6 +9,8 @@ import './editor.css'
 
 export interface EditorPaneProps {
   initialBlocks?: number
+  /** Note this editor persists to (defaults to the spike demo note). */
+  noteId?: string
 }
 
 // Stable note id for the spike's persistence demo.
@@ -17,6 +19,7 @@ const SPIKE_NOTE_ID = 'spike-note'
 export const EditorPane: Component<EditorPaneProps> = (props) => {
   let mountEl!: HTMLDivElement
   const { t } = useI18n()
+  const noteId = () => props.noteId ?? SPIKE_NOTE_ID
   const { lastLatency, peakLatency, editor } = useLoroEditor(() => mountEl, {
     initialBlocks: props.initialBlocks ?? 100,
   })
@@ -32,8 +35,8 @@ export const EditorPane: Component<EditorPaneProps> = (props) => {
     if (!instance) return
     try {
       setStatus('saving…')
-      await core.createNote(SPIKE_NOTE_ID, 'journal')
-      await core.saveEditorSnapshot(SPIKE_NOTE_ID, exportSnapshot(instance))
+      await core.createNote(noteId(), 'journal')
+      await core.saveEditorSnapshot(noteId(), exportSnapshot(instance))
       setStatus('saved to core ✓')
     } catch (error) {
       setStatus(`error: ${String(error)}`)
@@ -44,7 +47,7 @@ export const EditorPane: Component<EditorPaneProps> = (props) => {
   // data survived — including across an app restart (on-disk SQLite).
   const exportMarkdown = async () => {
     try {
-      setMarkdown(await core.exportNoteMarkdown(SPIKE_NOTE_ID))
+      setMarkdown(await core.exportNoteMarkdown(noteId()))
     } catch (error) {
       setMarkdown(`error: ${String(error)}`)
     }

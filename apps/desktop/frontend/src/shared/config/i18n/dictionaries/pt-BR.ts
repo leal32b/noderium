@@ -7,6 +7,7 @@ const dict: typeof enUS = {
   },
   navigation: {
     home: 'Início',
+    journal: 'Diário',
     settings: 'Configurações',
     editor: 'Editor',
   },
@@ -19,6 +20,19 @@ const dict: typeof enUS = {
   editor: {
     title: 'Editor de blocos (Spike #1)',
     subtitle: 'ProseMirror + Loro CRDT. Digite à vontade — o medidor mostra a latência por tecla.',
+  },
+  journal: {
+    title: 'Diário',
+  },
+  search: {
+    title: 'Busca',
+    placeholder: 'Busque nas suas notas…',
+    run: 'Buscar',
+    matches: 'resultados',
+  },
+  backlinks: {
+    title: 'Backlinks',
+    empty: 'Nenhum backlink ainda.',
   },
   topbar: {
     toggleSidebar: 'Alternar barra lateral',
@@ -40,6 +54,7 @@ const dict: typeof enUS = {
     },
     navigate: {
       home: 'Ir para Início',
+      journal: 'Ir para Diário',
       settings: 'Ir para Configurações',
       editor: 'Ir para Editor',
     },

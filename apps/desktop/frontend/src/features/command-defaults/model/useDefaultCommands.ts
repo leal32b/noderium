@@ -4,7 +4,7 @@ import { createEffect, onCleanup } from 'solid-js'
 import { useCommandStore } from '@entities/command'
 import { useI18n, useTheme } from '@shared'
 
-const DEFAULT_IDS = ['nav.home', 'nav.editor', 'nav.settings', 'actions.toggleTheme']
+const DEFAULT_IDS = ['nav.home', 'nav.journal', 'nav.editor', 'nav.settings', 'actions.toggleTheme']
 
 /** Registers the built-in command palette commands (navigation + actions). */
 export function useDefaultCommands(): void {
@@ -20,6 +20,12 @@ export function useDefaultCommands(): void {
         title: t('command.navigate.home'),
         group: 'navigate',
         execute: () => navigate('/'),
+      },
+      {
+        id: 'nav.journal',
+        title: t('command.navigate.journal'),
+        group: 'navigate',
+        execute: () => navigate('/journal'),
       },
       {
         id: 'nav.editor',
