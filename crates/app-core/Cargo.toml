@@ -9,8 +9,6 @@ repository.workspace = true
 authors.workspace = true
 
 [dependencies]
-# noderium-core = { path = "../core" }
-# noderium-store = { path = "../store" }
-# noderium-crdt = { path = "../crdt" }
-# noderium-search = { path = "../search" }
-# noderium-srs = { path = "../srs" }
+noderium-crdt = { path = "../crdt" }
+noderium-store = { path = "../store" }
+thiserror = "2"
