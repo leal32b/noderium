@@ -28,6 +28,21 @@ pub struct Note {
     pub updated_at: i64,
 }
 
+/// An SRS card row (a query index over CRDT-held SRS state).
+#[derive(Debug, Clone, PartialEq)]
+pub struct SrsCard {
+    pub id: String,
+    pub target_id: String,
+    pub card_type: String,
+    pub due: i64,
+    pub stability: f64,
+    pub difficulty: f64,
+    pub reps: i32,
+    pub lapses: i32,
+    pub state: String,
+    pub last_review: i64,
+}
+
 /// A block row in the derived index.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Block {
@@ -189,6 +204,62 @@ impl Store {
             .map_err(StoreError::from)
     }
 
+    // --- SRS cards (query index) ---
+
+    pub fn upsert_card(&self, card: &SrsCard) -> Result<()> {
+        self.conn.execute(
+            "INSERT INTO srs_cards
+               (id, target_id, card_type, due, stability, difficulty, reps, lapses, state, last_review)
+             VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10)
+             ON CONFLICT(id) DO UPDATE SET
+               target_id = excluded.target_id,
+               card_type = excluded.card_type,
+               due = excluded.due,
+               stability = excluded.stability,
+               difficulty = excluded.difficulty,
+               reps = excluded.reps,
+               lapses = excluded.lapses,
+               state = excluded.state,
+               last_review = excluded.last_review",
+            params![
+                card.id,
+                card.target_id,
+                card.card_type,
+                card.due,
+                card.stability,
+                card.difficulty,
+                card.reps,
+                card.lapses,
+                card.state,
+                card.last_review
+            ],
+        )?;
+        Ok(())
+    }
+
+    pub fn get_card(&self, id: &str) -> Result<Option<SrsCard>> {
+        Ok(self
+            .conn
+            .query_row(
+                "SELECT id, target_id, card_type, due, stability, difficulty, reps, lapses, state, last_review
+                 FROM srs_cards WHERE id = ?1",
+                params![id],
+                row_to_card,
+            )
+            .optional()?)
+    }
+
+    /// Cards due at or before `now`, soonest first (the review queue).
+    pub fn due_cards(&self, now: i64) -> Result<Vec<SrsCard>> {
+        let mut stmt = self.conn.prepare(
+            "SELECT id, target_id, card_type, due, stability, difficulty, reps, lapses, state, last_review
+             FROM srs_cards WHERE due <= ?1 ORDER BY due",
+        )?;
+        let rows = stmt.query_map(params![now], row_to_card)?;
+        rows.collect::<rusqlite::Result<Vec<_>>>()
+            .map_err(StoreError::from)
+    }
+
     // --- CRDT store (source of truth) ---
 
     pub fn save_snapshot(&self, note_id: &str, snapshot: &[u8], version: &[u8]) -> Result<()> {
@@ -213,6 +284,21 @@ impl Store {
             )
             .optional()?)
     }
+}
+
+fn row_to_card(row: &rusqlite::Row<'_>) -> rusqlite::Result<SrsCard> {
+    Ok(SrsCard {
+        id: row.get(0)?,
+        target_id: row.get(1)?,
+        card_type: row.get(2)?,
+        due: row.get(3)?,
+        stability: row.get(4)?,
+        difficulty: row.get(5)?,
+        reps: row.get(6)?,
+        lapses: row.get(7)?,
+        state: row.get(8)?,
+        last_review: row.get(9)?,
+    })
 }
 
 #[cfg(test)]
@@ -324,6 +410,36 @@ mod tests {
             .unwrap();
         assert_eq!(store.blocks_for_note("n1").unwrap().len(), 1);
         assert_eq!(store.search_blocks("alpha").unwrap(), vec!["b1"]);
+    }
+
+    #[test]
+    fn srs_cards_upsert_and_due_queue() {
+        let store = Store::open_in_memory().unwrap();
+        let mut card = SrsCard {
+            id: "c1".into(),
+            target_id: "b1".into(),
+            card_type: "note".into(),
+            due: 100,
+            stability: 1.0,
+            difficulty: 5.0,
+            reps: 0,
+            lapses: 0,
+            state: "new".into(),
+            last_review: 100,
+        };
+        store.upsert_card(&card).unwrap();
+        assert_eq!(store.get_card("c1").unwrap().as_ref(), Some(&card));
+
+        // Due at 100, so it appears in the queue at now=150 but not at now=50.
+        assert_eq!(store.due_cards(150).unwrap().len(), 1);
+        assert!(store.due_cards(50).unwrap().is_empty());
+
+        // Reschedule into the future; queue at now=150 is now empty.
+        card.due = 1_000;
+        card.reps = 1;
+        store.upsert_card(&card).unwrap();
+        assert!(store.due_cards(150).unwrap().is_empty());
+        assert_eq!(store.get_card("c1").unwrap().unwrap().reps, 1);
     }
 
     #[test]
