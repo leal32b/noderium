@@ -12,7 +12,10 @@ authors.workspace = true
 name = "noderium-desktop"
 path = "src/main.rs"
 
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
 [dependencies]
-# Tauri runtime + noderium-app-core wired in Phase 2 (needs tauri.conf.json,
-# build.rs, and a built frontend dist/). Kept as a plain binary for now so the
-# workspace compiles without those artifacts.
+tauri = { version = "2", features = [] }
+serde = { version = "1", features = ["derive"] }
+noderium-app-core = { path = "../../../crates/app-core" }

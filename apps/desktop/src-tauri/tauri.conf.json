@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Noderium",
+  "version": "0.0.1",
+  "identifier": "app.noderium.desktop",
+  "build": {
+    "frontendDist": "../frontend/dist",
+    "devUrl": "http://localhost:5173",
+    "beforeDevCommand": "pnpm --filter @noderium/desktop-frontend dev",
+    "beforeBuildCommand": "pnpm --filter @noderium/desktop-frontend build"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "Noderium",
+        "width": 1100,
+        "height": 720
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": ["icons/icon.png"]
+  }
+}
