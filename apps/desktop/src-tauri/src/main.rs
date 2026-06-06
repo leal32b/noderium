@@ -28,6 +28,7 @@ fn main() {
             commands::note_blocks,
             commands::search,
             commands::save_editor_snapshot,
+            commands::export_note_markdown,
         ])
         .run(tauri::generate_context!())
         .expect("error while running Noderium");

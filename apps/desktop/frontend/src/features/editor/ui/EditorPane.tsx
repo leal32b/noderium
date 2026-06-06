@@ -21,6 +21,7 @@ export const EditorPane: Component<EditorPaneProps> = (props) => {
     initialBlocks: props.initialBlocks ?? 100,
   })
   const [status, setStatus] = createSignal('')
+  const [markdown, setMarkdown] = createSignal('')
 
   const overBudget = () => lastLatency() > 16
 
@@ -39,6 +40,16 @@ export const EditorPane: Component<EditorPaneProps> = (props) => {
     }
   }
 
+  // Export the persisted note as markdown (FR-9). Doubles as a visual check that
+  // data survived — including across an app restart (on-disk SQLite).
+  const exportMarkdown = async () => {
+    try {
+      setMarkdown(await core.exportNoteMarkdown(SPIKE_NOTE_ID))
+    } catch (error) {
+      setMarkdown(`error: ${String(error)}`)
+    }
+  }
+
   return (
     <div class="flex flex-col gap-2">
       <div class="flex items-center gap-4 text-sm tabular-nums">
@@ -51,6 +62,9 @@ export const EditorPane: Component<EditorPaneProps> = (props) => {
           <Button size="sm" variant="secondary" onClick={persist}>
             Persist to core
           </Button>
+          <Button size="sm" variant="ghost" onClick={exportMarkdown}>
+            Export .md
+          </Button>
           <span class="text-text-tertiary">{status()}</span>
         </Show>
       </div>
@@ -58,6 +72,11 @@ export const EditorPane: Component<EditorPaneProps> = (props) => {
         ref={mountEl}
         class="rounded-lg border border-border-default bg-surface-raised p-3 text-text-primary"
       />
+      <Show when={markdown()}>
+        <pre class="overflow-auto rounded-lg border border-border-default bg-surface-sunken p-3 text-xs text-text-secondary">
+          {markdown()}
+        </pre>
+      </Show>
     </div>
   )
 }

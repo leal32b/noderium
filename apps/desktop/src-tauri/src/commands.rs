@@ -81,6 +81,17 @@ pub fn search(ws: State<'_, SharedWorkspace>, query: String) -> Result<Vec<Strin
     lock(&ws)?.search(&query).map_err(to_message)
 }
 
+/// Export a note as deterministic markdown (FR-9).
+#[tauri::command]
+pub fn export_note_markdown(
+    ws: State<'_, SharedWorkspace>,
+    note_id: String,
+) -> Result<String, String> {
+    lock(&ws)?
+        .export_note_markdown(&note_id)
+        .map_err(to_message)
+}
+
 /// Persist a snapshot exported by the JS editor (loro-prosemirror) and reindex.
 #[tauri::command]
 pub fn save_editor_snapshot(

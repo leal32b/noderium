@@ -25,4 +25,7 @@ export const core = {
 
   saveEditorSnapshot: (noteId: string, snapshot: Uint8Array): Promise<void> =>
     invoke('save_editor_snapshot', { noteId, snapshot: Array.from(snapshot) }),
+
+  exportNoteMarkdown: (noteId: string): Promise<string> =>
+    invoke('export_note_markdown', { noteId }),
 }
