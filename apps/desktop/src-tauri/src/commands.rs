@@ -19,6 +19,13 @@ pub struct BlockDto {
     pub text: String,
 }
 
+#[derive(Serialize)]
+pub struct BacklinkDto {
+    pub source_note_id: String,
+    pub source_block_id: String,
+    pub text: String,
+}
+
 fn to_message<E: std::fmt::Display>(error: E) -> String {
     error.to_string()
 }
@@ -79,6 +86,41 @@ pub fn note_blocks(
 #[tauri::command]
 pub fn search(ws: State<'_, SharedWorkspace>, query: String) -> Result<Vec<String>, String> {
     lock(&ws)?.search(&query).map_err(to_message)
+}
+
+/// Open (or create) the journal note for an ISO date (FR-1).
+#[tauri::command]
+pub fn open_journal(ws: State<'_, SharedWorkspace>, date: String) -> Result<String, String> {
+    lock(&ws)?.open_journal(&date, now_ms()).map_err(to_message)
+}
+
+/// Blocks that link to a note via `[[wikilinks]]` (FR-4 backlinks pane).
+#[tauri::command]
+pub fn backlinks(
+    ws: State<'_, SharedWorkspace>,
+    note_id: String,
+) -> Result<Vec<BacklinkDto>, String> {
+    let links = lock(&ws)?.backlinks(&note_id).map_err(to_message)?;
+    Ok(links
+        .into_iter()
+        .map(|b| BacklinkDto {
+            source_note_id: b.source_note_id,
+            source_block_id: b.source_block_id,
+            text: b.text,
+        })
+        .collect())
+}
+
+/// Import a markdown note (Obsidian-style, FR-10).
+#[tauri::command]
+pub fn import_markdown(
+    ws: State<'_, SharedWorkspace>,
+    note_id: String,
+    markdown: String,
+) -> Result<(), String> {
+    lock(&ws)?
+        .import_markdown(&note_id, &markdown, now_ms())
+        .map_err(to_message)
 }
 
 /// Export a note as deterministic markdown (FR-9).

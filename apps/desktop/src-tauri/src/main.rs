@@ -29,6 +29,9 @@ fn main() {
             commands::search,
             commands::save_editor_snapshot,
             commands::export_note_markdown,
+            commands::open_journal,
+            commands::backlinks,
+            commands::import_markdown,
         ])
         .run(tauri::generate_context!())
         .expect("error while running Noderium");
