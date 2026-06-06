@@ -5,9 +5,14 @@
 default:
     @just --list
 
-# Run the desktop frontend dev server (Vite).
+# Run the frontend in the browser (Vite only, no Rust core).
 dev:
     pnpm --filter @noderium/desktop-frontend dev
+
+# Run the full desktop app (Tauri): boots Vite + the Rust core + a native window.
+# Requires the Tauri CLI once: `cargo install tauri-cli --locked`.
+dev-desktop:
+    cd apps/desktop/src-tauri && cargo tauri dev
 
 # Build the desktop app: frontend assets first (Tauri embeds them), then Rust.
 build:
