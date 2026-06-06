@@ -40,7 +40,11 @@ just lint       # cargo clippy
 
 ## Status
 
-Phase 1 — monorepo scaffold (no domain logic yet). See ARCHITECTURE.md §11 for the roadmap.
+v0 walking skeleton complete, plus a working capture → persist → search → link →
+retain slice (journal, block editor, CRDT↔SQLite, FSRS, backlinks, FTS, `.md`
+import/export) behind a Tauri desktop app. See
+**[docs/implementation/status.md](docs/implementation/status.md)** for details and
+ARCHITECTURE.md §11 for the roadmap.
 
 ## License
 
