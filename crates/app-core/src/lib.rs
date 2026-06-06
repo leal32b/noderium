@@ -6,8 +6,11 @@
 //! except the CRDT store is a rebuildable derived index — proven by the tests.
 
 use noderium_crdt::{CrdtError, NoteDoc};
-use noderium_store::{Block, Note, Store, StoreError};
+use noderium_srs::{CardState, Phase, Scheduler};
+use noderium_store::{Block, Note, SrsCard, Store, StoreError};
 use thiserror::Error;
+
+pub use noderium_srs::{rating_from_str, Rating};
 
 #[derive(Debug, Error)]
 pub enum CoreError {
@@ -17,6 +20,35 @@ pub enum CoreError {
     Crdt(#[from] CrdtError),
     #[error("note not found: {0}")]
     NoteNotFound(String),
+    #[error("card not found: {0}")]
+    CardNotFound(String),
+}
+
+fn to_row(id: &str, target_id: &str, card_type: &str, state: &CardState) -> SrsCard {
+    SrsCard {
+        id: id.to_string(),
+        target_id: target_id.to_string(),
+        card_type: card_type.to_string(),
+        due: state.due_ms,
+        stability: state.stability,
+        difficulty: state.difficulty,
+        reps: state.reps,
+        lapses: state.lapses,
+        state: state.phase.as_str().to_string(),
+        last_review: state.last_review_ms,
+    }
+}
+
+fn from_row(card: &SrsCard) -> CardState {
+    CardState {
+        due_ms: card.due,
+        stability: card.stability,
+        difficulty: card.difficulty,
+        reps: card.reps,
+        lapses: card.lapses,
+        phase: Phase::parse(&card.state),
+        last_review_ms: card.last_review,
+    }
 }
 
 pub type Result<T> = std::result::Result<T, CoreError>;
@@ -24,18 +56,21 @@ pub type Result<T> = std::result::Result<T, CoreError>;
 /// Orchestrates persistence + CRDT for a single local workspace.
 pub struct Workspace {
     store: Store,
+    scheduler: Scheduler,
 }
 
 impl Workspace {
     pub fn open_in_memory() -> Result<Self> {
         Ok(Self {
             store: Store::open_in_memory()?,
+            scheduler: Scheduler::new(),
         })
     }
 
     pub fn open(path: impl AsRef<std::path::Path>) -> Result<Self> {
         Ok(Self {
             store: Store::open(path)?,
+            scheduler: Scheduler::new(),
         })
     }
 
@@ -172,6 +207,39 @@ impl Workspace {
         ))
     }
 
+    // --- spaced repetition (FSRS, FR-6) ---
+
+    /// Turn a note or block into a review card, due immediately.
+    pub fn create_card(
+        &self,
+        card_id: &str,
+        target_id: &str,
+        card_type: &str,
+        now: i64,
+    ) -> Result<()> {
+        let state = Scheduler::new_card(now);
+        self.store
+            .upsert_card(&to_row(card_id, target_id, card_type, &state))?;
+        Ok(())
+    }
+
+    /// Grade a card review; reschedules via FSRS and updates the queue index.
+    pub fn review_card(&self, card_id: &str, rating: Rating, now: i64) -> Result<()> {
+        let card = self
+            .store
+            .get_card(card_id)?
+            .ok_or_else(|| CoreError::CardNotFound(card_id.to_string()))?;
+        let next = self.scheduler.review(&from_row(&card), rating, now);
+        self.store
+            .upsert_card(&to_row(&card.id, &card.target_id, &card.card_type, &next))?;
+        Ok(())
+    }
+
+    /// The review queue: cards due at or before `now` (target ids).
+    pub fn due_cards(&self, now: i64) -> Result<Vec<SrsCard>> {
+        Ok(self.store.due_cards(now)?)
+    }
+
     // --- internals ---
 
     fn load_doc(&self, note_id: &str) -> Result<NoteDoc> {
@@ -267,6 +335,29 @@ body with [[Link]]\n";
         let out = ws.export_note_markdown("n1").unwrap();
         assert!(out.contains("# Heading"));
         assert!(out.contains("body with [[Link]]"));
+    }
+
+    #[test]
+    fn srs_card_review_flow() {
+        let ws = Workspace::open_in_memory().unwrap();
+        let now = 1_700_000_000_000;
+        ws.create_card("c1", "b1", "note", now).unwrap();
+
+        // Freshly created -> due now -> in the queue.
+        let due = ws.due_cards(now).unwrap();
+        assert_eq!(due.len(), 1);
+        assert_eq!(due[0].id, "c1");
+        assert_eq!(due[0].state, "new");
+
+        // Grade it "Good" -> rescheduled into the future -> leaves the queue.
+        ws.review_card("c1", Rating::Good, now).unwrap();
+        assert!(ws.due_cards(now).unwrap().is_empty());
+
+        // But it reappears once its due date arrives.
+        let rescheduled = ws.due_cards(now + 30 * 86_400_000).unwrap();
+        assert_eq!(rescheduled.len(), 1);
+        assert_eq!(rescheduled[0].reps, 1);
+        assert_ne!(rescheduled[0].state, "new");
     }
 
     #[test]

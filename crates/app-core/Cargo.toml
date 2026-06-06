@@ -11,5 +11,6 @@ authors.workspace = true
 [dependencies]
 noderium-core = { path = "../core" }
 noderium-crdt = { path = "../crdt" }
+noderium-srs = { path = "../srs" }
 noderium-store = { path = "../store" }
 thiserror = "2"
