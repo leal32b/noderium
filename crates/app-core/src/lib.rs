@@ -196,9 +196,14 @@ impl Workspace {
         Ok(self.store.blocks_for_note(note_id)?)
     }
 
-    /// Lexical search over indexed block text (FTS5/BM25).
+    /// Lexical search over indexed block text (FTS5/BM25). Returns block ids.
     pub fn search(&self, query: &str) -> Result<Vec<String>> {
         Ok(self.store.search_blocks(query)?)
+    }
+
+    /// Lexical search returning full block rows (for readable result snippets).
+    pub fn search_detailed(&self, query: &str) -> Result<Vec<Block>> {
+        Ok(self.store.search_blocks_detailed(query)?)
     }
 
     /// Import a markdown note (Obsidian-style: frontmatter + `[[wikilinks]]`,
