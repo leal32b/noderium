@@ -99,6 +99,84 @@ pub fn search(ws: State<'_, SharedWorkspace>, query: String) -> Result<Vec<Strin
     lock(&ws)?.search(&query).map_err(to_message)
 }
 
+#[derive(Serialize)]
+pub struct SearchHitDto {
+    pub block_id: String,
+    pub note_id: String,
+    pub text: String,
+}
+
+/// Search returning readable hits (block text + owning note).
+#[tauri::command]
+pub fn search_detailed(
+    ws: State<'_, SharedWorkspace>,
+    query: String,
+) -> Result<Vec<SearchHitDto>, String> {
+    let hits = lock(&ws)?.search_detailed(&query).map_err(to_message)?;
+    Ok(hits
+        .into_iter()
+        .map(|b| SearchHitDto {
+            block_id: b.id,
+            note_id: b.note_id,
+            text: b.text,
+        })
+        .collect())
+}
+
+#[derive(Serialize)]
+pub struct SrsCardDto {
+    pub id: String,
+    pub target_id: String,
+    pub card_type: String,
+    pub due: i64,
+    pub state: String,
+    pub reps: i32,
+}
+
+/// Turn a note/block into a review card (FR-6).
+#[tauri::command]
+pub fn create_card(
+    ws: State<'_, SharedWorkspace>,
+    card_id: String,
+    target_id: String,
+    card_type: String,
+) -> Result<(), String> {
+    lock(&ws)?
+        .create_card(&card_id, &target_id, &card_type, now_ms())
+        .map_err(to_message)
+}
+
+/// The review queue: cards due now.
+#[tauri::command]
+pub fn due_cards(ws: State<'_, SharedWorkspace>) -> Result<Vec<SrsCardDto>, String> {
+    let cards = lock(&ws)?.due_cards(now_ms()).map_err(to_message)?;
+    Ok(cards
+        .into_iter()
+        .map(|c| SrsCardDto {
+            id: c.id,
+            target_id: c.target_id,
+            card_type: c.card_type,
+            due: c.due,
+            state: c.state,
+            reps: c.reps,
+        })
+        .collect())
+}
+
+/// Grade a card review (`again` | `hard` | `good` | `easy`), rescheduling it.
+#[tauri::command]
+pub fn review_card(
+    ws: State<'_, SharedWorkspace>,
+    card_id: String,
+    rating: String,
+) -> Result<(), String> {
+    let rating = noderium_app_core::rating_from_str(&rating)
+        .ok_or_else(|| format!("invalid rating: {rating}"))?;
+    lock(&ws)?
+        .review_card(&card_id, rating, now_ms())
+        .map_err(to_message)
+}
+
 /// List all notes, most-recently-updated first.
 #[tauri::command]
 pub fn list_notes(ws: State<'_, SharedWorkspace>) -> Result<Vec<NoteDto>, String> {

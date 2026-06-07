@@ -34,6 +34,10 @@ fn main() {
             commands::backlinks,
             commands::import_markdown,
             commands::list_notes,
+            commands::search_detailed,
+            commands::create_card,
+            commands::due_cards,
+            commands::review_card,
         ])
         .run(tauri::generate_context!())
         .expect("error while running Noderium");
