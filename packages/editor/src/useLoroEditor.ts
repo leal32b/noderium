@@ -12,6 +12,8 @@ export interface UseLoroEditorOptions {
   /** Optional async loader for a stored snapshot to re-hydrate from. When it
    *  resolves to a snapshot, seeding is skipped and the content is restored. */
   loadSnapshot?: () => Promise<Uint8Array | undefined>
+  /** Called after each doc-changing transaction (for autosave/debounce). */
+  onChange?: () => void
 }
 
 export interface UseLoroEditorResult {
@@ -47,6 +49,7 @@ export function useLoroEditor(
       },
     }
     if (snapshot) editorOptions.snapshot = snapshot
+    if (options.onChange) editorOptions.onChange = options.onChange
     instance = createLoroEditor(mount, editorOptions)
 
     // Only seed when there is no restored content.

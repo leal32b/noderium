@@ -18,6 +18,8 @@ export interface LoroEditor {
 export interface CreateLoroEditorOptions {
   /** Called after each doc-changing transaction with its apply→render time (ms). */
   onLatency?: (ms: number) => void
+  /** Called after each doc-changing transaction (for autosave/debounce). */
+  onChange?: () => void
   /** A previously exported snapshot to re-hydrate the document from. */
   snapshot?: Uint8Array
 }
@@ -54,7 +56,10 @@ export function createLoroEditor(
       const start = performance.now()
       const next = view.state.apply(tr)
       view.updateState(next)
-      if (tr.docChanged) options.onLatency?.(performance.now() - start)
+      if (tr.docChanged) {
+        options.onLatency?.(performance.now() - start)
+        options.onChange?.()
+      }
     },
   })
 
