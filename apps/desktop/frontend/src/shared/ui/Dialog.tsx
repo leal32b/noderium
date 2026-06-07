@@ -13,12 +13,12 @@ export const Dialog: ParentComponent<DialogProps> = (props) => {
   return (
     <KDialog open={props.open} onOpenChange={props.onOpenChange}>
       <KDialog.Portal>
-        <KDialog.Overlay class="fixed inset-0 z-40 bg-black/40" />
+        <KDialog.Overlay class="dialog-overlay fixed inset-0 z-40 bg-black/40 backdrop-blur-[2px]" />
         <div class="fixed inset-0 z-50 flex items-start justify-center p-4 pt-[12vh]">
-          <KDialog.Content class="w-full max-w-lg rounded-lg border border-border-default bg-surface-raised text-text-primary shadow-xl">
+          <KDialog.Content class="dialog-content w-full max-w-xl overflow-hidden rounded-xl border border-border-default bg-surface-overlay text-text-primary shadow-lg">
             <Show when={props.title}>
               {(title) => (
-                <KDialog.Title class="border-b border-border-default px-4 py-3 font-medium">
+                <KDialog.Title class="border-b border-border-subtle px-4 py-3 text-sm font-semibold">
                   {title()}
                 </KDialog.Title>
               )}

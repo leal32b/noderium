@@ -11,6 +11,6 @@ describe('Button', () => {
 
   it('applies the primary variant by default', () => {
     const { getByRole } = render(() => <Button>Go</Button>)
-    expect(getByRole('button').className).toContain('bg-action-primary-default')
+    expect(getByRole('button').className).toContain('bg-accent')
   })
 })

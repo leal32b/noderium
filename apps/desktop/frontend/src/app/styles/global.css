@@ -15,8 +15,137 @@ body {
   background-color: var(--surface-background);
   color: var(--text-primary);
   font-family:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif,
-    'Apple Color Emoji', 'Segoe UI Emoji';
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif,
+    'Apple Color Emoji',
+    'Segoe UI Emoji';
+  font-size: 15px;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings:
+    'cv02' on,
+    'cv03' on,
+    'cv04' on,
+    'ss01' on;
+}
+
+/* Reset native control chrome (presetUno doesn't); utilities re-add as needed. */
+button {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: transparent;
+  border-style: solid;
+  border-width: 0;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+/* Links inherit color and are undecorated by default; components opt in. */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Headings: tighter tracking + balanced wrapping. */
+h1,
+h2,
+h3 {
+  letter-spacing: -0.014em;
+  text-wrap: balance;
+}
+
+/* Active sidebar nav item (accent pill). Loaded after UnoCSS so it wins. */
+.nav-active,
+.nav-active:hover {
+  background-color: var(--accent-subtle-bg);
+  color: var(--accent-subtle-text);
+}
+
+/* App lists are unstyled by default; the editor re-enables markers below. */
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+::selection {
+  background-color: var(--accent-subtle-bg);
+  color: var(--accent-subtle-text);
+}
+
+/* Quiet, theme-aware scrollbars. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--border-strong);
+  border: 3px solid transparent;
+  background-clip: content-box;
+  border-radius: 9999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--text-tertiary);
+}
+
+/* Dialog / overlay entrance animations (Kobalte sets data-expanded). */
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes content-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.dialog-overlay[data-expanded] {
+  animation: overlay-in 140ms ease-out;
+}
+
+.dialog-content[data-expanded] {
+  animation: content-in 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Respect reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

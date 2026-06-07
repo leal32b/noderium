@@ -10,7 +10,10 @@ export const Input: Component<InputProps> = (props) => {
   return (
     <input
       class={cx(
-        'focus-ring h-9 w-full rounded border border-border-default bg-surface-background px-3 text-sm text-text-primary placeholder:text-text-tertiary',
+        'h-9 w-full rounded-md border border-border-default bg-surface-raised px-3 text-sm text-text-primary outline-none transition-all duration-150',
+        'placeholder:text-text-tertiary',
+        'hover:border-border-strong',
+        'focus:(border-accent ring-2 ring-accent/25)',
         local.class,
       )}
       {...rest}
