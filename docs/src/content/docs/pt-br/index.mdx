@@ -1,0 +1,45 @@
+---
+title: Noderium
+description: PKM local-first que unifica diário, Zettelkasten e repetição espaçada.
+template: splash
+hero:
+  tagline: Um único fluxo para capturar, destilar e reter — totalmente local, rápido e seu.
+  image:
+    file: ../../../assets/noderium-logo.svg
+  actions:
+    - text: O que é o Noderium
+      link: /pt-br/start/what-is-noderium/
+      icon: right-arrow
+    - text: Ver no GitHub
+      link: https://github.com/leal32b/noderium
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## Os três pilares
+
+<CardGrid stagger>
+  <Card title="Diário" icon="pencil">
+    Captura diária sem fricção. Registre o pensamento primeiro; estruture depois.
+  </Card>
+  <Card title="Zettelkasten" icon="random">
+    Notas atômicas e densamente conectadas com `[[wikilinks]]` e backlinks.
+  </Card>
+  <Card title="Repetição espaçada" icon="approve-check">
+    Transforme notas em memória durável com uma fila de revisão agendada por FSRS.
+  </Card>
+</CardGrid>
+
+## Por onde começar
+
+<CardGrid>
+  <Card title="Comece aqui" icon="rocket">
+    Novo no Noderium? [Instale e execute](/pt-br/start/install-and-run/) e siga o
+    [Início rápido](/pt-br/start/quickstart/).
+  </Card>
+  <Card title="Como funciona" icon="setting">
+    O CRDT como fonte da verdade, o editor, a busca e o SRS — explicados.
+  </Card>
+</CardGrid>

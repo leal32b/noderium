@@ -1,0 +1,53 @@
+---
+title: Noderium
+description: Local-first PKM that unifies journal, Zettelkasten, and spaced repetition.
+template: splash
+hero:
+  tagline: One workflow for capture, distillation, and retention — fully local, fast, and yours.
+  image:
+    file: ../../assets/noderium-logo.svg
+  actions:
+    - text: What is Noderium
+      link: /start/what-is-noderium/
+      icon: right-arrow
+    - text: View on GitHub
+      link: https://github.com/leal32b/noderium
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## The three pillars
+
+<CardGrid stagger>
+  <Card title="Journal" icon="pencil">
+    Low-friction daily capture. Get the thought down first; structure it later.
+  </Card>
+  <Card title="Zettelkasten" icon="random">
+    Atomic, densely linked notes with `[[wikilinks]]` and backlinks.
+  </Card>
+  <Card title="Spaced repetition" icon="approve-check">
+    Turn notes into durable memory with an FSRS-scheduled review queue.
+  </Card>
+</CardGrid>
+
+## Find your way
+
+<CardGrid>
+  <Card title="Start here" icon="rocket">
+    New to Noderium? [Install & run](/start/install-and-run/), then follow the
+    [Quickstart](/start/quickstart/).
+  </Card>
+  <Card title="How it works" icon="setting">
+    The [CRDT source of truth](/how-it-works/crdt-source-of-truth/), the editor,
+    search, and SRS — explained.
+  </Card>
+  <Card title="Architecture" icon="open-book">
+    [Repo layout](/architecture/overview/), the frontend (FSD), the data model,
+    and all [decision records](/architecture/decisions/).
+  </Card>
+  <Card title="Roadmap" icon="list-format">
+    What's built today and [what's next](/roadmap/whats-next/).
+  </Card>
+</CardGrid>

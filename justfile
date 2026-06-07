@@ -30,6 +30,14 @@ test:
 test-editor:
     pnpm --filter @noderium/editor test
 
+# Documentation site (Astro Starlight, ADR-014). Serves locally with HMR.
+docs:
+    pnpm --filter @noderium/docs dev
+
+# Build the documentation site (fails on broken internal links).
+docs-build:
+    pnpm --filter @noderium/docs build
+
 # Lint: clippy for the Rust crates (desktop excluded — needs frontend dist).
 lint:
     cargo clippy --workspace --exclude noderium-desktop --all-targets -- -D warnings

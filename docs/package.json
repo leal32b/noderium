@@ -2,6 +2,25 @@
   "name": "@noderium/docs",
   "version": "0.0.1",
   "private": true,
-  "description": "Astro Starlight documentation (ADR-014). Scaffolded later.",
-  "license": "Apache-2.0"
+  "type": "module",
+  "description": "Astro Starlight documentation (ADR-014).",
+  "license": "Apache-2.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "^0.39.3",
+    "@mermaid-js/layout-elk": "^0.2.0",
+    "astro": "^6.4.4",
+    "astro-mermaid": "^2.0.2",
+    "mermaid": "^11.15.0",
+    "sharp": "^0.34.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "typescript": "^5.7.2"
+  }
 }
