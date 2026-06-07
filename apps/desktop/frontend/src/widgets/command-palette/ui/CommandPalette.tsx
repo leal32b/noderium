@@ -99,6 +99,10 @@ export const CommandPalette: Component = () => {
         <Search size={16} class="shrink-0 text-text-tertiary" />
         <input
           autofocus
+          autocomplete="off"
+          autocapitalize="off"
+          autocorrect="off"
+          spellcheck={false}
           class="h-12 w-full bg-transparent text-sm text-text-primary outline-none placeholder:text-text-tertiary"
           placeholder={t('command.placeholder')}
           value={query()}

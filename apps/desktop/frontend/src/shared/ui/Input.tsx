@@ -9,6 +9,8 @@ export const Input: Component<InputProps> = (props) => {
   const [local, rest] = splitProps(props, ['class'])
   return (
     <input
+      autocomplete="off"
+      spellcheck={false}
       class={cx(
         'h-9 w-full rounded-md border border-border-default bg-surface-raised px-3 text-sm text-text-primary outline-none transition-all duration-150',
         'placeholder:text-text-tertiary',
