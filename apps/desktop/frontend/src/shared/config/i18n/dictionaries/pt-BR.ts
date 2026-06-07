@@ -8,6 +8,7 @@ const dict: typeof enUS = {
   navigation: {
     home: 'Início',
     journal: 'Diário',
+    notes: 'Notas',
     settings: 'Configurações',
     editor: 'Editor',
   },
@@ -25,6 +26,12 @@ const dict: typeof enUS = {
   },
   journal: {
     title: 'Diário',
+  },
+  notes: {
+    title: 'Notas',
+    new: 'Nova nota',
+    untitled: 'Sem título',
+    empty: 'Nenhuma nota ainda.',
   },
   search: {
     title: 'Busca',
@@ -57,6 +64,7 @@ const dict: typeof enUS = {
     navigate: {
       home: 'Ir para Início',
       journal: 'Ir para Diário',
+      notes: 'Ir para Notas',
       settings: 'Ir para Configurações',
       editor: 'Ir para Editor',
     },

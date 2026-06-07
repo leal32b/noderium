@@ -8,6 +8,7 @@ export default {
   navigation: {
     home: 'Home',
     journal: 'Journal',
+    notes: 'Notes',
     settings: 'Settings',
     editor: 'Editor',
   },
@@ -25,6 +26,12 @@ export default {
   },
   journal: {
     title: 'Journal',
+  },
+  notes: {
+    title: 'Notes',
+    new: 'New note',
+    untitled: 'Untitled',
+    empty: 'No notes yet.',
   },
   search: {
     title: 'Search',
@@ -57,6 +64,7 @@ export default {
     navigate: {
       home: 'Go to Home',
       journal: 'Go to Journal',
+      notes: 'Go to Notes',
       settings: 'Go to Settings',
       editor: 'Go to Editor',
     },

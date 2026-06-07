@@ -14,6 +14,16 @@ export interface BacklinkDto {
   text: string
 }
 
+/** A note as returned by the Rust `list_notes` command. */
+export interface NoteDto {
+  id: string
+  type: string
+  title: string | null
+  journal_date: string | null
+  created_at: number
+  updated_at: number
+}
+
 /**
  * Typed client for the noderium-app-core Tauri commands. Argument keys are
  * camelCase: Tauri converts Rust's snake_case command params to camelCase on the
@@ -47,4 +57,6 @@ export const core = {
 
   importMarkdown: (noteId: string, markdown: string): Promise<void> =>
     invoke('import_markdown', { noteId, markdown }),
+
+  listNotes: (): Promise<NoteDto[]> => invoke('list_notes'),
 }
