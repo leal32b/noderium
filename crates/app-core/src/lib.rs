@@ -39,6 +39,16 @@ fn to_row(id: &str, target_id: &str, card_type: &str, state: &CardState) -> SrsC
     }
 }
 
+fn truncate(text: &str, max_chars: usize) -> String {
+    if text.chars().count() <= max_chars {
+        text.to_string()
+    } else {
+        let mut s: String = text.chars().take(max_chars).collect();
+        s.push('…');
+        s
+    }
+}
+
 fn from_row(card: &SrsCard) -> CardState {
     CardState {
         due_ms: card.due,
@@ -143,10 +153,16 @@ impl Workspace {
                 text: block.text.clone(),
             })?;
         }
+        self.maybe_autotitle(note_id, &blocks)?;
         self.reindex_links(
             note_id,
             blocks.iter().map(|b| (b.id.as_str(), b.text.as_str())),
         )
+    }
+
+    /// All notes, most-recently-updated first.
+    pub fn list_notes(&self) -> Result<Vec<Note>> {
+        Ok(self.store.list_notes()?)
     }
 
     /// Blocks (with their note) that link to `note_id` via `[[wikilinks]]`.
@@ -312,6 +328,27 @@ impl Workspace {
         )
     }
 
+    /// Derive a note's title from its first non-empty block, unless the note
+    /// already has a meaningful title (journal dates, frontmatter titles stay).
+    fn maybe_autotitle(&self, note_id: &str, blocks: &[noderium_crdt::BlockData]) -> Result<()> {
+        let Some(first) = blocks.iter().find(|b| !b.text.trim().is_empty()) else {
+            return Ok(());
+        };
+        let Some(mut note) = self.store.get_note(note_id)? else {
+            return Ok(());
+        };
+        let needs_title = note
+            .title
+            .as_deref()
+            .map(|t| t.trim().is_empty() || t == "Untitled")
+            .unwrap_or(true);
+        if needs_title {
+            note.title = Some(truncate(first.text.trim(), 80));
+            self.store.upsert_note(&note)?;
+        }
+        Ok(())
+    }
+
     /// Rebuild the link graph for a note: parse `[[wikilinks]]` from each block
     /// and store edges to notes that exist (resolved by title).
     fn reindex_links<'a>(
@@ -393,6 +430,43 @@ body with [[Link]]\n";
         let out = ws.export_note_markdown("n1").unwrap();
         assert!(out.contains("# Heading"));
         assert!(out.contains("body with [[Link]]"));
+    }
+
+    #[test]
+    fn lists_notes_and_autotitles_from_first_block() {
+        let ws = Workspace::open_in_memory().unwrap();
+        ws.create_note("n1", "atomic", None, 1).unwrap();
+        let snapshot = noderium_crdt::blocks_to_prosemirror_snapshot(&[BlockData {
+            id: "b1".into(),
+            block_type: "heading".into(),
+            text: "My First Note".into(),
+        }])
+        .unwrap();
+        ws.import_editor_snapshot("n1", &snapshot).unwrap();
+
+        // Untitled atomic note gets a title from its first block.
+        assert_eq!(
+            ws.note("n1").unwrap().unwrap().title.as_deref(),
+            Some("My First Note")
+        );
+
+        // Journal keeps its date title even after content is saved.
+        let jid = ws.open_journal("2026-06-06", 2).unwrap();
+        let jsnap = noderium_crdt::blocks_to_prosemirror_snapshot(&[BlockData {
+            id: "jb".into(),
+            block_type: "paragraph".into(),
+            text: "dear diary".into(),
+        }])
+        .unwrap();
+        ws.import_editor_snapshot(&jid, &jsnap).unwrap();
+        assert_eq!(
+            ws.note(&jid).unwrap().unwrap().title.as_deref(),
+            Some("2026-06-06")
+        );
+
+        let notes = ws.list_notes().unwrap();
+        assert!(notes.iter().any(|n| n.id == "n1"));
+        assert!(notes.iter().any(|n| n.id == jid));
     }
 
     #[test]
