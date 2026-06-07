@@ -1,4 +1,4 @@
-import { ChevronDown, Globe, Menu, Monitor, Moon, Search, Sun } from 'lucide-solid'
+import { ChevronDown, Globe, Monitor, Moon, PanelLeft, Search, Sun } from 'lucide-solid'
 import { For } from 'solid-js'
 import type { Component } from 'solid-js'
 
@@ -22,47 +22,37 @@ export const Topbar: Component<TopbarProps> = (props) => {
   const palette = useCommandPalette()
 
   return (
-    <header class="flex h-14 shrink-0 items-center gap-3 border-b border-border-subtle bg-surface-raised px-3">
-      <button
-        type="button"
-        class="icon-btn h-9 w-9 md:hidden"
-        aria-label={t('topbar.toggleSidebar')}
-        onClick={() => props.onToggleSidebar()}
-      >
-        <Menu size={18} />
-      </button>
-
-      <div class="flex select-none items-center gap-2">
-        <span class="flex h-6 w-6 items-center justify-center rounded-md bg-accent text-[13px] font-bold text-accent-text">
-          N
-        </span>
-        <span class="text-[15px] font-semibold tracking-tight">Noderium</span>
+    <header class="grid h-14 shrink-0 grid-cols-[auto_1fr_auto] items-center gap-3 border-b border-border-subtle bg-surface-raised px-3">
+      <div class="flex items-center gap-2">
+        <button
+          type="button"
+          class="icon-btn h-9 w-9"
+          aria-label={t('topbar.toggleSidebar')}
+          onClick={() => props.onToggleSidebar()}
+        >
+          <PanelLeft size={18} />
+        </button>
+        <div class="flex select-none items-center gap-2">
+          <span class="flex h-6 w-6 items-center justify-center rounded-md bg-accent text-[13px] font-bold text-accent-text">
+            N
+          </span>
+          <span class="hidden text-[15px] font-semibold tracking-tight sm:inline">Noderium</span>
+        </div>
       </div>
 
-      <button
-        type="button"
-        onClick={() => palette.open()}
-        aria-label={t('topbar.openCommandPalette')}
-        class="focus-ring ml-auto hidden h-9 items-center gap-2 rounded-md border border-border-default bg-surface-background px-2.5 text-sm text-text-tertiary transition-colors hover:border-border-strong md:inline-flex"
-      >
-        <Search size={15} />
-        <span>{t('topbar.search')}</span>
-        <kbd class="ml-6 rounded border border-border-default bg-surface-sunken px-1.5 py-0.5 font-sans text-[11px] text-text-secondary">
-          ⌘K
-        </kbd>
-      </button>
-
-      <div class="ml-auto flex items-center gap-2 md:ml-0">
+      <div class="flex justify-center">
         <button
           type="button"
           onClick={() => palette.open()}
           aria-label={t('topbar.openCommandPalette')}
-          class="icon-btn h-9 w-9 md:hidden"
+          class="focus-ring flex h-9 w-full max-w-md items-center gap-2 rounded-md border border-border-default bg-surface-background px-3 text-sm text-text-tertiary transition-colors hover:border-border-strong"
         >
-          <Search size={18} />
+          <Search size={15} />
+          <span>{t('topbar.search')}</span>
         </button>
+      </div>
 
-        {/* Theme segmented control */}
+      <div class="flex items-center justify-end gap-2">
         <div
           class="inline-flex items-center rounded-md border border-border-default bg-surface-background p-0.5"
           role="group"
@@ -89,7 +79,6 @@ export const Topbar: Component<TopbarProps> = (props) => {
           </For>
         </div>
 
-        {/* Language select */}
         <div class="relative">
           <Globe
             size={15}

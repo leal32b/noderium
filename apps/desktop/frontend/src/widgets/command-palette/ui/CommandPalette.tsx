@@ -107,9 +107,6 @@ export const CommandPalette: Component = () => {
           }
           onKeyDown={onKeyDown}
         />
-        <kbd class="shrink-0 rounded border border-border-default bg-surface-sunken px-1.5 py-0.5 font-sans text-[11px] text-text-tertiary">
-          ESC
-        </kbd>
       </div>
 
       <ul class="max-h-[min(60vh,24rem)] overflow-y-auto p-2">

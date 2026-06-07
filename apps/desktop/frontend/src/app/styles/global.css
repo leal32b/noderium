@@ -97,6 +97,37 @@ h3 {
   text-wrap: balance;
 }
 
+/* Collapsed-sidebar tooltip (CSS-only: shows on hover and keyboard focus). */
+.sidebar-tip::after {
+  content: attr(data-tip);
+  position: absolute;
+  left: calc(100% + 10px);
+  top: 50%;
+  transform: translateY(-50%) translateX(-4px);
+  white-space: nowrap;
+  background-color: var(--surface-overlay);
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
+  border-radius: 6px;
+  padding: 0.25rem 0.5rem;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.2;
+  box-shadow: var(--shadow-md);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 120ms ease,
+    transform 120ms ease;
+  z-index: 60;
+}
+
+.sidebar-tip:hover::after,
+.sidebar-tip:focus-visible::after {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
 /* Active sidebar nav item (accent pill). Loaded after UnoCSS so it wins. */
 .nav-active,
 .nav-active:hover {

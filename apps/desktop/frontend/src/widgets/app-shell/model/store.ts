@@ -1,17 +1,22 @@
+import { makePersisted } from '@solid-primitives/storage'
 import { createSignal } from 'solid-js'
 import type { Accessor } from 'solid-js'
 
 export interface AppShellState {
-  sidebarOpen: Accessor<boolean>
-  setSidebarOpen: (open: boolean) => void
-  toggleSidebar: () => void
+  collapsed: Accessor<boolean>
+  setCollapsed: (collapsed: boolean) => void
+  toggleCollapsed: () => void
 }
 
 export function createAppShellState(): AppShellState {
-  const [sidebarOpen, setSidebarOpen] = createSignal(false)
+  const [collapsed, setCollapsed] = makePersisted(createSignal(false), {
+    name: 'sidebar-collapsed',
+    serialize: (v) => (v ? '1' : '0'),
+    deserialize: (raw) => raw === '1',
+  })
   return {
-    sidebarOpen,
-    setSidebarOpen,
-    toggleSidebar: () => setSidebarOpen((v) => !v),
+    collapsed,
+    setCollapsed,
+    toggleCollapsed: () => setCollapsed((v) => !v),
   }
 }
