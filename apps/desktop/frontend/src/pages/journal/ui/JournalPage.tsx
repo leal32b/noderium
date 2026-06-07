@@ -2,7 +2,7 @@ import { createSignal, onMount, Show } from 'solid-js'
 import type { Component } from 'solid-js'
 
 import { EditorPane } from '@features/editor'
-import { BacklinksPanel, SearchPanel } from '@features/notes'
+import { BacklinksPanel } from '@features/notes'
 import { core, isTauri, useI18n } from '@shared'
 
 const todayIso = (): string => new Date().toISOString().slice(0, 10)
@@ -31,16 +31,17 @@ export const JournalPage: Component = () => {
   return (
     <div class="mx-auto flex max-w-3xl flex-col gap-6">
       <header>
-        <h1 class="text-2xl font-semibold tracking-tight">{t('journal.title')}</h1>
-        <p class="mt-0.5 text-sm text-text-tertiary first-letter:uppercase">
+        <h1 class="text-3xl font-semibold tracking-tight first-letter:uppercase">
           {formatDate(new Date(`${date}T00:00:00`), { dateStyle: 'full' })}
+        </h1>
+        <p class="mt-1 text-xs font-semibold uppercase tracking-wider text-text-tertiary">
+          {t('journal.title')}
         </p>
       </header>
       <Show when={noteId()}>
         {(id) => (
           <>
             <EditorPane noteId={id()} initialBlocks={0} loadPersisted autoPersist />
-            <SearchPanel />
             <BacklinksPanel noteId={id()} />
           </>
         )}

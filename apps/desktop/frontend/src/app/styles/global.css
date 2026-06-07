@@ -55,6 +55,34 @@ button:disabled {
   cursor: not-allowed;
 }
 
+/* Reset native input/select/textarea chrome; utilities re-add as needed. */
+input,
+select,
+textarea {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: transparent;
+  border-style: solid;
+  border-width: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  line-height: inherit;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-tertiary);
+  opacity: 1;
+}
+
+/* Remove the native search clear/decoration buttons. */
+input[type='search']::-webkit-search-cancel-button,
+input[type='search']::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
 /* Links inherit color and are undecorated by default; components opt in. */
 a {
   color: inherit;

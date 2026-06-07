@@ -79,8 +79,10 @@ const dict: typeof enUS = {
     system: 'Sistema',
   },
   command: {
-    placeholder: 'Digite um comando ou busque…',
-    empty: 'Nenhum comando encontrado.',
+    placeholder: 'Busque notas ou execute um comando…',
+    empty: 'Nenhum resultado.',
+    commandsLabel: 'Comandos',
+    notesLabel: 'Notas',
     group: {
       navigate: 'Navegar',
       actions: 'Ações',

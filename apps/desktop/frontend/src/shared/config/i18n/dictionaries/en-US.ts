@@ -79,8 +79,10 @@ export default {
     system: 'System',
   },
   command: {
-    placeholder: 'Type a command or search…',
-    empty: 'No commands found.',
+    placeholder: 'Search notes or run a command…',
+    empty: 'No results.',
+    commandsLabel: 'Commands',
+    notesLabel: 'Notes',
     group: {
       navigate: 'Navigate',
       actions: 'Actions',
