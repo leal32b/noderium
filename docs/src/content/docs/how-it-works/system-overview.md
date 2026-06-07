@@ -24,9 +24,29 @@ The editor flushes **deltas** to the core in batches — never a round-trip per
 keystroke. The core persists the CRDT (the source of truth) and rebuilds its derived
 SQLite indexes from it.
 
-:::note[Diagram]
-A C4-style system diagram is added in the design-and-diagrams phase.
-:::
+```mermaid
+flowchart TB
+  user([You])
+
+  subgraph desktop["Desktop app — Tauri 2 window (JS / WASM)"]
+    ui["SolidJS UI<br/>(Feature-Sliced Design)"]
+    editor["Editor<br/>ProseMirror + live Loro doc"]
+  end
+
+  subgraph core["Rust core (app-core)"]
+    loro[["Loro CRDT<br/>source of truth"]]
+    sqlite["SQLite derived indexes<br/>blocks · FTS5 · sqlite-vec · srs"]
+  end
+
+  md[".md import / export"]
+  sync["Sync server<br/>E2E, zero-knowledge (v2)"]
+
+  user --> ui --> editor
+  editor -- "batched deltas<br/>(Tauri commands)" --> loro
+  loro -- "rebuilds" --> sqlite
+  core -. "on demand" .-> md
+  core -. "encrypted ops (v2)" .-> sync
+```
 
 ## Why this shape
 

@@ -17,6 +17,71 @@ Each note is a Loro document built from three structures
 - **`Text`** (per block) — the block's text.
 - **`Map`** (per block/note) — typed properties, the note type, and SRS state.
 
+## Entity relationships
+
+`crdt_docs` / `crdt_oplog` hold the source of truth; everything else is derived from
+them.
+
+```mermaid
+erDiagram
+  notes ||--o{ blocks : "contains"
+  blocks ||--o{ blocks : "parent of"
+  notes ||--o{ properties : "owns"
+  blocks ||--o{ properties : "owns"
+  blocks ||--o{ links : "links from"
+  notes ||--o{ srs_cards : "carded as"
+  blocks ||--o{ srs_cards : "carded as"
+  notes ||--|| crdt_docs : "snapshot"
+  notes ||--o{ crdt_oplog : "ops"
+
+  notes {
+    text id PK
+    text type
+    text title
+    text journal_date
+    int  created_at
+    int  updated_at
+  }
+  blocks {
+    text id PK
+    text note_id FK
+    text parent_id
+    text order_key
+    text block_type
+    text text
+  }
+  properties {
+    text owner_id PK
+    text key PK
+    text value
+    text value_type
+  }
+  links {
+    text source_block_id
+    text target_note_id
+    text target_block_id
+    text link_type
+  }
+  srs_cards {
+    text id PK
+    text target_id
+    text card_type
+    int  due
+    text state
+  }
+  crdt_docs {
+    text note_id PK
+    blob snapshot
+    blob version
+  }
+  crdt_oplog {
+    int  seq PK
+    text note_id
+    blob update
+    int  ts
+  }
+```
+
 ## SQLite schema (derived indexes)
 
 Every table below **except `crdt_docs` / `crdt_oplog` is a rebuildable derived

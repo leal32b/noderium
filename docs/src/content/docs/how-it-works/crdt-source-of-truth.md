@@ -21,19 +21,20 @@ the rule holds.
 When the editor flushes, the snapshot becomes the truth and everything else is derived
 from it:
 
-```
-JS editor (live Loro doc, loro-prosemirror)
-  └─ exportSnapshot() ─► Tauri invoke "save_editor_snapshot"
-        └─ app-core::import_editor_snapshot
-             ├─ store.save_snapshot   (crdt_docs = source of truth)
-             ├─ crdt::blocks_from_prosemirror_snapshot   (cross-language read)
-             ├─ store.upsert_block …  (blocks + FTS index)
-             └─ reindex_links         (links/backlinks from [[wikilinks]])
+```mermaid
+flowchart TB
+  ed["JS editor<br/>live Loro doc (loro-prosemirror)"]
+  ed -->|"exportSnapshot()"| inv["Tauri invoke<br/>save_editor_snapshot"]
+  inv --> imp["app-core::import_editor_snapshot"]
+
+  imp --> save[["store.save_snapshot<br/>crdt_docs = source of truth"]]
+  imp --> read["crdt::blocks_from_prosemirror_snapshot<br/>(cross-language read)"]
+  read --> upsert["store.upsert_block …<br/>blocks + FTS index"]
+  imp --> links["reindex_links<br/>links / backlinks from [[wikilinks]]"]
 ```
 
-:::note[Diagram]
-A data-flow diagram is added in the design-and-diagrams phase.
-:::
+Everything below `save_snapshot` is a **derived index** — wipe it and it rebuilds from
+the snapshot, byte-identical.
 
 ## Why a CRDT (not files, not git)
 

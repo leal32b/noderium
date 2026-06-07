@@ -12,8 +12,10 @@ covers the visual layer.
 
 Imports flow **down only**, and only through a slice's public API (`index.ts`):
 
-```
-app  →  pages  →  widgets  →  features  →  entities  →  shared
+```mermaid
+flowchart TB
+  app --> pages --> widgets --> features --> entities --> shared
+  app -. "may import any layer below" .-> shared
 ```
 
 - `app → {pages, widgets, features, entities, shared}`
