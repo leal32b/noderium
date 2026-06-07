@@ -26,6 +26,17 @@ pub struct BacklinkDto {
     pub text: String,
 }
 
+#[derive(Serialize)]
+pub struct NoteDto {
+    pub id: String,
+    #[serde(rename = "type")]
+    pub note_type: String,
+    pub title: Option<String>,
+    pub journal_date: Option<String>,
+    pub created_at: i64,
+    pub updated_at: i64,
+}
+
 fn to_message<E: std::fmt::Display>(error: E) -> String {
     error.to_string()
 }
@@ -86,6 +97,23 @@ pub fn note_blocks(
 #[tauri::command]
 pub fn search(ws: State<'_, SharedWorkspace>, query: String) -> Result<Vec<String>, String> {
     lock(&ws)?.search(&query).map_err(to_message)
+}
+
+/// List all notes, most-recently-updated first.
+#[tauri::command]
+pub fn list_notes(ws: State<'_, SharedWorkspace>) -> Result<Vec<NoteDto>, String> {
+    let notes = lock(&ws)?.list_notes().map_err(to_message)?;
+    Ok(notes
+        .into_iter()
+        .map(|n| NoteDto {
+            id: n.id,
+            note_type: n.note_type,
+            title: n.title,
+            journal_date: n.journal_date,
+            created_at: n.created_at,
+            updated_at: n.updated_at,
+        })
+        .collect())
 }
 
 /// Open (or create) the journal note for an ISO date (FR-1).

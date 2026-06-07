@@ -33,6 +33,7 @@ fn main() {
             commands::open_journal,
             commands::backlinks,
             commands::import_markdown,
+            commands::list_notes,
         ])
         .run(tauri::generate_context!())
         .expect("error while running Noderium");
