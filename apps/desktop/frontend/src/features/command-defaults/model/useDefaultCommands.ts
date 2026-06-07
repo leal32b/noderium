@@ -8,6 +8,7 @@ const DEFAULT_IDS = [
   'nav.home',
   'nav.journal',
   'nav.notes',
+  'nav.review',
   'nav.editor',
   'nav.settings',
   'actions.toggleTheme',
@@ -39,6 +40,12 @@ export function useDefaultCommands(): void {
         title: t('command.navigate.notes'),
         group: 'navigate',
         execute: () => navigate('/notes'),
+      },
+      {
+        id: 'nav.review',
+        title: t('command.navigate.review'),
+        group: 'navigate',
+        execute: () => navigate('/review'),
       },
       {
         id: 'nav.editor',

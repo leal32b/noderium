@@ -1,5 +1,5 @@
 import { A } from '@solidjs/router'
-import { BookText, FileText, Home, PenLine, Settings } from 'lucide-solid'
+import { BookText, FileText, GraduationCap, Home, PenLine, Settings } from 'lucide-solid'
 import { For } from 'solid-js'
 import type { Component } from 'solid-js'
 
@@ -21,6 +21,7 @@ const NAV_ITEMS: readonly NavItem[] = [
   { href: '/', labelKey: 'navigation.home', icon: Home },
   { href: '/journal', labelKey: 'navigation.journal', icon: BookText },
   { href: '/notes', labelKey: 'navigation.notes', icon: FileText },
+  { href: '/review', labelKey: 'navigation.review', icon: GraduationCap },
   { href: '/editor', labelKey: 'navigation.editor', icon: PenLine },
   { href: '/settings', labelKey: 'navigation.settings', icon: Settings },
 ]

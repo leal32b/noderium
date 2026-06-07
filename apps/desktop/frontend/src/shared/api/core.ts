@@ -24,6 +24,25 @@ export interface NoteDto {
   updated_at: number
 }
 
+/** A search hit (block text + owning note) from `search_detailed`. */
+export interface SearchHitDto {
+  block_id: string
+  note_id: string
+  text: string
+}
+
+/** An SRS card from `due_cards`. */
+export interface SrsCardDto {
+  id: string
+  target_id: string
+  card_type: string
+  due: number
+  state: string
+  reps: number
+}
+
+export type Rating = 'again' | 'hard' | 'good' | 'easy'
+
 /**
  * Typed client for the noderium-app-core Tauri commands. Argument keys are
  * camelCase: Tauri converts Rust's snake_case command params to camelCase on the
@@ -59,4 +78,14 @@ export const core = {
     invoke('import_markdown', { noteId, markdown }),
 
   listNotes: (): Promise<NoteDto[]> => invoke('list_notes'),
+
+  searchDetailed: (query: string): Promise<SearchHitDto[]> => invoke('search_detailed', { query }),
+
+  createCard: (cardId: string, targetId: string, cardType: string): Promise<void> =>
+    invoke('create_card', { cardId, targetId, cardType }),
+
+  dueCards: (): Promise<SrsCardDto[]> => invoke('due_cards'),
+
+  reviewCard: (cardId: string, rating: Rating): Promise<void> =>
+    invoke('review_card', { cardId, rating }),
 }
