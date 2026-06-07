@@ -1,9 +1,11 @@
 # Working agreement for Noderium
 
 Read this first, every session. It is the contract for how we build here.
-For *what* the system is, see [ARCHITECTURE.md](ARCHITECTURE.md) (vision + 15 ADRs),
-[docs/implementation/status.md](docs/implementation/status.md) (what exists today),
-and [BLUEPRINT.md](BLUEPRINT.md) (frontend template).
+For *what* the system is, see the [`docs/`](docs/) Starlight site (run `just docs`):
+the [architecture overview](docs/src/content/docs/architecture/overview.md) + the
+[15 ADRs](docs/src/content/docs/architecture/decisions.md), the living
+[status](docs/src/content/docs/roadmap/status.md) (what exists today), and the
+[frontend (FSD)](docs/src/content/docs/architecture/frontend-fsd.md) reference.
 
 Noderium is a local-first PKM: **Rust** core (cargo workspace) + **SolidJS + Tauri 2**
 frontend (Feature-Sliced Design). Source of truth is a **Loro CRDT** in **SQLite**.

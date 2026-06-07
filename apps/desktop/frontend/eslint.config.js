@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint'
 
 // FSD layers, top to bottom. Each may only import from layers below it
 // (and itself), and only through a slice's public API (index.ts). Enforced
-// by eslint-plugin-boundaries (ADR-012 / BLUEPRINT.md §2).
+// by eslint-plugin-boundaries (ADR-012; see docs/ Frontend (FSD)).
 const FSD_LAYERS = ['app', 'pages', 'widgets', 'features', 'entities', 'shared']
 
 const allowedImports = {

@@ -10,9 +10,14 @@ Multi-device E2E sync is a future paid service. Built on **Tauri 2 + SolidJS + R
 
 ## Documentation
 
-- **[ARCHITECTURE.md](ARCHITECTURE.md)** — vision, 15 ADRs, data model, sync, roadmap.
-- **[BLUEPRINT.md](BLUEPRINT.md)** — frontend (FSD) template reference (ADR-012).
-- **[docs/implementation/](docs/implementation/)** — step-by-step implementation notes.
+Full documentation lives in the [`docs/`](docs/) Astro Starlight site — run
+`just docs` to browse it locally. Highlights:
+
+- **[Architecture overview](docs/src/content/docs/architecture/overview.md)** — repo layout, crates, data model.
+- **[Decision records](docs/src/content/docs/architecture/decisions.md)** — the 15 ADRs, one page each.
+- **[How it works](docs/src/content/docs/how-it-works/system-overview.md)** — the system, explained.
+- **[Frontend (FSD)](docs/src/content/docs/architecture/frontend-fsd.md)** — the SolidJS template reference.
+- **[Roadmap / Status](docs/src/content/docs/roadmap/status.md)** — what's built and what's next.
 
 ## Repository layout
 
@@ -43,8 +48,8 @@ just lint       # cargo clippy
 v0 walking skeleton complete, plus a working capture → persist → search → link →
 retain slice (journal, block editor, CRDT↔SQLite, FSRS, backlinks, FTS, `.md`
 import/export) behind a Tauri desktop app. See
-**[docs/implementation/status.md](docs/implementation/status.md)** for details and
-ARCHITECTURE.md §11 for the roadmap.
+**[Status](docs/src/content/docs/roadmap/status.md)** for details and
+**[Roadmap](docs/src/content/docs/roadmap/whats-next.md)** for what's next.
 
 ## License
 

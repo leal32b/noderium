@@ -4,9 +4,9 @@
 > per-keystroke budget with large margin. ADR-004's editor risk is de-risked;
 > proceed to integrate the editor into the app.
 
-This is the #1 technical risk in the project (ADR-004 / ARCHITECTURE.md §12): if the
-ProseMirror + Loro binding could not type at 60fps (< 16.67 ms/frame), the editor
-engine choice would need to be reassessed.
+This is the #1 technical risk in the project ([ADR-004](../../docs/src/content/docs/architecture/adr/adr-004-desktop-tauri-solidjs-editor.md)):
+if the ProseMirror + Loro binding could not type at 60fps (< 16.67 ms/frame), the
+editor engine choice would need to be reassessed.
 
 ## Findings
 
