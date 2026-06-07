@@ -6,6 +6,7 @@ const dict: typeof enUS = {
     cancel: 'Cancelar',
   },
   navigation: {
+    section: 'Espaço',
     home: 'Início',
     journal: 'Diário',
     notes: 'Notas',
@@ -19,11 +20,20 @@ const dict: typeof enUS = {
       subtitle: 'Capturar → destilar → reter. Seu segundo cérebro, local-first.',
     },
   },
+  home: {
+    open: 'Abrir',
+    journalDesc: 'Capture o dia com notas diárias sem fricção.',
+    notesDesc: 'Destile ideias em notas atômicas e conectadas.',
+    reviewDesc: 'Retenha o que importa com repetição espaçada.',
+  },
   editor: {
     title: 'Editor de blocos (Spike #1)',
     subtitle: 'ProseMirror + Loro CRDT. Digite à vontade — o medidor mostra a latência por tecla.',
-    saving: 'Salvando…',
-    saved: 'Salvo ✓',
+    saving: 'Salvando',
+    saved: 'Salvo',
+    saveError: 'Falha ao salvar',
+    persist: 'Persistir no core',
+    export: 'Exportar',
   },
   journal: {
     title: 'Diário',
@@ -36,9 +46,11 @@ const dict: typeof enUS = {
   },
   review: {
     title: 'Revisão',
+    subtitle: 'Cartões para hoje, agendados pelo FSRS.',
     empty: 'Nada para revisar. 🎉',
     add: 'Adicionar à revisão',
     added: 'Adicionado ✓',
+    addError: 'Não foi possível adicionar',
     again: 'De novo',
     hard: 'Difícil',
     good: 'Bom',
@@ -59,6 +71,7 @@ const dict: typeof enUS = {
     theme: 'Tema',
     language: 'Idioma',
     openCommandPalette: 'Abrir paleta de comandos',
+    search: 'Buscar…',
   },
   theme: {
     light: 'Claro',

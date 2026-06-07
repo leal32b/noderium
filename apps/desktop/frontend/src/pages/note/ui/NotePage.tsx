@@ -1,4 +1,5 @@
 import { A, useParams } from '@solidjs/router'
+import { ArrowLeft, GraduationCap } from 'lucide-solid'
 import { createSignal, Show } from 'solid-js'
 import type { Component } from 'solid-js'
 
@@ -16,26 +17,31 @@ export const NotePage: Component = () => {
     try {
       await core.createCard(`card-${id}`, id, 'note')
       setCardStatus(t('review.added'))
-    } catch (error) {
-      setCardStatus(`error: ${String(error)}`)
+    } catch {
+      setCardStatus(t('review.addError'))
     }
   }
 
   return (
-    <div class="mx-auto flex max-w-3xl flex-col gap-4">
-      <div class="flex items-center justify-between">
-        <A href="/notes" class="focus-ring text-sm text-action-primary-default hover:underline">
-          ← {t('notes.title')}
+    <div class="mx-auto flex max-w-3xl flex-col gap-6">
+      <header class="flex items-center justify-between">
+        <A
+          href="/notes"
+          class="row-interactive -ml-2 inline-flex items-center gap-1.5 px-2 py-1 text-sm text-text-secondary"
+        >
+          <ArrowLeft size={15} />
+          {t('notes.title')}
         </A>
         <Show when={isTauri()}>
           <div class="flex items-center gap-2">
             <span class="text-xs text-text-tertiary">{cardStatus()}</span>
-            <Button size="sm" variant="ghost" onClick={() => addToReview(params.id)}>
+            <Button size="sm" variant="secondary" onClick={() => addToReview(params.id)}>
+              <GraduationCap size={15} />
               {t('review.add')}
             </Button>
           </div>
         </Show>
-      </div>
+      </header>
       {/* `keyed` re-mounts the editor when navigating between notes. */}
       <Show when={params.id} keyed>
         {(id) => (

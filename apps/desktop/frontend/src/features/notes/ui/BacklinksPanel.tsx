@@ -1,5 +1,6 @@
-import { createEffect, For, Show } from 'solid-js'
-import { createSignal } from 'solid-js'
+import { A } from '@solidjs/router'
+import { Link2 } from 'lucide-solid'
+import { createEffect, createSignal, For, Show } from 'solid-js'
 import type { Component } from 'solid-js'
 
 import { core, isTauri, useI18n } from '@shared'
@@ -21,19 +22,29 @@ export const BacklinksPanel: Component<BacklinksPanelProps> = (props) => {
   })
 
   return (
-    <section class="flex flex-col gap-2 rounded-lg border border-border-default p-3">
-      <h2 class="text-sm font-semibold">{t('backlinks.title')}</h2>
+    <section class="card flex flex-col gap-3 p-4">
+      <div class="flex items-center gap-2 text-text-tertiary">
+        <Link2 size={14} />
+        <h2 class="text-xs font-semibold uppercase tracking-wider">{t('backlinks.title')}</h2>
+      </div>
       <Show
         when={links().length > 0}
-        fallback={<p class="text-xs text-text-tertiary">{t('backlinks.empty')}</p>}
+        fallback={<p class="text-sm text-text-tertiary">{t('backlinks.empty')}</p>}
       >
-        <For each={links()}>
-          {(link) => (
-            <div class="text-xs text-text-secondary">
-              <span class="text-text-tertiary">{link.source_note_id}</span> — {link.text}
-            </div>
-          )}
-        </For>
+        <ul class="flex flex-col gap-0.5">
+          <For each={links()}>
+            {(link) => (
+              <li>
+                <A
+                  href={`/note/${link.source_note_id}`}
+                  class="row-interactive block truncate px-2.5 py-1.5 text-sm text-text-secondary"
+                >
+                  {link.text}
+                </A>
+              </li>
+            )}
+          </For>
+        </ul>
       </Show>
     </section>
   )

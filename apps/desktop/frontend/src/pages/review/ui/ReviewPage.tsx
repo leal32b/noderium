@@ -1,3 +1,4 @@
+import { GraduationCap } from 'lucide-solid'
 import { createResource, For, Show } from 'solid-js'
 import type { Component } from 'solid-js'
 
@@ -22,17 +23,28 @@ export const ReviewPage: Component = () => {
   }
 
   return (
-    <div class="mx-auto flex max-w-2xl flex-col gap-4">
-      <h1 class="text-xl font-semibold">{t('review.title')}</h1>
+    <div class="mx-auto flex max-w-2xl flex-col gap-6">
+      <header>
+        <h1 class="text-2xl font-semibold tracking-tight">{t('review.title')}</h1>
+        <p class="mt-0.5 text-sm text-text-tertiary">{t('review.subtitle')}</p>
+      </header>
+
       <Show
         when={cards() && cards()!.length > 0}
-        fallback={<p class="text-sm text-text-tertiary">{t('review.empty')}</p>}
+        fallback={
+          <div class="card flex flex-col items-center gap-2 p-12 text-center">
+            <span class="flex h-11 w-11 items-center justify-center rounded-full bg-surface-sunken text-text-tertiary">
+              <GraduationCap size={20} />
+            </span>
+            <p class="text-sm text-text-tertiary">{t('review.empty')}</p>
+          </div>
+        }
       >
         <For each={cards()}>
           {(card) => (
-            <div class="flex flex-col gap-3 rounded-lg border border-border-default p-4">
-              <div class="font-medium">{titleFor(card.target_id)}</div>
-              <div class="flex gap-2">
+            <div class="card flex flex-col gap-4 p-5">
+              <div class="text-[15px] font-medium">{titleFor(card.target_id)}</div>
+              <div class="grid grid-cols-4 gap-2">
                 <For each={RATINGS}>
                   {(rating) => (
                     <Button size="sm" variant="secondary" onClick={() => grade(card.id, rating)}>

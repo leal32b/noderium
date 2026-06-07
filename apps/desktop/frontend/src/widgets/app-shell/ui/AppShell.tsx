@@ -21,7 +21,7 @@ export const AppShell: ParentComponent = (props) => {
       <Topbar onToggleSidebar={shell.toggleSidebar} />
       <div class="flex min-h-0 flex-1">
         <Sidebar open={shell.sidebarOpen()} onClose={() => shell.setSidebarOpen(false)} />
-        <main id="main" class="min-w-0 flex-1 overflow-y-auto p-6">
+        <main id="main" class="min-w-0 flex-1 overflow-y-auto px-6 py-8 md:px-10">
           {props.children}
         </main>
       </div>

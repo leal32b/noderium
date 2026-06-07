@@ -1,4 +1,5 @@
 import { A, useNavigate } from '@solidjs/router'
+import { ChevronRight, FileText, Plus } from 'lucide-solid'
 import { createResource, For, Show } from 'solid-js'
 import type { Component } from 'solid-js'
 
@@ -17,29 +18,47 @@ export const NotesPage: Component = () => {
   }
 
   return (
-    <div class="mx-auto flex max-w-3xl flex-col gap-4">
-      <div class="flex items-center justify-between">
-        <h1 class="text-xl font-semibold">{t('notes.title')}</h1>
+    <div class="mx-auto flex max-w-3xl flex-col gap-6">
+      <header class="flex items-center justify-between">
+        <h1 class="text-2xl font-semibold tracking-tight">{t('notes.title')}</h1>
         <Show when={isTauri()}>
-          <Button size="sm" onClick={newNote}>
+          <Button size="md" onClick={newNote}>
+            <Plus size={16} />
             {t('notes.new')}
           </Button>
         </Show>
-      </div>
+      </header>
+
       <Show
         when={notes() && notes()!.length > 0}
-        fallback={<p class="text-sm text-text-tertiary">{t('notes.empty')}</p>}
+        fallback={
+          <div class="card flex flex-col items-center gap-2 p-12 text-center">
+            <span class="flex h-11 w-11 items-center justify-center rounded-full bg-surface-sunken text-text-tertiary">
+              <FileText size={20} />
+            </span>
+            <p class="text-sm text-text-tertiary">{t('notes.empty')}</p>
+          </div>
+        }
       >
-        <ul class="flex flex-col gap-1">
+        <ul class="card divide-y divide-border-subtle overflow-hidden p-0">
           <For each={notes()}>
             {(note) => (
               <li>
                 <A
                   href={`/note/${note.id}`}
-                  class="focus-ring flex items-center justify-between rounded px-3 py-2 hover:bg-surface-sunken"
+                  class="focus-ring group flex items-center gap-3 px-4 py-3 transition-colors hover:bg-surface-hover"
                 >
-                  <span>{note.title || t('notes.untitled')}</span>
-                  <span class="text-xs text-text-tertiary">{note.type}</span>
+                  <FileText size={16} class="shrink-0 text-text-tertiary" />
+                  <span class="min-w-0 flex-1 truncate text-sm font-medium text-text-primary">
+                    {note.title || t('notes.untitled')}
+                  </span>
+                  <span class="rounded-full bg-surface-sunken px-2 py-0.5 text-[11px] text-text-tertiary">
+                    {note.type}
+                  </span>
+                  <ChevronRight
+                    size={16}
+                    class="shrink-0 text-text-tertiary transition-transform group-hover:translate-x-0.5"
+                  />
                 </A>
               </li>
             )}

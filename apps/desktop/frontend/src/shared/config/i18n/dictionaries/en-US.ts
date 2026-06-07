@@ -6,6 +6,7 @@ export default {
     cancel: 'Cancel',
   },
   navigation: {
+    section: 'Workspace',
     home: 'Home',
     journal: 'Journal',
     notes: 'Notes',
@@ -19,11 +20,20 @@ export default {
       subtitle: 'Capture → distill → retain. Your second brain, local-first.',
     },
   },
+  home: {
+    open: 'Open',
+    journalDesc: 'Capture the day with low-friction daily notes.',
+    notesDesc: 'Distill ideas into atomic, linked notes.',
+    reviewDesc: 'Retain what matters with spaced repetition.',
+  },
   editor: {
     title: 'Block editor (Spike #1)',
     subtitle: 'ProseMirror + Loro CRDT. Type anywhere — the meter shows keystroke latency.',
-    saving: 'Saving…',
-    saved: 'Saved ✓',
+    saving: 'Saving',
+    saved: 'Saved',
+    saveError: 'Save failed',
+    persist: 'Persist to core',
+    export: 'Export',
   },
   journal: {
     title: 'Journal',
@@ -36,9 +46,11 @@ export default {
   },
   review: {
     title: 'Review',
+    subtitle: 'Cards due now, scheduled by FSRS.',
     empty: 'Nothing due. 🎉',
     add: 'Add to review',
     added: 'Added ✓',
+    addError: 'Could not add',
     again: 'Again',
     hard: 'Hard',
     good: 'Good',
@@ -59,6 +71,7 @@ export default {
     theme: 'Theme',
     language: 'Language',
     openCommandPalette: 'Open command palette',
+    search: 'Search…',
   },
   theme: {
     light: 'Light',
