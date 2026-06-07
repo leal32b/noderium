@@ -194,16 +194,7 @@ impl Store {
             "SELECT id, note_id, parent_id, order_key, block_type, text
              FROM blocks WHERE note_id = ?1 ORDER BY order_key",
         )?;
-        let rows = stmt.query_map(params![note_id], |row| {
-            Ok(Block {
-                id: row.get(0)?,
-                note_id: row.get(1)?,
-                parent_id: row.get(2)?,
-                order_key: row.get(3)?,
-                block_type: row.get(4)?,
-                text: row.get(5)?,
-            })
-        })?;
+        let rows = stmt.query_map(params![note_id], row_to_block)?;
         rows.collect::<rusqlite::Result<Vec<_>>>()
             .map_err(StoreError::from)
     }
@@ -224,6 +215,19 @@ impl Store {
              ORDER BY rank",
         )?;
         let rows = stmt.query_map(params![query], |row| row.get::<_, String>(0))?;
+        rows.collect::<rusqlite::Result<Vec<_>>>()
+            .map_err(StoreError::from)
+    }
+
+    /// Like [`Self::search_blocks`] but returns the full block rows (for snippets).
+    pub fn search_blocks_detailed(&self, query: &str) -> Result<Vec<Block>> {
+        let mut stmt = self.conn.prepare(
+            "SELECT b.id, b.note_id, b.parent_id, b.order_key, b.block_type, b.text
+             FROM blocks_fts f JOIN blocks b ON b.rowid = f.rowid
+             WHERE blocks_fts MATCH ?1
+             ORDER BY rank",
+        )?;
+        let rows = stmt.query_map(params![query], row_to_block)?;
         rows.collect::<rusqlite::Result<Vec<_>>>()
             .map_err(StoreError::from)
     }
@@ -364,6 +368,17 @@ impl Store {
             )
             .optional()?)
     }
+}
+
+fn row_to_block(row: &rusqlite::Row<'_>) -> rusqlite::Result<Block> {
+    Ok(Block {
+        id: row.get(0)?,
+        note_id: row.get(1)?,
+        parent_id: row.get(2)?,
+        order_key: row.get(3)?,
+        block_type: row.get(4)?,
+        text: row.get(5)?,
+    })
 }
 
 fn row_to_note(row: &rusqlite::Row<'_>) -> rusqlite::Result<Note> {
