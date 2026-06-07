@@ -1,6 +1,6 @@
 import { A } from '@solidjs/router'
 import { BookText, FileText, GraduationCap, Home, PenLine, Settings } from 'lucide-solid'
-import { For, Show } from 'solid-js'
+import { For } from 'solid-js'
 import type { Component } from 'solid-js'
 
 import { cx, useI18n } from '@shared'
@@ -31,45 +31,38 @@ export const Sidebar: Component<SidebarProps> = (props) => {
   return (
     <nav
       class={cx(
-        'flex shrink-0 flex-col gap-1 border-r border-border-subtle bg-surface-raised py-3 transition-[width] duration-200',
-        props.collapsed ? 'w-16 items-center px-2' : 'w-60 px-3',
+        'flex shrink-0 flex-col gap-0.5 border-r border-border-subtle bg-surface-background px-3 py-3 transition-[width] duration-200 ease-out',
+        props.collapsed ? 'w-16' : 'w-60',
       )}
     >
-      <Show when={!props.collapsed}>
-        <p class="px-3 pb-1 pt-1 text-[11px] font-semibold uppercase tracking-wider text-text-tertiary">
-          {t('navigation.section')}
-        </p>
-      </Show>
-
-      <ul class="flex w-full flex-col gap-0.5">
+      <ul class="flex flex-col gap-0.5">
         <For each={NAV_ITEMS}>
           {(item) => (
-            <li class={cx('flex', props.collapsed && 'justify-center')}>
-              <Show
-                when={props.collapsed}
-                fallback={
-                  <A
-                    href={item.href}
-                    end={item.href === '/'}
-                    class="focus-ring flex w-full items-center gap-2.5 rounded-md px-3 py-2 text-sm font-medium text-text-secondary transition-colors duration-150 hover:(bg-surface-hover text-text-primary)"
-                    activeClass="nav-active"
-                  >
-                    <item.icon size={17} />
-                    {t(item.labelKey)}
-                  </A>
-                }
+            <li>
+              <A
+                href={item.href}
+                end={item.href === '/'}
+                aria-label={t(item.labelKey)}
+                data-tip={props.collapsed ? t(item.labelKey) : undefined}
+                class={cx(
+                  'focus-ring relative flex w-full items-center rounded-md py-2 text-sm font-medium text-text-secondary transition-colors duration-150 hover:(bg-surface-hover text-text-primary)',
+                  props.collapsed && 'sidebar-tip',
+                )}
+                activeClass="nav-active"
               >
-                <A
-                  href={item.href}
-                  end={item.href === '/'}
-                  aria-label={t(item.labelKey)}
-                  data-tip={t(item.labelKey)}
-                  class="sidebar-tip focus-ring relative flex h-10 w-10 items-center justify-center rounded-md text-text-secondary transition-colors duration-150 hover:(bg-surface-hover text-text-primary)"
-                  activeClass="nav-active"
-                >
+                {/* Fixed-width icon slot keeps icons static while the bar resizes. */}
+                <span class="flex w-10 shrink-0 items-center justify-center">
                   <item.icon size={19} />
-                </A>
-              </Show>
+                </span>
+                <span
+                  class={cx(
+                    'overflow-hidden whitespace-nowrap transition-all duration-200 ease-out',
+                    props.collapsed ? 'max-w-0 opacity-0' : 'max-w-[10rem] opacity-100',
+                  )}
+                >
+                  {t(item.labelKey)}
+                </span>
+              </A>
             </li>
           )}
         </For>

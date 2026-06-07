@@ -22,7 +22,7 @@ export const Topbar: Component<TopbarProps> = (props) => {
   const palette = useCommandPalette()
 
   return (
-    <header class="grid h-14 shrink-0 grid-cols-[auto_1fr_auto] items-center gap-3 border-b border-border-subtle bg-surface-raised px-3">
+    <header class="grid h-14 shrink-0 grid-cols-[auto_1fr_auto] items-center gap-3 border-b border-border-subtle bg-surface-background px-3">
       <div class="flex items-center gap-2">
         <button
           type="button"
@@ -33,9 +33,6 @@ export const Topbar: Component<TopbarProps> = (props) => {
           <PanelLeft size={18} />
         </button>
         <div class="flex select-none items-center gap-2">
-          <span class="flex h-6 w-6 items-center justify-center rounded-md bg-accent text-[13px] font-bold text-accent-text">
-            N
-          </span>
           <span class="hidden text-[15px] font-semibold tracking-tight sm:inline">Noderium</span>
         </div>
       </div>
@@ -45,7 +42,7 @@ export const Topbar: Component<TopbarProps> = (props) => {
           type="button"
           onClick={() => palette.open()}
           aria-label={t('topbar.openCommandPalette')}
-          class="focus-ring flex h-9 w-full max-w-md items-center gap-2 rounded-md border border-border-default bg-surface-background px-3 text-sm text-text-tertiary transition-colors hover:border-border-strong"
+          class="focus-ring flex h-9 w-full max-w-md items-center gap-2 rounded-md border border-border-default bg-surface-raised px-3 text-sm text-text-tertiary transition-colors hover:border-border-strong"
         >
           <Search size={15} />
           <span>{t('topbar.search')}</span>
@@ -54,7 +51,7 @@ export const Topbar: Component<TopbarProps> = (props) => {
 
       <div class="flex items-center justify-end gap-2">
         <div
-          class="inline-flex items-center rounded-md border border-border-default bg-surface-background p-0.5"
+          class="inline-flex items-center rounded-md border border-border-default bg-surface-sunken p-0.5"
           role="group"
           aria-label={t('topbar.theme')}
         >
@@ -86,7 +83,7 @@ export const Topbar: Component<TopbarProps> = (props) => {
           />
           <select
             aria-label={t('topbar.language')}
-            class="focus-ring h-9 appearance-none rounded-md border border-border-default bg-surface-background pl-8 pr-7 text-sm text-text-primary transition-colors hover:border-border-strong"
+            class="focus-ring h-9 appearance-none rounded-md border border-border-default bg-surface-raised pl-8 pr-7 text-sm text-text-primary transition-colors hover:border-border-strong"
             value={locale()}
             onChange={(e) => setLocale(e.currentTarget.value as Locale)}
           >
