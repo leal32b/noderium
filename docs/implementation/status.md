@@ -22,8 +22,9 @@
 | On-disk persistence (app-data SQLite) | — | `apps/desktop/src-tauri` | ✅ |
 | Lexical search (FTS5/BM25) | FR-7 (lexical) | `store`, `app-core` | ✅ |
 | Journal: date-keyed daily note | FR-1 | `app-core`, `/journal` | ✅ |
+| Notes list + per-note pages + autosave | FR-2/FR-4 | `/notes`, `/note/:id` | ✅ |
 | Atomic notes + `[[wikilinks]]` → backlinks | FR-4 | `core`, `store`, `app-core` | ✅ |
-| Spaced repetition (FSRS scheduler + queue) | FR-6 | `crates/srs`, `store`, `app-core` | ✅ |
+| Spaced repetition (FSRS) + review UI | FR-6 | `crates/srs`, `/review` | ✅ |
 | Deterministic `.md` export | FR-9 | `crates/core`, `app-core` | ✅ |
 | Markdown / Obsidian import | FR-10/ADR-015 | `crates/core`, `app-core` | ✅ |
 | Command palette, themes, i18n (en-US/pt-BR) | FR-12 | frontend | ✅ |
@@ -32,7 +33,7 @@
 
 - **Hybrid semantic search** (`ai` crate: local embeddings + sqlite-vec + RRF) — FR-7 semantic. `crates/ai`, `crates/search` are stubs.
 - **Typed properties** (FR-5), block move/indent ops, history/checkpoints UI (FR-8).
-- **SRS review UI**, GUI vault import, loading persisted notes back into the editor.
+- **GUI vault import** (Tauri dialog + Obsidian walker), markdown source mode (FR-3).
 - **E2E sync** (FR-11, v2): `crates/sync-client`, `server/sync-server` are stubs.
 
 ---
@@ -77,8 +78,10 @@ JS editor (live Loro doc, loro-prosemirror)
 
 ## Tauri commands (Rust ↔ JS, ADR-005)
 
-`create_note` · `add_block` · `note_blocks` · `search` · `save_editor_snapshot` ·
-`export_note_markdown` · `open_journal` · `backlinks` · `import_markdown`
+`create_note` · `add_block` · `note_blocks` · `search` · `search_detailed` ·
+`save_editor_snapshot` · `load_editor_snapshot` · `export_note_markdown` ·
+`open_journal` · `backlinks` · `import_markdown` · `list_notes` ·
+`create_card` · `due_cards` · `review_card`
 
 Frontend client: `apps/desktop/frontend/src/shared/api/core.ts` (camelCase arg keys —
 Tauri converts to Rust snake_case).
@@ -125,8 +128,7 @@ cargo fmt --all -- --check
 ## Known limitations
 
 - The desktop app opens an **in-app-data SQLite** file; there is no migration UX yet.
-- The **journal** editor re-hydrates from its stored snapshot on open (round-trips);
-  the `/editor` spike page still seeds 100 demo blocks and does not load.
-- Search returns block **ids**; surfacing snippets is a follow-up.
+- The journal/notes editors **autosave** (debounced) and re-hydrate from their stored
+  snapshot on open; the `/editor` spike page still seeds 100 demo blocks (manual save).
 - Frontmatter parsing is a minimal `key: value` reader, not full YAML.
-- SRS has no review UI yet (scheduler + queue exist and are tested).
+- Note titles are auto-derived from the first block (journal keeps its date title).
