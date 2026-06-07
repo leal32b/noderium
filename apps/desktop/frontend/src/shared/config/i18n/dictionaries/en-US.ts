@@ -20,6 +20,8 @@ export default {
   editor: {
     title: 'Block editor (Spike #1)',
     subtitle: 'ProseMirror + Loro CRDT. Type anywhere — the meter shows keystroke latency.',
+    saving: 'Saving…',
+    saved: 'Saved ✓',
   },
   journal: {
     title: 'Journal',

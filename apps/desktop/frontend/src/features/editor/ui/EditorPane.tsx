@@ -1,7 +1,7 @@
 import { exportSnapshot } from '@noderium/editor/binding'
 import { useLoroEditor } from '@noderium/editor/hook'
 import type { UseLoroEditorOptions } from '@noderium/editor/hook'
-import { createSignal, Show } from 'solid-js'
+import { createSignal, onCleanup, Show } from 'solid-js'
 import type { Component } from 'solid-js'
 
 import { Button, core, cx, isTauri, useI18n } from '@shared'
@@ -14,42 +14,74 @@ export interface EditorPaneProps {
   noteId?: string
   /** Re-hydrate the editor from the note's stored snapshot on open (Tauri only). */
   loadPersisted?: boolean
+  /** Autosave to the core ~600ms after typing stops (the note must already exist). */
+  autoPersist?: boolean
 }
 
 // Stable note id for the spike's persistence demo.
 const SPIKE_NOTE_ID = 'spike-note'
+const AUTOSAVE_DELAY_MS = 600
 
 export const EditorPane: Component<EditorPaneProps> = (props) => {
   let mountEl!: HTMLDivElement
+  let saveTimer: ReturnType<typeof setTimeout> | undefined
   const { t } = useI18n()
   const noteId = () => props.noteId ?? SPIKE_NOTE_ID
-  const editorOptions: UseLoroEditorOptions = { initialBlocks: props.initialBlocks ?? 100 }
-  if (props.loadPersisted && isTauri()) {
-    editorOptions.loadSnapshot = () => core.loadEditorSnapshot(noteId())
-  }
-  const { lastLatency, peakLatency, editor } = useLoroEditor(() => mountEl, editorOptions)
   const [status, setStatus] = createSignal('')
   const [markdown, setMarkdown] = createSignal('')
 
-  const overBudget = () => lastLatency() > 16
+  const autosaveEnabled = () => Boolean(props.autoPersist) && isTauri()
 
-  // Flush the live JS Loro doc to the Rust core (ADR-005). Only meaningful when
-  // running inside Tauri; in the browser there is no core to talk to.
-  const persist = async () => {
+  const saveNow = async () => {
     const instance = editor()
     if (!instance) return
     try {
-      setStatus('saving…')
-      await core.createNote(noteId(), 'journal')
+      setStatus(t('editor.saving'))
       await core.saveEditorSnapshot(noteId(), exportSnapshot(instance))
-      setStatus('saved to core ✓')
+      setStatus(t('editor.saved'))
     } catch (error) {
       setStatus(`error: ${String(error)}`)
     }
   }
 
-  // Export the persisted note as markdown (FR-9). Doubles as a visual check that
-  // data survived — including across an app restart (on-disk SQLite).
+  const scheduleSave = () => {
+    if (!autosaveEnabled()) return
+    clearTimeout(saveTimer)
+    saveTimer = setTimeout(() => void saveNow(), AUTOSAVE_DELAY_MS)
+  }
+
+  const editorOptions: UseLoroEditorOptions = { initialBlocks: props.initialBlocks ?? 100 }
+  if (props.loadPersisted && isTauri()) {
+    editorOptions.loadSnapshot = () => core.loadEditorSnapshot(noteId())
+  }
+  if (props.autoPersist) editorOptions.onChange = scheduleSave
+
+  const { lastLatency, peakLatency, editor } = useLoroEditor(() => mountEl, editorOptions)
+
+  // Flush any pending edit when leaving the page.
+  onCleanup(() => {
+    if (saveTimer !== undefined) {
+      clearTimeout(saveTimer)
+      if (autosaveEnabled()) void saveNow()
+    }
+  })
+
+  const overBudget = () => lastLatency() > 16
+
+  // Manual one-shot persist (used on the spike page, which has no note row yet).
+  const persist = async () => {
+    const instance = editor()
+    if (!instance) return
+    try {
+      setStatus(t('editor.saving'))
+      await core.createNote(noteId(), 'journal')
+      await core.saveEditorSnapshot(noteId(), exportSnapshot(instance))
+      setStatus(t('editor.saved'))
+    } catch (error) {
+      setStatus(`error: ${String(error)}`)
+    }
+  }
+
   const exportMarkdown = async () => {
     try {
       setMarkdown(await core.exportNoteMarkdown(noteId()))
@@ -65,15 +97,20 @@ export const EditorPane: Component<EditorPaneProps> = (props) => {
           last: {lastLatency().toFixed(2)} ms
         </span>
         <span class="text-text-secondary">peak: {peakLatency().toFixed(2)} ms</span>
-        <span class="text-text-tertiary">{t('editor.subtitle')}</span>
         <Show when={isTauri()}>
-          <Button size="sm" variant="secondary" onClick={persist}>
-            Persist to core
-          </Button>
+          <Show
+            when={props.autoPersist}
+            fallback={
+              <Button size="sm" variant="secondary" onClick={persist}>
+                Persist to core
+              </Button>
+            }
+          >
+            <span class="text-text-tertiary">{status()}</span>
+          </Show>
           <Button size="sm" variant="ghost" onClick={exportMarkdown}>
             Export .md
           </Button>
-          <span class="text-text-tertiary">{status()}</span>
         </Show>
       </div>
       <div

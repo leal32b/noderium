@@ -20,6 +20,8 @@ const dict: typeof enUS = {
   editor: {
     title: 'Editor de blocos (Spike #1)',
     subtitle: 'ProseMirror + Loro CRDT. Digite à vontade — o medidor mostra a latência por tecla.',
+    saving: 'Salvando…',
+    saved: 'Salvo ✓',
   },
   journal: {
     title: 'Diário',

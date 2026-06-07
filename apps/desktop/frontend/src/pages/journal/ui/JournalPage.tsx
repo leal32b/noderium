@@ -40,7 +40,7 @@ export const JournalPage: Component = () => {
       <Show when={noteId()}>
         {(id) => (
           <>
-            <EditorPane noteId={id()} initialBlocks={0} loadPersisted />
+            <EditorPane noteId={id()} initialBlocks={0} loadPersisted autoPersist />
             <BacklinksPanel noteId={id()} />
           </>
         )}
