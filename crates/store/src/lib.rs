@@ -148,18 +148,20 @@ impl Store {
                 "SELECT id, type, title, journal_date, created_at, updated_at
                  FROM notes WHERE id = ?1",
                 params![id],
-                |row| {
-                    Ok(Note {
-                        id: row.get(0)?,
-                        note_type: row.get(1)?,
-                        title: row.get(2)?,
-                        journal_date: row.get(3)?,
-                        created_at: row.get(4)?,
-                        updated_at: row.get(5)?,
-                    })
-                },
+                row_to_note,
             )
             .optional()?)
+    }
+
+    /// All notes, most-recently-updated first.
+    pub fn list_notes(&self) -> Result<Vec<Note>> {
+        let mut stmt = self.conn.prepare(
+            "SELECT id, type, title, journal_date, created_at, updated_at
+             FROM notes ORDER BY updated_at DESC, id",
+        )?;
+        let rows = stmt.query_map([], row_to_note)?;
+        rows.collect::<rusqlite::Result<Vec<_>>>()
+            .map_err(StoreError::from)
     }
 
     // --- blocks ---
@@ -362,6 +364,17 @@ impl Store {
             )
             .optional()?)
     }
+}
+
+fn row_to_note(row: &rusqlite::Row<'_>) -> rusqlite::Result<Note> {
+    Ok(Note {
+        id: row.get(0)?,
+        note_type: row.get(1)?,
+        title: row.get(2)?,
+        journal_date: row.get(3)?,
+        created_at: row.get(4)?,
+        updated_at: row.get(5)?,
+    })
 }
 
 fn row_to_card(row: &rusqlite::Row<'_>) -> rusqlite::Result<SrsCard> {
