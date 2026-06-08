@@ -42,7 +42,8 @@ headroom. A browser-based RUM check belongs in the CI perf-budget job later.
 - `src/loro-binding.ts` — wires PM ↔ Loro via `LoroSyncPlugin` + `LoroUndoPlugin`
   (the live Loro doc lives in JS/WASM, ADR-005); instruments `dispatchTransaction`
   to measure per-keystroke latency. Helpers: `seedParagraphs`, `positionInsideBlock`.
-- `src/ProseMirrorEditor.tsx` — Solid component: editor pane + live latency meter.
+- `src/useLoroEditor.ts` — the reusable Solid hook the app consumes (mounts the
+  editor, exposes live latency signals, handles snapshot load + autosave hooks).
 - `src/latency-test.test.ts` — the spike: 100 blocks, 100 keystrokes in block #50,
   asserts **p95 < 16 ms**.
 

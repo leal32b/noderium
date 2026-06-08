@@ -8,5 +8,3 @@ export {
 export type { LoroEditor, CreateLoroEditorOptions } from './loro-binding'
 export { useLoroEditor } from './useLoroEditor'
 export type { UseLoroEditorOptions, UseLoroEditorResult } from './useLoroEditor'
-export { ProseMirrorEditor } from './ProseMirrorEditor'
-export type { ProseMirrorEditorProps } from './ProseMirrorEditor'

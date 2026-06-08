@@ -1,5 +1,3 @@
-export { env } from './env'
-export type { Env } from './env'
 export {
   LOCALES,
   DEFAULT_LOCALE,
