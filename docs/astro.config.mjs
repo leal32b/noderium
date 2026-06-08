@@ -6,9 +6,38 @@ import starlightLinksValidator from 'starlight-links-validator';
 
 const repo = 'https://github.com/leal32b/noderium';
 
+// GitHub Pages serves this project at https://leal32b.github.io/noderium.
+const site = 'https://leal32b.github.io';
+const base = '/noderium';
+
+// Prefix `base` onto root-absolute internal links in Markdown at build time, so
+// content can be authored base-free (`/architecture/...`) and still resolve under
+// the subpath deploy. Dependency-free walk over the hast tree.
+function rehypeBaseLinks() {
+  const prefix = base.replace(/\/+$/, '');
+  const walk = (node) => {
+    if (
+      node.type === 'element' &&
+      node.tagName === 'a' &&
+      typeof node.properties?.href === 'string'
+    ) {
+      const href = node.properties.href;
+      const isInternalRoot = href.startsWith('/') && !href.startsWith('//');
+      const alreadyPrefixed = href === prefix || href.startsWith(`${prefix}/`);
+      if (isInternalRoot && !alreadyPrefixed) {
+        node.properties.href = prefix + href;
+      }
+    }
+    node.children?.forEach(walk);
+  };
+  return (tree) => walk(tree);
+}
+
 // https://astro.build/config
 export default defineConfig({
-  // `site`/`base` for deployment are configured in the CI/deploy phase.
+  site,
+  base,
+  markdown: { rehypePlugins: [rehypeBaseLinks] },
   // astro-mermaid renders ```mermaid``` code fences client-side (no headless
   // browser at build time) and follows Starlight's light/dark theme. It must
   // precede starlight() so it can transform code fences before Expressive Code.

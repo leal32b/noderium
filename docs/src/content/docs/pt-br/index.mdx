@@ -8,7 +8,9 @@ hero:
     file: ../../../assets/noderium-logo.svg
   actions:
     - text: O que é o Noderium
-      link: /pt-br/start/what-is-noderium/
+      # Hero links bypass the base-prefix rehype plugin (frontmatter, not Markdown),
+      # so they include the `/noderium` base explicitly.
+      link: /noderium/pt-br/start/what-is-noderium/
       icon: right-arrow
     - text: Ver no GitHub
       link: https://github.com/leal32b/noderium

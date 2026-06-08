@@ -1,15 +1,13 @@
-# Deploy the docs site to GitHub Pages.
+# Deploy the docs site to GitHub Pages at https://leal32b.github.io/noderium.
 #
-# STUB: this is wired up but intentionally manual-only (workflow_dispatch) so it
-# never runs unexpectedly. To enable it:
+# `site`/`base` (/noderium) are set in docs/astro.config.mjs, and a rehype plugin
+# prefixes the base onto content links, so the subpath deploy resolves. Kept
+# manual-only (workflow_dispatch) until Pages is enabled, so it never fails
+# unexpectedly. To go live:
 #   1. Repo Settings → Pages → Build and deployment → Source: "GitHub Actions".
-#   2. Decide the URL:
-#      - Custom domain or a user/org page  → deploys at the root, no extra config.
-#      - Project path (leal32b.github.io/noderium) → set `site` and `base` in
-#        docs/astro.config.mjs (base: '/noderium') so assets resolve, and prefix
-#        internal links with the base. Internal links are currently authored
-#        base-free for a root deploy.
-#   3. Run this workflow from the Actions tab (or change the trigger to `push`).
+#   2. Run this workflow from the Actions tab.
+# To auto-deploy on every docs change, add to the trigger below:
+#   push: { branches: [main], paths: ['docs/**', '.github/workflows/docs-deploy.yml'] }
 name: Docs deploy
 
 on:
