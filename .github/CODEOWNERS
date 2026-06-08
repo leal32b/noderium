@@ -1,15 +1,14 @@
 # Code owners — auto-requested for review on matching paths.
-# Replace the placeholder team/user below with real GitHub handles before relying
-# on this (an unknown owner is ignored by GitHub).
+# Add more handles/teams as the project grows.
 
 # Default owner for everything.
-*                       @noderium/maintainers
+*                       @leal32b
 
 # Domain crates (keep them pure — no Tauri/UI leakage).
-/crates/                @noderium/maintainers
+/crates/                @leal32b
 
 # Desktop frontend (FSD boundaries).
-/apps/desktop/frontend/ @noderium/maintainers
+/apps/desktop/frontend/ @leal32b
 
 # Architecture decisions need extra scrutiny.
-/docs/src/content/docs/architecture/ @noderium/maintainers
+/docs/src/content/docs/architecture/ @leal32b

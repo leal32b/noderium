@@ -9,7 +9,7 @@ no backported release branches yet.
 
 **Please do not open a public issue for security problems.**
 
-Report privately through GitHub's **["Report a vulnerability"](https://github.com/noderium/noderium/security/advisories/new)**
+Report privately through GitHub's **["Report a vulnerability"](https://github.com/leal32b/noderium/security/advisories/new)**
 (Security → Advisories) so we can triage and fix before disclosure.
 
 Include, where possible:

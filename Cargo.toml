@@ -23,7 +23,7 @@ version = "0.0.1"
 edition = "2021"
 rust-version = "1.92"
 license = "Apache-2.0"
-repository = "https://github.com/noderium/noderium"
+repository = "https://github.com/leal32b/noderium"
 authors = ["Noderium contributors"]
 
 [workspace.dependencies]
