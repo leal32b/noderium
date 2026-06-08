@@ -77,3 +77,18 @@ and rebuilds it **byte-identical** from the Loro snapshot. See
   snapshot on open; the `/editor` spike page still seeds 100 demo blocks (manual save).
 - Frontmatter parsing is a minimal `key: value` reader, not full YAML.
 - Note titles are auto-derived from the first block (the journal keeps its date title).
+- **Wikilink resolution is by exact title.** A `[[link]]` to a not-yet-created note
+  is not back-filled when the target later appears, and renaming a note drops the
+  backlinks that pointed at its old title. Resolution by stable note id is planned.
+
+## Deliberate omissions
+
+Scaffolding that was wired but unused has been removed to keep the surface honest;
+reintroduce from git history when a concrete need appears:
+
+- **Server-state caching** (TanStack Query) — the app is local-first via
+  `createResource`/Tauri commands; revisit only if a cache layer is justified (sync v2).
+- **HTTP env config** (`VITE_API_BASE_URL`) — contradicts the local-first boundary
+  ([ADR-005](/architecture/adr/adr-005-rust-js-boundary/)); the frontend never calls HTTP.
+- **The editor spike component** (`ProseMirrorEditor`) — the app mounts the editor
+  through the `useLoroEditor` hook instead.

@@ -28,6 +28,11 @@ flowchart TB
 Cross-slice imports go **only** through `index.ts`. Deep imports are blocked by
 `eslint-plugin-boundaries`.
 
+> **Same-layer imports are allowed by design.** A widget may import another
+> widget's public API (e.g. `topbar` opens the `command-palette`). The boundary
+> rule is enforced per *layer*, not per *slice*, so it does not forbid
+> sibling-slice imports within a layer — a deliberate trade-off for this app's size.
+
 ```typescript
 // ❌ deep import into a slice's internals
 import { something } from '@features/editor/model/store';
