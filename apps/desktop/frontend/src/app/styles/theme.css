@@ -96,12 +96,21 @@
   --action-primary-text: var(--accent-text);
 }
 
-/* Density: scales the height of interactive controls (Button, Input). The
-   comfortable height equals h-9, so comfortable is visually unchanged. */
+/* Density: scales control heights and the layout rhythm (content padding, nav
+   items, card padding, list rows). The comfortable values equal the current
+   look, so comfortable is visually unchanged; compact tightens everything. */
 [data-density='comfortable'] {
-  --control-height: 2.25rem;
+  --control-height: 2.25rem; /* h-9 */
+  --pad-main-y: 2rem; /* main content py-8 */
+  --pad-nav-y: 0.5rem; /* sidebar item py-2 */
+  --pad-card: 1.25rem; /* card p-5 */
+  --pad-row-y: 0.75rem; /* list / settings row py-3 */
 }
 
 [data-density='compact'] {
   --control-height: 1.875rem;
+  --pad-main-y: 1.25rem;
+  --pad-nav-y: 0.3125rem;
+  --pad-card: 0.875rem;
+  --pad-row-y: 0.5rem;
 }

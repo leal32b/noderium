@@ -44,7 +44,7 @@ export const Sidebar: Component<SidebarProps> = (props) => {
                 aria-label={t(item.labelKey)}
                 data-tip={props.collapsed ? t(item.labelKey) : undefined}
                 class={cx(
-                  'focus-ring relative flex w-full items-center rounded-md py-2 text-sm font-medium text-text-secondary transition-colors duration-150 hover:(bg-surface-hover text-text-primary)',
+                  'focus-ring relative flex w-full items-center rounded-md py-[var(--pad-nav-y)] text-sm font-medium text-text-secondary transition-colors duration-150 hover:(bg-surface-hover text-text-primary)',
                   props.collapsed && 'sidebar-tip',
                 )}
                 activeClass="nav-active"

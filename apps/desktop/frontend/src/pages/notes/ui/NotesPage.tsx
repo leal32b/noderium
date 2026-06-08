@@ -50,7 +50,7 @@ export const NotesPage: Component = () => {
               <li>
                 <A
                   href={`/note/${note.id}`}
-                  class="focus-ring group flex items-center gap-3 px-4 py-3 transition-colors hover:bg-surface-hover"
+                  class="focus-ring group flex items-center gap-3 px-4 py-[var(--pad-row-y)] transition-colors hover:bg-surface-hover"
                 >
                   <FileText size={16} class="shrink-0 text-text-tertiary" />
                   <span class="min-w-0 flex-1 truncate text-sm font-medium text-text-primary">

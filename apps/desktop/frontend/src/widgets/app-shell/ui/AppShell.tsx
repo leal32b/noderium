@@ -21,7 +21,7 @@ export const AppShell: ParentComponent = (props) => {
       <Topbar onToggleSidebar={shell.toggleCollapsed} />
       <div class="flex min-h-0 flex-1">
         <Sidebar collapsed={shell.collapsed()} />
-        <main id="main" class="min-w-0 flex-1 overflow-y-auto px-6 py-8 md:px-10">
+        <main id="main" class="min-w-0 flex-1 overflow-y-auto px-6 py-[var(--pad-main-y)] md:px-10">
           {props.children}
         </main>
       </div>

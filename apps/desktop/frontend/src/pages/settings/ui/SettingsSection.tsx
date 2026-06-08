@@ -26,7 +26,7 @@ export interface SettingsRowProps {
 
 /** A single labeled control inside a [`SettingsSection`]. */
 export const SettingsRow: ParentComponent<SettingsRowProps> = (props) => (
-  <div class="flex items-center justify-between gap-4 px-4 py-3">
+  <div class="flex items-center justify-between gap-4 px-4 py-[var(--pad-row-y)]">
     <div class="min-w-0">
       <div class="text-sm font-medium text-text-primary">{props.label}</div>
       <Show when={props.description}>

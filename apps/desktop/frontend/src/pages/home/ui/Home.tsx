@@ -54,7 +54,7 @@ export const Home: Component = () => {
           {(pillar) => (
             <A
               href={pillar.href}
-              class="group focus-ring card flex flex-col gap-3 p-5 transition-all duration-200 hover:(-translate-y-0.5 border-border-strong shadow-md)"
+              class="group focus-ring card flex flex-col gap-3 p-[var(--pad-card)] transition-all duration-200 hover:(-translate-y-0.5 border-border-strong shadow-md)"
             >
               <div class="flex items-center justify-between">
                 <span class="flex h-10 w-10 items-center justify-center rounded-lg bg-accent-subtle-bg text-accent-subtle-text">
