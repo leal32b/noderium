@@ -9,5 +9,5 @@ repository.workspace = true
 authors.workspace = true
 
 [dependencies]
-rs-fsrs = "1.2"
-chrono = "0.4"
+rs-fsrs.workspace = true
+chrono.workspace = true

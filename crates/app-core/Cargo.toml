@@ -13,4 +13,4 @@ noderium-core = { path = "../core" }
 noderium-crdt = { path = "../crdt" }
 noderium-srs = { path = "../srs" }
 noderium-store = { path = "../store" }
-thiserror = "2"
+thiserror.workspace = true

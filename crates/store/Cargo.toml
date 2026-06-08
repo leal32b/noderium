@@ -9,6 +9,6 @@ repository.workspace = true
 authors.workspace = true
 
 [dependencies]
-# `bundled` compiles SQLite with FTS5 enabled (no system SQLite dependency).
-rusqlite = { version = "0.32", features = ["bundled"] }
-thiserror = "2"
+# `bundled` (set on the workspace dep) compiles SQLite with FTS5 enabled.
+rusqlite.workspace = true
+thiserror.workspace = true

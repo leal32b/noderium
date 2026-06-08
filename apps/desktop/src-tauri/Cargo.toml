@@ -13,9 +13,9 @@ name = "noderium-desktop"
 path = "src/main.rs"
 
 [build-dependencies]
-tauri-build = { version = "2", features = [] }
+tauri-build.workspace = true
 
 [dependencies]
-tauri = { version = "2", features = [] }
-serde = { version = "1", features = ["derive"] }
+tauri.workspace = true
+serde.workspace = true
 noderium-app-core = { path = "../../../crates/app-core" }

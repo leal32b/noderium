@@ -23,7 +23,17 @@ repository = "https://github.com/noderium/noderium"
 authors = ["Noderium contributors"]
 
 [workspace.dependencies]
-# Populated as crates gain real dependencies in later phases.
+# Third-party versions are centralized here; member crates opt in with
+# `<dep>.workspace = true` so versions can never drift across the workspace.
+thiserror = "2"
+rusqlite = { version = "0.32", features = ["bundled"] }
+loro = "1.13"
+rs-fsrs = "1.2"
+chrono = "0.4"
+time = { version = "0.3", features = ["formatting"] }
+serde = { version = "1", features = ["derive"] }
+tauri = { version = "2", features = [] }
+tauri-build = { version = "2", features = [] }
 
 [profile.release]
 opt-level = 3
