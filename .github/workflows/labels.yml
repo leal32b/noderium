@@ -1,0 +1,32 @@
+name: Labels
+
+# Keep the repo's labels in sync with .github/labels.yml so the labels the issue
+# templates reference always exist. Runs when the label set changes, or manually.
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/labels.yml"
+      - ".github/workflows/labels.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: labels
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    name: Sync labels
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: crazy-max/ghaction-github-labeler@v5
+        with:
+          yaml-file: .github/labels.yml
+          # Don't delete labels that aren't in the file (e.g. GitHub defaults).
+          skip-delete: true
