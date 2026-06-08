@@ -63,6 +63,23 @@ jobs:
       - name: Editor latency test
         run: pnpm --filter @noderium/editor test
 
+  docs:
+    name: Docs (build + link check)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Install
+        run: pnpm install --frozen-lockfile
+      # `astro build` runs starlight-links-validator; it fails on broken
+      # internal links (ADR-014).
+      - name: Build docs
+        run: pnpm --filter @noderium/docs build
+
   desktop:
     name: Desktop (Tauri build)
     runs-on: ubuntu-latest
