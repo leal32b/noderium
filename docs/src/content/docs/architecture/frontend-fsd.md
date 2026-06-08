@@ -49,11 +49,20 @@ src/
 ├── widgets/     # composed UI (app-shell, topbar, sidebar, command-palette)
 ├── features/    # user-facing capabilities (editor, search, srs-review, journal)
 ├── entities/    # domain entities (note, block, link, command)
-└── shared/      # ui (Kobalte), lib (theme, i18n, sync), config, api, types
+└── shared/      # ui (Kobalte), lib (theme, i18n), config, api, types
 ```
 
 Each slice has `ui/`, optional `model/` and `api/`, and a single `index.ts` public
 API — the only external import point.
+
+> **Where providers live.** A cross-cutting **context + hook** consumed across
+> layers (theming, i18n) lives in `shared/lib` and is re-exported through
+> `@shared`; an **app-only** provider (error boundary, sync status, toasts) lives
+> in `app/providers`. `app/App.tsx` composes them.
+>
+> **Where i18n lives.** Config *data* (locales + dictionaries) sits in
+> `shared/config/i18n`; the runtime *provider/hook* in `shared/lib/i18n.tsx` —
+> data and runtime are split on purpose.
 
 ## Stack
 
@@ -61,30 +70,32 @@ API — the only external import point.
   `exactOptionalPropertyTypes`, …).
 - **UnoCSS** — semantic tokens as CSS variables (see
   [Design tokens & themes](/design/tokens-and-themes/)).
-- **Kobalte** (headless components), `lucide-solid` (icons), **Valibot**
-  (validation/env).
+- **Kobalte** (headless components) and `lucide-solid` (icons).
 
 ## Providers (order matters)
 
+`app/App.tsx` composes the providers (annotated with their home layer):
+
 ```
-RootErrorBoundary
-  └─ QueryProvider
-       └─ SyncProvider        ← CRDT/sync engine state (was RealtimeProvider)
-            └─ I18nProvider
-                 └─ ThemeProvider
-                      └─ ToastProvider
-                           └─ AppRoutes
+RootErrorBoundary           (app/providers)
+  └─ SyncProvider           (app/providers)  ← CRDT/sync status (was RealtimeProvider)
+       └─ I18nProvider      (shared/lib)
+            └─ ThemeProvider (shared/lib)
+                 └─ ToastProvider (app/providers)
+                      └─ AppRoutes
 ```
 
 ## Key systems
 
 - **Theming** — `data-theme` + `data-density` on `<html>`; instant swap, no rebuild.
-- **i18n** — lazy dictionaries (en-US bundled, pt-BR on demand), `Intl` formatters,
-  `<html lang>` kept in sync.
+- **i18n** — config data (locales + dictionaries) in `shared/config/i18n`, the
+  runtime provider in `shared/lib/i18n.tsx`; lazy dictionaries (en-US bundled,
+  pt-BR on demand), `Intl` formatters, `<html lang>` kept in sync.
 - **Command palette (⌘K)** — a `command` entity + `useDefaultCommands()` +
   `useCommandPaletteShortcut()` (`@solid-primitives/keyboard`).
-- **State** — TanStack Query (server/sync), signals (client UI), `makePersisted`
-  (local preferences).
+- **State** — Solid signals + `createResource` (client/UI) and `makePersisted`
+  (local preferences). No server-state cache: data comes from the Rust core via
+  Tauri commands, not HTTP.
 - **Local-first IPC** — the frontend talks to the Rust core via **Tauri commands**,
   never HTTP ([ADR-005](/architecture/adr/adr-005-rust-js-boundary/)). See the
   [Tauri command API](/architecture/tauri-command-api/).
