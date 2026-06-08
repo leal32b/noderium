@@ -13,13 +13,6 @@ use tauri::State;
 pub type SharedWorkspace = Mutex<Workspace>;
 
 #[derive(Serialize)]
-pub struct BlockDto {
-    pub id: String,
-    pub block_type: String,
-    pub text: String,
-}
-
-#[derive(Serialize)]
 pub struct BacklinkDto {
     pub source_note_id: String,
     pub source_block_id: String,
@@ -64,39 +57,6 @@ pub fn create_note(
     lock(&ws)?
         .create_note(&id, &note_type, title.as_deref(), now_ms())
         .map_err(to_message)
-}
-
-#[tauri::command]
-pub fn add_block(
-    ws: State<'_, SharedWorkspace>,
-    note_id: String,
-    block_type: String,
-    text: String,
-) -> Result<String, String> {
-    lock(&ws)?
-        .add_block(&note_id, &block_type, &text)
-        .map_err(to_message)
-}
-
-#[tauri::command]
-pub fn note_blocks(
-    ws: State<'_, SharedWorkspace>,
-    note_id: String,
-) -> Result<Vec<BlockDto>, String> {
-    let blocks = lock(&ws)?.blocks(&note_id).map_err(to_message)?;
-    Ok(blocks
-        .into_iter()
-        .map(|b| BlockDto {
-            id: b.id,
-            block_type: b.block_type,
-            text: b.text,
-        })
-        .collect())
-}
-
-#[tauri::command]
-pub fn search(ws: State<'_, SharedWorkspace>, query: String) -> Result<Vec<String>, String> {
-    lock(&ws)?.search(&query).map_err(to_message)
 }
 
 #[derive(Serialize)]

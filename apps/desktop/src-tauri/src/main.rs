@@ -24,9 +24,6 @@ fn main() {
         })
         .invoke_handler(tauri::generate_handler![
             commands::create_note,
-            commands::add_block,
-            commands::note_blocks,
-            commands::search,
             commands::save_editor_snapshot,
             commands::load_editor_snapshot,
             commands::export_note_markdown,
