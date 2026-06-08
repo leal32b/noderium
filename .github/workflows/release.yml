@@ -1,0 +1,82 @@
+name: Release
+
+# Cut a release by pushing a semver tag:
+#   git tag v0.1.0 && git push origin v0.1.0
+#
+# Builds the Tauri desktop app for macOS (universal), Linux and Windows, then
+# uploads the installers to a DRAFT GitHub Release for a maintainer to review
+# and publish. The frontend dist is produced by the configured
+# beforeBuildCommand (tauri.conf.json), so no extra build step is needed.
+on:
+  push:
+    tags:
+      - "v*"
+
+# Least privilege: only the release job needs write access to create the release.
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    name: Build & release (${{ matrix.platform }})
+    permissions:
+      contents: write # create the GitHub Release and upload installers
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: macos-latest
+            args: "--target universal-apple-darwin"
+            rust-targets: "aarch64-apple-darwin,x86_64-apple-darwin"
+          - platform: ubuntu-22.04
+            args: ""
+            rust-targets: ""
+          - platform: windows-latest
+            args: ""
+            rust-targets: ""
+    runs-on: ${{ matrix.platform }}
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Tauri system deps (Linux)
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev librsvg2-dev \
+            libappindicator3-dev patchelf build-essential
+
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.rust-targets }}
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Install JS dependencies
+        run: pnpm install --frozen-lockfile
+
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # --- Optional code signing (define these repo secrets to enable) ---
+          # macOS:   APPLE_CERTIFICATE, APPLE_CERTIFICATE_PASSWORD,
+          #          APPLE_SIGNING_IDENTITY, APPLE_ID, APPLE_PASSWORD, APPLE_TEAM_ID
+          # Windows: TAURI_SIGNING_PRIVATE_KEY, TAURI_SIGNING_PRIVATE_KEY_PASSWORD
+        with:
+          projectPath: apps/desktop
+          tagName: ${{ github.ref_name }}
+          releaseName: "Noderium ${{ github.ref_name }}"
+          releaseBody: "Download the installer for your platform from the assets below."
+          releaseDraft: true
+          prerelease: false
+          args: ${{ matrix.args }}
