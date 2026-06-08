@@ -43,6 +43,7 @@ const dict: typeof enUS = {
     new: 'Nova nota',
     untitled: 'Sem título',
     empty: 'Nenhuma nota ainda.',
+    createError: 'Não foi possível criar a nota.',
   },
   review: {
     title: 'Revisão',
@@ -51,6 +52,7 @@ const dict: typeof enUS = {
     add: 'Adicionar à revisão',
     added: 'Adicionado ✓',
     addError: 'Não foi possível adicionar',
+    gradeError: 'Não foi possível salvar a revisão.',
     again: 'De novo',
     hard: 'Difícil',
     good: 'Bom',

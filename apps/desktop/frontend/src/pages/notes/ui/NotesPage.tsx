@@ -3,7 +3,7 @@ import { ChevronRight, FileText, Plus } from 'lucide-solid'
 import { createResource, For, Show } from 'solid-js'
 import type { Component } from 'solid-js'
 
-import { Button, core, isTauri, useI18n } from '@shared'
+import { Button, core, isTauri, notify, useI18n } from '@shared'
 
 /** All notes, with a way to create and open them (FR-4 navigation). */
 export const NotesPage: Component = () => {
@@ -12,9 +12,13 @@ export const NotesPage: Component = () => {
   const [notes] = createResource(() => (isTauri() ? core.listNotes() : Promise.resolve([])))
 
   const newNote = async () => {
-    const id = `note-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
-    await core.createNote(id, 'atomic', t('notes.untitled'))
-    navigate(`/note/${id}`)
+    try {
+      const id = `note-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
+      await core.createNote(id, 'atomic', t('notes.untitled'))
+      navigate(`/note/${id}`)
+    } catch {
+      notify.error(t('notes.createError'))
+    }
   }
 
   return (

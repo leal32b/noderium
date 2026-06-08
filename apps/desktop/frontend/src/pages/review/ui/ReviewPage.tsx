@@ -2,7 +2,7 @@ import { GraduationCap } from 'lucide-solid'
 import { createResource, For, Show } from 'solid-js'
 import type { Component } from 'solid-js'
 
-import { Button, core, isTauri, useI18n } from '@shared'
+import { Button, core, isTauri, notify, useI18n } from '@shared'
 import type { Rating } from '@shared'
 
 const RATINGS: readonly Rating[] = ['again', 'hard', 'good', 'easy']
@@ -18,8 +18,12 @@ export const ReviewPage: Component = () => {
   const titleFor = (targetId: string) => notes()?.find((n) => n.id === targetId)?.title ?? targetId
 
   const grade = async (cardId: string, rating: Rating) => {
-    await core.reviewCard(cardId, rating)
-    void refetch()
+    try {
+      await core.reviewCard(cardId, rating)
+      void refetch()
+    } catch {
+      notify.error(t('review.gradeError'))
+    }
   }
 
   return (

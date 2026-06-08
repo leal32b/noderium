@@ -43,6 +43,7 @@ export default {
     new: 'New note',
     untitled: 'Untitled',
     empty: 'No notes yet.',
+    createError: 'Could not create the note.',
   },
   review: {
     title: 'Review',
@@ -51,6 +52,7 @@ export default {
     add: 'Add to review',
     added: 'Added ✓',
     addError: 'Could not add',
+    gradeError: 'Could not save your review.',
     again: 'Again',
     hard: 'Hard',
     good: 'Good',

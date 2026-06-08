@@ -41,7 +41,10 @@ export const CommandPalette: Component = () => {
       setNoteHits([])
       return
     }
-    void core.searchDetailed(q).then((hits) => setNoteHits(hits.slice(0, MAX_NOTE_HITS)))
+    void core
+      .searchDetailed(q)
+      .then((hits) => setNoteHits(hits.slice(0, MAX_NOTE_HITS)))
+      .catch(() => setNoteHits([]))
   })
 
   const commandItems = createMemo<PaletteItem[]>(() => {

@@ -18,7 +18,10 @@ export const BacklinksPanel: Component<BacklinksPanelProps> = (props) => {
   createEffect(() => {
     const id = props.noteId
     if (!isTauri()) return
-    void core.backlinks(id).then(setLinks)
+    void core
+      .backlinks(id)
+      .then(setLinks)
+      .catch(() => setLinks([]))
   })
 
   return (

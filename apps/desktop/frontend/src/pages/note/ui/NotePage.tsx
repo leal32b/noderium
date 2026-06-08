@@ -1,24 +1,23 @@
 import { A, useParams } from '@solidjs/router'
 import { ArrowLeft, GraduationCap } from 'lucide-solid'
-import { createSignal, Show } from 'solid-js'
+import { Show } from 'solid-js'
 import type { Component } from 'solid-js'
 
 import { EditorPane } from '@features/editor'
 import { BacklinksPanel } from '@features/notes'
-import { Button, core, isTauri, useI18n } from '@shared'
+import { Button, core, isTauri, notify, useI18n } from '@shared'
 
 /** A single note: the editor bound to it (autosaving) + its backlinks. */
 export const NotePage: Component = () => {
   const params = useParams<{ id: string }>()
   const { t } = useI18n()
-  const [cardStatus, setCardStatus] = createSignal('')
 
   const addToReview = async (id: string) => {
     try {
       await core.createCard(`card-${id}`, id, 'note')
-      setCardStatus(t('review.added'))
+      notify.success(t('review.added'))
     } catch {
-      setCardStatus(t('review.addError'))
+      notify.error(t('review.addError'))
     }
   }
 
@@ -33,13 +32,10 @@ export const NotePage: Component = () => {
           {t('notes.title')}
         </A>
         <Show when={isTauri()}>
-          <div class="flex items-center gap-2">
-            <span class="text-xs text-text-tertiary">{cardStatus()}</span>
-            <Button size="sm" variant="secondary" onClick={() => addToReview(params.id)}>
-              <GraduationCap size={15} />
-              {t('review.add')}
-            </Button>
-          </div>
+          <Button size="sm" variant="secondary" onClick={() => addToReview(params.id)}>
+            <GraduationCap size={15} />
+            {t('review.add')}
+          </Button>
         </Show>
       </header>
       {/* `keyed` re-mounts the editor when navigating between notes. */}
