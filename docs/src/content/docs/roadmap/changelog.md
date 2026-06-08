@@ -7,16 +7,12 @@ All notable changes to Noderium are documented here, newest first, following
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). For day-to-day work see the
 git history; this page records milestones.
 
-:::note[Stub]
-The full changelog is compiled in a later phase. The entries below are a starting
-point.
-:::
-
 ## Unreleased
 
 ### Added
 
-- Documentation site (Astro Starlight) — this site
+- Documentation site (Astro Starlight) with full IA, the 15 ADRs, Mermaid diagrams,
+  how-to guides, and a CI build + deploy workflow
   ([ADR-014](/architecture/adr/adr-014-docs-astro-starlight/)).
 
 ## v0 — Walking skeleton
