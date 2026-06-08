@@ -5,7 +5,7 @@
 //! Golden rule (ADR-001): the Loro doc is the source of truth; every SQLite row
 //! except the CRDT store is a rebuildable derived index — proven by the tests.
 
-use noderium_crdt::{CrdtError, NoteDoc};
+use noderium_crdt::CrdtError;
 use noderium_srs::{CardState, Phase, Scheduler};
 use noderium_store::{Block, Note, SrsCard, Store, StoreError};
 use thiserror::Error;
@@ -100,7 +100,7 @@ impl Workspace {
             created_at: now,
             updated_at: now,
         })?;
-        self.persist(id, &NoteDoc::new())?;
+        self.seed_empty(id)?;
         Ok(())
     }
 
@@ -122,17 +122,9 @@ impl Workspace {
         // Only seed an empty CRDT doc on genuine first creation — never clobber
         // a note that already has persisted content.
         if self.store.load_snapshot(&id)?.is_none() {
-            self.persist(&id, &NoteDoc::new())?;
+            self.seed_empty(&id)?;
         }
         Ok(id)
-    }
-
-    /// Append a block to a note (CRDT op), then refresh its derived index.
-    pub fn add_block(&self, note_id: &str, block_type: &str, text: &str) -> Result<String> {
-        let doc = self.load_doc(note_id)?;
-        let block_id = doc.add_block(block_type, text)?;
-        self.persist(note_id, &doc)?;
-        Ok(block_id)
     }
 
     /// Persist a snapshot produced by the JS editor (a `loro-prosemirror`-shaped
@@ -141,23 +133,7 @@ impl Workspace {
     /// its snapshot becomes truth here, and SQLite is rebuilt from it.
     pub fn import_editor_snapshot(&self, note_id: &str, snapshot: &[u8]) -> Result<()> {
         self.store.save_snapshot(note_id, snapshot, &[])?;
-        let blocks = noderium_crdt::blocks_from_prosemirror_snapshot(snapshot)?;
-        self.store.delete_blocks_for_note(note_id)?;
-        for (index, block) in blocks.iter().enumerate() {
-            self.store.upsert_block(&Block {
-                id: block.id.clone(),
-                note_id: note_id.to_string(),
-                parent_id: None,
-                order_key: format!("{index:08}"),
-                block_type: block.block_type.clone(),
-                text: block.text.clone(),
-            })?;
-        }
-        self.maybe_autotitle(note_id, &blocks)?;
-        self.reindex_links(
-            note_id,
-            blocks.iter().map(|b| (b.id.as_str(), b.text.as_str())),
-        )
+        self.index_from_snapshot(note_id, snapshot)
     }
 
     /// All notes, most-recently-updated first.
@@ -178,8 +154,11 @@ impl Workspace {
     /// Drop and re-derive a note's block index purely from its CRDT snapshot.
     /// (After this the SQLite rows are byte-for-byte reproducible from Loro.)
     pub fn rebuild_index_from_crdt(&self, note_id: &str) -> Result<()> {
-        let doc = self.load_doc(note_id)?;
-        self.reindex(note_id, &doc)
+        let snapshot = self
+            .store
+            .load_snapshot(note_id)?
+            .ok_or_else(|| CoreError::NoteNotFound(note_id.to_string()))?;
+        self.index_from_snapshot(note_id, &snapshot)
     }
 
     /// Wipe a note's derived block index (e.g. before a rebuild). Does not touch
@@ -299,23 +278,22 @@ impl Workspace {
 
     // --- internals ---
 
-    fn load_doc(&self, note_id: &str) -> Result<NoteDoc> {
-        let snapshot = self
-            .store
-            .load_snapshot(note_id)?
-            .ok_or_else(|| CoreError::NoteNotFound(note_id.to_string()))?;
-        Ok(NoteDoc::from_snapshot(&snapshot)?)
-    }
-
-    fn persist(&self, note_id: &str, doc: &NoteDoc) -> Result<()> {
-        let snapshot = doc.snapshot()?;
+    /// Seed a note's source of truth with an empty editor-shaped snapshot. Using
+    /// the same `loro-prosemirror` shape the live editor emits keeps every note
+    /// on a single CRDT representation from creation onward.
+    fn seed_empty(&self, note_id: &str) -> Result<()> {
         // Version vector blob is reserved for sync (ADR-008); empty for v1 local.
+        let snapshot = noderium_crdt::blocks_to_prosemirror_snapshot(&[])?;
         self.store.save_snapshot(note_id, &snapshot, &[])?;
-        self.reindex(note_id, doc)
+        Ok(())
     }
 
-    fn reindex(&self, note_id: &str, doc: &NoteDoc) -> Result<()> {
-        let blocks = doc.blocks()?;
+    /// Rebuild a note's derived index (blocks + title + links) purely from a
+    /// stored `loro-prosemirror` snapshot — the one shape the live editor emits.
+    /// This is what makes the golden rule (ADR-001) hold for *real* notes, not
+    /// just synthetic ones.
+    fn index_from_snapshot(&self, note_id: &str, snapshot: &[u8]) -> Result<()> {
+        let blocks = noderium_crdt::blocks_from_prosemirror_snapshot(snapshot)?;
         self.store.delete_blocks_for_note(note_id)?;
         for (index, block) in blocks.iter().enumerate() {
             self.store.upsert_block(&Block {
@@ -327,6 +305,7 @@ impl Workspace {
                 text: block.text.clone(),
             })?;
         }
+        self.maybe_autotitle(note_id, &blocks)?;
         self.reindex_links(
             note_id,
             blocks.iter().map(|b| (b.id.as_str(), b.text.as_str())),
@@ -597,10 +576,22 @@ body with [[Link]]\n";
     fn creates_a_note_and_indexes_blocks() {
         let ws = Workspace::open_in_memory().unwrap();
         ws.create_note("n1", "atomic", Some("Fruit"), 1).unwrap();
-        ws.add_block("n1", "heading", "Apples and oranges").unwrap();
-        ws.add_block("n1", "paragraph", "bananas are great")
-            .unwrap();
+        let snapshot = noderium_crdt::blocks_to_prosemirror_snapshot(&[
+            BlockData {
+                id: "b1".into(),
+                block_type: "heading".into(),
+                text: "Apples and oranges".into(),
+            },
+            BlockData {
+                id: "b2".into(),
+                block_type: "paragraph".into(),
+                text: "bananas are great".into(),
+            },
+        ])
+        .unwrap();
+        ws.import_editor_snapshot("n1", &snapshot).unwrap();
 
+        // An explicit title is kept (autotitle only fills in untitled notes).
         assert_eq!(
             ws.note("n1").unwrap().unwrap().title.as_deref(),
             Some("Fruit")
@@ -614,12 +605,24 @@ body with [[Link]]\n";
     fn derived_index_is_rebuildable_from_crdt() {
         let ws = Workspace::open_in_memory().unwrap();
         ws.create_note("n1", "atomic", None, 1).unwrap();
-        ws.add_block("n1", "paragraph", "the quick brown fox")
-            .unwrap();
-        ws.add_block("n1", "paragraph", "jumps over lazy dog")
-            .unwrap();
+        // Persist content exactly as the live editor does: a loro-prosemirror
+        // snapshot. The rebuild path must hold for *this* shape, not just the
+        // synthetic Tree model.
+        let snapshot = noderium_crdt::blocks_to_prosemirror_snapshot(&[
+            BlockData {
+                id: "b1".into(),
+                block_type: "paragraph".into(),
+                text: "the quick brown fox".into(),
+            },
+            BlockData {
+                id: "b2".into(),
+                block_type: "paragraph".into(),
+                text: "jumps over lazy dog".into(),
+            },
+        ])
+        .unwrap();
+        ws.import_editor_snapshot("n1", &snapshot).unwrap();
 
-        // Snapshot the indexed state (block ids derive from stable Loro TreeIDs).
         let before: Vec<(String, String)> = ws
             .blocks("n1")
             .unwrap()
@@ -633,7 +636,7 @@ body with [[Link]]\n";
         assert!(ws.blocks("n1").unwrap().is_empty());
         assert!(ws.search("quick").unwrap().is_empty());
 
-        // Rebuild purely from the CRDT snapshot — same rows, search works again.
+        // Rebuild purely from the stored CRDT snapshot — same rows, search works.
         ws.rebuild_index_from_crdt("n1").unwrap();
         let after: Vec<(String, String)> = ws
             .blocks("n1")
