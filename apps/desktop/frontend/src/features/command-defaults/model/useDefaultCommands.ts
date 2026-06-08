@@ -26,43 +26,36 @@ export function useDefaultCommands(): void {
       {
         id: 'nav.home',
         title: t('command.navigate.home'),
-        group: 'navigate',
         execute: () => navigate('/'),
       },
       {
         id: 'nav.journal',
         title: t('command.navigate.journal'),
-        group: 'navigate',
         execute: () => navigate('/journal'),
       },
       {
         id: 'nav.notes',
         title: t('command.navigate.notes'),
-        group: 'navigate',
         execute: () => navigate('/notes'),
       },
       {
         id: 'nav.review',
         title: t('command.navigate.review'),
-        group: 'navigate',
         execute: () => navigate('/review'),
       },
       {
         id: 'nav.editor',
         title: t('command.navigate.editor'),
-        group: 'navigate',
         execute: () => navigate('/editor'),
       },
       {
         id: 'nav.settings',
         title: t('command.navigate.settings'),
-        group: 'navigate',
         execute: () => navigate('/settings'),
       },
       {
         id: 'actions.toggleTheme',
         title: t('command.actions.toggleTheme'),
-        group: 'actions',
         execute: () => theme.setTheme(theme.resolvedTheme() === 'dark' ? 'light' : 'dark'),
       },
     ])

@@ -1,17 +1,11 @@
 // No `as const`: property names stay literal (so translation keys infer), but
 // values widen to `string` so other locales can satisfy `typeof enUS`.
 export default {
-  common: {
-    ok: 'OK',
-    cancel: 'Cancel',
-  },
   navigation: {
-    section: 'Workspace',
     home: 'Home',
     journal: 'Journal',
     notes: 'Notes',
     review: 'Review',
-    settings: 'Settings',
     editor: 'Editor',
   },
   app: {
@@ -58,20 +52,12 @@ export default {
     good: 'Good',
     easy: 'Easy',
   },
-  search: {
-    title: 'Search',
-    placeholder: 'Search your notes…',
-    run: 'Search',
-    matches: 'matches',
-  },
   backlinks: {
     title: 'Backlinks',
     empty: 'No backlinks yet.',
   },
   topbar: {
     toggleSidebar: 'Toggle sidebar',
-    theme: 'Theme',
-    language: 'Language',
     openCommandPalette: 'Open command palette',
     search: 'Search…',
   },
@@ -96,10 +82,6 @@ export default {
     empty: 'No results.',
     commandsLabel: 'Commands',
     notesLabel: 'Notes',
-    group: {
-      navigate: 'Navigate',
-      actions: 'Actions',
-    },
     navigate: {
       home: 'Go to Home',
       journal: 'Go to Journal',

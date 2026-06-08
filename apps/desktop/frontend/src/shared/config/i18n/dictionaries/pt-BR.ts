@@ -1,17 +1,11 @@
 import type enUS from './en-US'
 
 const dict: typeof enUS = {
-  common: {
-    ok: 'OK',
-    cancel: 'Cancelar',
-  },
   navigation: {
-    section: 'Espaço',
     home: 'Início',
     journal: 'Diário',
     notes: 'Notas',
     review: 'Revisão',
-    settings: 'Configurações',
     editor: 'Editor',
   },
   app: {
@@ -58,20 +52,12 @@ const dict: typeof enUS = {
     good: 'Bom',
     easy: 'Fácil',
   },
-  search: {
-    title: 'Busca',
-    placeholder: 'Busque nas suas notas…',
-    run: 'Buscar',
-    matches: 'resultados',
-  },
   backlinks: {
     title: 'Backlinks',
     empty: 'Nenhum backlink ainda.',
   },
   topbar: {
     toggleSidebar: 'Alternar barra lateral',
-    theme: 'Tema',
-    language: 'Idioma',
     openCommandPalette: 'Abrir paleta de comandos',
     search: 'Buscar…',
   },
@@ -96,10 +82,6 @@ const dict: typeof enUS = {
     empty: 'Nenhum resultado.',
     commandsLabel: 'Comandos',
     notesLabel: 'Notas',
-    group: {
-      navigate: 'Navegar',
-      actions: 'Ações',
-    },
     navigate: {
       home: 'Ir para Início',
       journal: 'Ir para Diário',
