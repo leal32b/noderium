@@ -96,13 +96,12 @@
   --action-primary-text: var(--accent-text);
 }
 
-/* Density: scales the base rhythm + control heights. */
+/* Density: scales the height of interactive controls (Button, Input). The
+   comfortable height equals h-9, so comfortable is visually unchanged. */
 [data-density='comfortable'] {
-  --density-space: 1rem;
   --control-height: 2.25rem;
 }
 
 [data-density='compact'] {
-  --density-space: 0.625rem;
   --control-height: 1.875rem;
 }

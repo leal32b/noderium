@@ -12,7 +12,7 @@ export const Input: Component<InputProps> = (props) => {
       autocomplete="off"
       spellcheck={false}
       class={cx(
-        'h-9 w-full rounded-md border border-border-default bg-surface-raised px-3 text-sm text-text-primary outline-none transition-all duration-150',
+        'h-[var(--control-height)] w-full rounded-md border border-border-default bg-surface-raised px-3 text-sm text-text-primary outline-none transition-all duration-150',
         'placeholder:text-text-tertiary',
         'hover:border-border-strong',
         'focus:(border-accent ring-2 ring-accent/25)',
