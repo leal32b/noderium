@@ -1,1 +1,8 @@
+# Frontend: eslint + prettier on staged files.
 pnpm --filter @noderium/desktop-frontend exec lint-staged
+
+# Rust: if any .rs files are staged, verify formatting locally too (clippy stays
+# in CI — too slow for a hook). Keeps Rust-only commits from skipping checks.
+if git diff --cached --name-only --diff-filter=ACM | grep -q '\.rs$'; then
+  cargo fmt --all -- --check
+fi
