@@ -1,15 +1,19 @@
 [workspace]
 resolver = "2"
 members = [
+    # Domain (pure, portable — no Tauri/UI).
     "crates/core",
     "crates/store",
     "crates/crdt",
-    "crates/search",
-    "crates/ai",
     "crates/srs",
+    # Domain stubs (not yet wired).
+    "crates/ai",
+    "crates/search",
     "crates/sync-client",
+    # Facade + shells.
     "crates/app-core",
     "apps/desktop/src-tauri",
+    # Sync server (source-available, ADR-009).
     "server/sync-server",
 ]
 
