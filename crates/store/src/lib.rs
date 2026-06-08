@@ -80,9 +80,19 @@ impl Store {
 
     fn from_connection(conn: Connection) -> Result<Self> {
         conn.pragma_update(None, "foreign_keys", true)?;
+        // WAL + NORMAL: durable enough for a local-first store, with far fewer
+        // fsyncs on the write-heavy reindex path. (No-op for in-memory databases.)
+        conn.execute_batch("PRAGMA journal_mode = WAL; PRAGMA synchronous = NORMAL;")?;
         let mut store = Self { conn };
         store.migrate()?;
         Ok(store)
+    }
+
+    /// Begin a transaction over the underlying connection. A note reindex wraps
+    /// all its writes in one so the whole operation is a single atomic, durable
+    /// unit (one fsync) instead of dozens of auto-committed statements.
+    pub fn begin(&self) -> Result<rusqlite::Transaction<'_>> {
+        Ok(self.conn.unchecked_transaction()?)
     }
 
     fn migrate(&mut self) -> Result<()> {
@@ -167,8 +177,11 @@ impl Store {
     // --- blocks ---
 
     pub fn upsert_block(&self, block: &Block) -> Result<()> {
-        self.conn.execute(
-            "INSERT INTO blocks (id, note_id, parent_id, order_key, block_type, text)
+        // Cached statement: this runs in a tight loop over every block of a note
+        // on each save, so prepare once and reuse.
+        self.conn
+            .prepare_cached(
+                "INSERT INTO blocks (id, note_id, parent_id, order_key, block_type, text)
              VALUES (?1, ?2, ?3, ?4, ?5, ?6)
              ON CONFLICT(id) DO UPDATE SET
                note_id = excluded.note_id,
@@ -176,15 +189,15 @@ impl Store {
                order_key = excluded.order_key,
                block_type = excluded.block_type,
                text = excluded.text",
-            params![
+            )?
+            .execute(params![
                 block.id,
                 block.note_id,
                 block.parent_id,
                 block.order_key,
                 block.block_type,
                 block.text
-            ],
-        )?;
+            ])?;
         Ok(())
     }
 
@@ -252,11 +265,12 @@ impl Store {
         target_note_id: &str,
         link_type: &str,
     ) -> Result<()> {
-        self.conn.execute(
-            "INSERT INTO links (source_block_id, target_note_id, target_block_id, link_type)
-             VALUES (?1, ?2, NULL, ?3)",
-            params![source_block_id, target_note_id, link_type],
-        )?;
+        self.conn
+            .prepare_cached(
+                "INSERT INTO links (source_block_id, target_note_id, target_block_id, link_type)
+                 VALUES (?1, ?2, NULL, ?3)",
+            )?
+            .execute(params![source_block_id, target_note_id, link_type])?;
         Ok(())
     }
 

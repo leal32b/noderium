@@ -132,8 +132,11 @@ impl Workspace {
     /// it. This is the editor → core flush (ADR-005): the live doc lives in JS,
     /// its snapshot becomes truth here, and SQLite is rebuilt from it.
     pub fn import_editor_snapshot(&self, note_id: &str, snapshot: &[u8]) -> Result<()> {
+        let tx = self.store.begin()?;
         self.store.save_snapshot(note_id, snapshot, &[])?;
-        self.index_from_snapshot(note_id, snapshot)
+        self.index_from_snapshot(note_id, snapshot)?;
+        tx.commit().map_err(StoreError::from)?;
+        Ok(())
     }
 
     /// All notes, most-recently-updated first.
@@ -158,7 +161,10 @@ impl Workspace {
             .store
             .load_snapshot(note_id)?
             .ok_or_else(|| CoreError::NoteNotFound(note_id.to_string()))?;
-        self.index_from_snapshot(note_id, &snapshot)
+        let tx = self.store.begin()?;
+        self.index_from_snapshot(note_id, &snapshot)?;
+        tx.commit().map_err(StoreError::from)?;
+        Ok(())
     }
 
     /// Wipe a note's derived block index (e.g. before a rebuild). Does not touch
