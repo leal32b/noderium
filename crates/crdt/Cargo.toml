@@ -1,6 +1,6 @@
 [package]
 name = "noderium-crdt"
-description = "Loro CRDT integration: snapshots, history compaction, checkpoints."
+description = "Loro CRDT integration: snapshots and loro-prosemirror parsing."
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true

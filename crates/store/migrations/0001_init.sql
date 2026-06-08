@@ -23,6 +23,8 @@ CREATE TABLE blocks (
 
 CREATE INDEX blocks_note_idx ON blocks(note_id, order_key);
 
+-- Reserved for typed properties (FR-5). No code reads/writes this yet; it is
+-- created up front to avoid a migration once the block model gains properties.
 CREATE TABLE properties (
   owner_id    TEXT NOT NULL,
   key         TEXT NOT NULL,
@@ -77,6 +79,8 @@ CREATE TABLE crdt_docs (
   version  BLOB NOT NULL
 );
 
+-- Reserved for incremental op sync (ADR-008, v2). Not written in the v1 local
+-- flow, which persists whole snapshots to crdt_docs.
 CREATE TABLE crdt_oplog (
   seq      INTEGER PRIMARY KEY AUTOINCREMENT,
   note_id  TEXT NOT NULL,

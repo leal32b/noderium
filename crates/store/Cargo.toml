@@ -1,6 +1,6 @@
 [package]
 name = "noderium-store"
-description = "SQLite persistence: FTS5, sqlite-vec, migrations, derived indexes."
+description = "SQLite persistence: FTS5, migrations, and derived indexes (sqlite-vec planned)."
 version.workspace = true
 edition.workspace = true
 rust-version.workspace = true
