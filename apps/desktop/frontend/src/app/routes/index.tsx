@@ -10,6 +10,9 @@ const NotesPage = lazy(() => import('@pages/notes').then((m) => ({ default: m.No
 const NotePage = lazy(() => import('@pages/note').then((m) => ({ default: m.NotePage })))
 const ReviewPage = lazy(() => import('@pages/review').then((m) => ({ default: m.ReviewPage })))
 const EditorPage = lazy(() => import('@pages/editor').then((m) => ({ default: m.EditorPage })))
+const SettingsPage = lazy(() =>
+  import('@pages/settings').then((m) => ({ default: m.SettingsPage })),
+)
 const NotFound = lazy(() => import('@pages/not-found').then((m) => ({ default: m.NotFound })))
 
 export const AppRoutes: Component = () => (
@@ -20,6 +23,7 @@ export const AppRoutes: Component = () => (
     <Route path="/note/:id" component={NotePage} />
     <Route path="/review" component={ReviewPage} />
     <Route path="/editor" component={EditorPage} />
+    <Route path="/settings" component={SettingsPage} />
     <Route path="*" component={NotFound} />
   </Router>
 )

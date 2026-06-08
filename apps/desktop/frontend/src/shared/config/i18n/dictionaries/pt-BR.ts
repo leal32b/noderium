@@ -78,6 +78,17 @@ const dict: typeof enUS = {
     dark: 'Escuro',
     system: 'Sistema',
   },
+  settings: {
+    title: 'Configurações',
+    appearance: 'Aparência',
+    appearanceDesc: 'Tema e densidade de exibição.',
+    theme: 'Tema',
+    density: 'Densidade',
+    comfortable: 'Confortável',
+    compact: 'Compacto',
+    language: 'Idioma',
+    languageDesc: 'Idioma da interface.',
+  },
   command: {
     placeholder: 'Busque notas ou execute um comando…',
     empty: 'Nenhum resultado.',

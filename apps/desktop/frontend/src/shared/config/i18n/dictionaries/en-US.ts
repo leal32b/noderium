@@ -78,6 +78,17 @@ export default {
     dark: 'Dark',
     system: 'System',
   },
+  settings: {
+    title: 'Settings',
+    appearance: 'Appearance',
+    appearanceDesc: 'Theme and display density.',
+    theme: 'Theme',
+    density: 'Density',
+    comfortable: 'Comfortable',
+    compact: 'Compact',
+    language: 'Language',
+    languageDesc: 'Interface language.',
+  },
   command: {
     placeholder: 'Search notes or run a command…',
     empty: 'No results.',
