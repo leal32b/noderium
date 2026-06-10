@@ -137,11 +137,11 @@ importers:
   packages/editor:
     dependencies:
       loro-crdt:
-        specifier: ^1.10.2
-        version: 1.12.4
+        specifier: ^1.13.1
+        version: 1.13.1
       loro-prosemirror:
         specifier: ^0.4.3
-        version: 0.4.3(loro-crdt@1.12.4)
+        version: 0.4.3(loro-crdt@1.13.1)
       prosemirror-commands:
         specifier: ^1.6.2
         version: 1.7.1
@@ -3445,8 +3445,8 @@ packages:
   longest-streak@3.1.0:
     resolution: {integrity: sha512-9Ri+o0JYgehTaVBBDoMqIl8GXtbWg711O3srftcHhZ0dqnETqLaoIK0x17fUw9rFSlK/0NlsKe0Ahhyl5pXE2g==}
 
-  loro-crdt@1.12.4:
-    resolution: {integrity: sha512-l1wRo+ogebXw8V1fOiqwWaVEyqF3L7Ien48djKfpieYkZ6iI5uF26rlORd1vQHPriqOYUCklauqDDgws8tYDxw==}
+  loro-crdt@1.13.1:
+    resolution: {integrity: sha512-iTeMr6HE3UbBUL1c2a+CnsQGyEZtJmv9M+QonPkDPC3VA+OJGWUPHcQaL5QNIuGMPZVuTb4RXAhUVJGuCEuWVw==}
 
   loro-prosemirror@0.4.3:
     resolution: {integrity: sha512-stAWIWs54LfXx0mvCzXF02XpEv9AKgrhSBPt44eT4SsrBEWZaq0jTFuzs8EyBmipBBcuC2ooRRX4NQjwSeQl9Q==}
@@ -8640,12 +8640,12 @@ snapshots:
 
   longest-streak@3.1.0: {}
 
-  loro-crdt@1.12.4: {}
+  loro-crdt@1.13.1: {}
 
-  loro-prosemirror@0.4.3(loro-crdt@1.12.4):
+  loro-prosemirror@0.4.3(loro-crdt@1.13.1):
     dependencies:
       lib0: 0.2.117
-      loro-crdt: 1.12.4
+      loro-crdt: 1.13.1
       prosemirror-model: 1.25.7
       prosemirror-state: 1.4.4
       prosemirror-view: 1.41.8
