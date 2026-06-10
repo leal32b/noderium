@@ -1,6 +1,7 @@
 version: 2
 updates:
-  # Rust (cargo workspace).
+  # Rust (cargo workspace). Group non-major bumps into one PR; majors stay
+  # individual so each is reviewed on its own.
   - package-ecosystem: cargo
     directory: "/"
     schedule:
@@ -8,8 +9,14 @@ updates:
     open-pull-requests-limit: 5
     commit-message:
       prefix: "build"
+    groups:
+      cargo:
+        update-types:
+          - "minor"
+          - "patch"
 
-  # JS (pnpm workspace) — root manifest + workspace packages.
+  # JS (pnpm workspace). Split runtime vs tooling so app-affecting bumps are
+  # visible separately from dev-tooling churn; majors stay individual.
   - package-ecosystem: npm
     directory: "/"
     schedule:
@@ -17,11 +24,26 @@ updates:
     open-pull-requests-limit: 5
     commit-message:
       prefix: "build"
+    groups:
+      npm-production:
+        dependency-type: "production"
+        update-types:
+          - "minor"
+          - "patch"
+      npm-development:
+        dependency-type: "development"
+        update-types:
+          - "minor"
+          - "patch"
 
-  # GitHub Actions.
+  # GitHub Actions rarely break across majors — group every update into one PR.
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
       interval: weekly
     commit-message:
       prefix: "ci"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
