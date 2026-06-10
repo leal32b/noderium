@@ -19,7 +19,7 @@ jobs:
     name: Rust (fmt, clippy, test)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: rustfmt, clippy
@@ -37,7 +37,7 @@ jobs:
     name: Frontend (typecheck, lint, test, build)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v5
       - uses: actions/setup-node@v5
         with:
@@ -60,7 +60,7 @@ jobs:
     name: Perf budget — editor latency (Spike #1)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v5
       - uses: actions/setup-node@v5
         with:
@@ -76,7 +76,7 @@ jobs:
     name: Docs (build + link check)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v5
       - uses: actions/setup-node@v5
         with:
@@ -93,7 +93,7 @@ jobs:
     name: Desktop (Tauri build)
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Install Tauri system deps
         run: |
           sudo apt-get update
