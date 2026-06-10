@@ -1,30 +1,36 @@
-name: Release
+name: Release (build installers)
 
-# Cut a release by pushing a semver tag:
-#   git tag v0.1.0 && git push origin v0.1.0
-#
-# Builds the Tauri desktop app for macOS (universal), Linux and Windows, then
-# uploads the installers to a DRAFT GitHub Release for a maintainer to review
-# and publish. The frontend dist is produced by the configured
+# Reusable build: produces the Tauri desktop installers for macOS (universal),
+# Linux and Windows and uploads them to the GitHub Release for `tag`. Called by
+# release-please.yml after it cuts a release; also runnable manually to (re)build
+# installers for an existing tag. The frontend dist is produced by the configured
 # beforeBuildCommand (tauri.conf.json), so no extra build step is needed.
 on:
-  push:
-    tags:
-      - "v*"
+  workflow_call:
+    inputs:
+      tag:
+        description: "Git tag of the release to build (e.g. v0.1.0)"
+        required: true
+        type: string
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Git tag of the release to build (e.g. v0.1.0)"
+        required: true
+        type: string
 
-# Least privilege: only the release job needs write access to create the release.
 permissions:
   contents: read
 
 concurrency:
-  group: release-${{ github.ref }}
+  group: release-build-${{ inputs.tag }}
   cancel-in-progress: false
 
 jobs:
-  release:
-    name: Build & release (${{ matrix.platform }})
+  build:
+    name: Build & upload (${{ matrix.platform }})
     permissions:
-      contents: write # create the GitHub Release and upload installers
+      contents: write # upload installers to the release
     strategy:
       fail-fast: false
       matrix:
@@ -42,6 +48,8 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.tag }}
 
       - name: Install Tauri system deps (Linux)
         if: matrix.platform == 'ubuntu-22.04'
@@ -74,9 +82,9 @@ jobs:
           # Windows: TAURI_SIGNING_PRIVATE_KEY, TAURI_SIGNING_PRIVATE_KEY_PASSWORD
         with:
           projectPath: apps/desktop
-          tagName: ${{ github.ref_name }}
-          releaseName: "Noderium ${{ github.ref_name }}"
-          releaseBody: "Download the installer for your platform from the assets below."
-          releaseDraft: true
+          # Upload to the release release-please already created for this tag
+          # (don't pass releaseName/Body, so its changelog notes are kept).
+          tagName: ${{ inputs.tag }}
+          releaseDraft: false
           prerelease: false
           args: ${{ matrix.args }}

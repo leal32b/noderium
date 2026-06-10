@@ -1,0 +1,45 @@
+name: Release Please
+
+# Conventional-Commits-driven releases. On each push to main, release-please
+# maintains a "Release PR" that bumps the version (.release-please-manifest.json,
+# Cargo.toml, tauri.conf.json) and updates CHANGELOG.md. Merging that PR creates
+# the tag + GitHub Release, which triggers the multi-platform installer build.
+#
+# Requires: Settings → Actions → General → Workflow permissions →
+#   "Allow GitHub Actions to create and approve pull requests" (for the Release PR).
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write # create the release + tag, push the Release PR branch
+  pull-requests: write # open/update the Release PR
+
+concurrency:
+  group: release-please
+  cancel-in-progress: false
+
+jobs:
+  release-please:
+    name: Release PR / tag
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+    steps:
+      - uses: googleapis/release-please-action@v5
+        id: release
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+  # When a release was just cut, build the installers and attach them to it.
+  build:
+    needs: release-please
+    if: ${{ needs.release-please.outputs.release_created == 'true' }}
+    permissions:
+      contents: write
+    uses: ./.github/workflows/release.yml
+    with:
+      tag: ${{ needs.release-please.outputs.tag_name }}
+    secrets: inherit
