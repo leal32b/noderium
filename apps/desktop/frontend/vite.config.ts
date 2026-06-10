@@ -3,12 +3,15 @@ import { fileURLToPath, URL } from 'node:url'
 import UnoCSS from 'unocss/vite'
 import { defineConfig } from 'vite'
 import solid from 'vite-plugin-solid'
+import wasm from 'vite-plugin-wasm'
 
 // Tauri expects a fixed port and ignores Vite's env vars; see ADR-004.
 const host = process.env['TAURI_DEV_HOST']
 
 export default defineConfig({
-  plugins: [UnoCSS(), solid()],
+  // loro-crdt's bundler build imports `.wasm` via ESM integration, which Vite 8's
+  // built-in wasm fallback rejects; vite-plugin-wasm serves it instead (ADR-002).
+  plugins: [wasm(), UnoCSS(), solid()],
   resolve: {
     alias: {
       '@app': fileURLToPath(new URL('./src/app', import.meta.url)),
@@ -24,6 +27,11 @@ export default defineConfig({
   // wasm asset correctly.
   optimizeDeps: {
     exclude: ['@noderium/editor', 'loro-crdt', 'loro-prosemirror'],
+  },
+  // vite-plugin-wasm instantiates the wasm with top-level await; the bundle
+  // must emit it natively. Tauri only ships a modern webview, so target esnext.
+  build: {
+    target: 'esnext',
   },
   // Tauri integration: stable dev server, no clobbering of Rust build output.
   clearScreen: false,
