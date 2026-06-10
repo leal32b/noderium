@@ -1,10 +1,10 @@
-import { presetUno } from '@unocss/preset-uno'
-import { defineConfig } from 'unocss'
+import { defineConfig, presetWind3 } from 'unocss'
 
 // Semantic tokens resolve to CSS vars defined in src/app/styles/theme.css.
 // Swapping data-theme on <html> re-themes instantly, no rebuild (ADR-012).
+// presetWind3 is the Tailwind-v3-compatible successor of the old presetUno.
 export default defineConfig({
-  presets: [presetUno()],
+  presets: [presetWind3()],
   theme: {
     colors: {
       surface: {
