@@ -2,6 +2,10 @@
 *::before,
 *::after {
   box-sizing: border-box;
+  /* Tailwind-style border reset: presetWind3 (UnoCSS 66) no longer ships it, so
+     `border`/`border-r` width utilities render with a solid style by default. */
+  border-width: 0;
+  border-style: solid;
 }
 
 html,
