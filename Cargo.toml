@@ -21,7 +21,7 @@ members = [
 [workspace.package]
 version = "0.0.1" # x-release-please-version
 edition = "2021"
-rust-version = "1.92"
+rust-version = "1.96"
 license = "Apache-2.0"
 repository = "https://github.com/leal32b/noderium"
 authors = ["Noderium contributors"]
@@ -30,7 +30,7 @@ authors = ["Noderium contributors"]
 # Third-party versions are centralized here; member crates opt in with
 # `<dep>.workspace = true` so versions can never drift across the workspace.
 thiserror = "2"
-rusqlite = { version = "0.32", features = ["bundled"] }
+rusqlite = { version = "0.40", features = ["bundled"] }
 loro = "1.13"
 rs-fsrs = "1.2"
 chrono = "0.4"
