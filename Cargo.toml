@@ -19,7 +19,7 @@ members = [
 
 # Shared metadata inherited by member crates via `*.workspace = true`.
 [workspace.package]
-version = "0.0.1" # x-release-please-version
+version = "0.1.0" # x-release-please-version
 edition = "2021"
 rust-version = "1.96"
 license = "Apache-2.0"
