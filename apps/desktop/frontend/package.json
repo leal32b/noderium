@@ -23,7 +23,7 @@
     "@solid-primitives/storage": "^4.3.4",
     "@solidjs/router": "^0.16.1",
     "@tauri-apps/api": "^2.1.1",
-    "lucide-solid": "^1.16.0",
+    "lucide-solid": "^1.20.0",
     "solid-js": "^1.9.3"
   },
   "devDependencies": {
