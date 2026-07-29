@@ -18,17 +18,17 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "loro-crdt": "^1.13.1",
+    "loro-crdt": "^1.13.8",
     "loro-prosemirror": "^0.4.3",
     "prosemirror-commands": "^1.6.2",
     "prosemirror-keymap": "^1.2.2",
-    "prosemirror-model": "^1.25.8",
+    "prosemirror-model": "^1.25.11",
     "prosemirror-schema-list": "^1.5.0",
     "prosemirror-state": "^1.4.3",
-    "prosemirror-view": "^1.41.9"
+    "prosemirror-view": "^1.42.2"
   },
   "peerDependencies": {
-    "solid-js": "^1.9.3"
+    "solid-js": "^1.9.14"
   },
   "peerDependenciesMeta": {
     "solid-js": {
@@ -38,7 +38,7 @@
   "devDependencies": {
     "@types/node": "^22.10.5",
     "jsdom": "^29.1.1",
-    "solid-js": "^1.9.3",
+    "solid-js": "^1.9.14",
     "typescript": "^5.7.2",
     "vitest": "^4.1.8"
   }
